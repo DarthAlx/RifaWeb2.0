@@ -21,7 +21,7 @@ class RecuperaciónDeContraseña extends ResetPassword
                     ->subject('Recuperación de contraseña')
                     ->greeting('Hola!')
                     ->line('Recibes este mensaje porque se nos solicitó la recuperación de la contraseña de tu cuenta.')
-                    ->action('Recuperar contraseña', url('password/reset', $this->token))
+                    ->action('Recuperar contraseña', url('password/reset', $this->token.'/'.$this->email))
                     ->line('Si no fuiste tu quien realizó la petición, puedes ignorar este correo.')
                     ->salutation('Saludos, '. config('app.name'));
     }

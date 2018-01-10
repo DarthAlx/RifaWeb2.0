@@ -1,4 +1,4 @@
-@component('mail::message')
+@component('vendor.mail.markdown.message')
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}

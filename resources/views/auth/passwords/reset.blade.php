@@ -20,7 +20,12 @@
             <form  action="{{ route('password.request') }}" method="post">
               {!! csrf_field() !!}
                 <input type="hidden" name="token" value="{{ $token }}">
-                <input type="hidden" name="email" value="{{ $email }}">
+              <div class="md-form input-field">
+                
+                <input class="form-control" id="email" type="email" name="email" required>
+                        <label for="email">Email</label><br>
+                        
+                    </div>
               <div class="md-form input-field">
                 
                 <input class="form-control" id="contraseña" type="password" name="password" required>
