@@ -30,6 +30,9 @@ Route::get('/perfil', function () {
 // Authentication routes...
 Route::get('entrar', 'Auth\LoginController@showLoginForm');
 Route::post('entrar', 'Auth\LoginController@login');
+
+Route::get('acceso', 'RolesController@index');
+
 Route::get('/salir', function () {
     Auth::logout();
     return redirect()->intended('/');
@@ -45,3 +48,8 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 
 Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback');
+
+
+Route::get('/admin', function () {
+    return view('admin');
+})->middleware('admin');

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->date('dob');
             $table->string('tel');
             $table->string('genero');
-            $table->string('role')->default('usuario');
+            $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
