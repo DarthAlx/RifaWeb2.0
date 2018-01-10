@@ -40,7 +40,7 @@ Route::get('registro', 'Auth\RegisterController@showRegistrationForm');
 Route::post('registro', 'Auth\RegisterController@register');
 
 
-Route::get('password/reset/{token}/{email}', 'Auth\ResetPasswordController@showResetForm');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 // Facebook
 
 Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
