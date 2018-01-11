@@ -190,7 +190,7 @@ footer{
     font-size: 70%;
 }
 .product.small .product-text h5{
-    font-size: 0.8rem;
+    font-size: 1.2rem;
 }
 .product.small .product-text .number h2{
     font-size: 1.56rem;
@@ -647,16 +647,16 @@ margin: 1em 0;
         margin-top: 10px;
     }
     .product.small .btn{
-        height: 36px;
-    line-height: 36px;
-    padding: 0 2rem;
+        height: 30px;
+    line-height: 30px;
+    padding: 0 1rem;
 }
 .product.small .btn{
-        font-size: 1rem;
+        font-size: 0.8rem;
 
     }
     .product.small .product-text .row{
-        margin-bottom: 20px;
+        margin-bottom: 15px;
 
     }
     .col-md-6 {
