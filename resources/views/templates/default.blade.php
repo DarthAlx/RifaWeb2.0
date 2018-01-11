@@ -11,6 +11,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}?v={{rand()}}" media="screen" />
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+      </head>
     <body>
         <section class="navigation">
             <div class="container">
@@ -45,19 +46,19 @@
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{url('/perfil')}}">Perfil</a>
-                            <a class="dropdown-item" href="#">Pedidos</a>
+                            <a class="dropdown-item" href="#">Mensajes <span class="new badge" data-badge-caption="nuevos">4</span></a>
+                            <a class="dropdown-item" href="#">Mis Rifas</a>
                             <a class="dropdown-item" href="#">Direcciones</a>
-                            <a class="dropdown-item" href="#">Cuenta</a>
-                            <a class="dropdown-item" href="#">Lista de deseos</a>
                           </div>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="{{url('/salir')}}">SALIR</a>
                         </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="#">CARRITO</a>
+                        </li>
                       @endif
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">CARRITO</a>
-                      </li>
+                      
                     </ul>
                     
                     
@@ -145,5 +146,10 @@
         <script type="text/javascript" src="{{ url('js/popper.js') }}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <script type="text/javascript" src="{{ url('js/script.js') }}"></script>
+        <script>
+          $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();     
+          });
+        </script>
     </body>
 </html>

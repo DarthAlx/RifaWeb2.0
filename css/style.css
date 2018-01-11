@@ -489,10 +489,36 @@ right: 0;
     .page404Wrap a.homePage {line-height: 46px;}
 }
 
+
+
+/* Perfil */
 .perfilside a:hover{
     border-right: 3px solid #446084;
 }
-
+.perfilheader{
+    padding: 100px 0;
+}
+.profilecard{
+    margin: 0 auto;
+    width: max-content;
+}
+.perfiltext {
+    margin-left: 20px;
+}
+.perfiltext h2{
+    color: #fff;
+    font-family: "Lato", sans-serif;
+    text-shadow: 1px 1px #000;
+    font-weight: bold;
+}
+.fixed-action-btn {
+    position: fixed;
+    right: 23px;
+    bottom: 50%;
+    padding-top: 15px;
+    margin-bottom: 0;
+    z-index: 997;
+}
 
 
 
@@ -543,6 +569,10 @@ margin: 1em 0;
    padding-right: 15px;
     padding-left: 15px;
     }
+
+    .perfiltext h2{
+    font-size: 2rem;
+}
 }
 
 @media screen and (min-width:768px){
@@ -568,6 +598,9 @@ margin: 1em 0;
     .navbar>.container-fluid .navbar-brand-centered {
         margin-left: -80px;
     }
+    .perfiltext h2{
+        font-size: 3.56rem;
+}
 }
 @media screen and (min-width:768px){
     .container{

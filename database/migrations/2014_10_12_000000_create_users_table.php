@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->date('dob');
             $table->string('tel');
             $table->string('genero');
+            $table->string('avatar')->default(url('/img/dummy.png'));
             $table->boolean('is_admin')->default(false);
             $table->rememberToken();
             $table->timestamps();

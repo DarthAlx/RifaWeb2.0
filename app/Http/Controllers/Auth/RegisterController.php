@@ -68,14 +68,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        if ($data['avatar']) {
+            $user = User::create([
+            'name' => ucwords($data['name']),
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'dob' => $data['dob'],
+            'tel' => $data['tel'],
+            'genero' => $data['genero'],
+            'avatar' => $data['avatar']
+        ]);
+        }
+        else{
+            $user = User::create([
             'name' => ucwords($data['name']),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'dob' => $data['dob'],
             'tel' => $data['tel'],
             'genero' => $data['genero']
-        ]);
+            ]);
+        }
+        
         if ($data['service_id']) {
             $user->socialProvider()->create([
                 'provider_id' => $data['service_id'],

@@ -19,10 +19,12 @@
                             </a>
                         </div>
                         @else
+                            <div  class="text-center" style="width: 100%;"><img src="{{$userinfo->getAvatar()}}" class="circle" alt=""></div>
                             <h5><strong>Por favor complete su perfil.</strong></h5>
                         @endif
                     </div>
                     <h6 class="section-title-center py-3"> <span class="secition-title-main"><i class="fa fa-user"></i> Registrarse</span></h6>
+
                     @if (session('status'))
                         <div class="alert alert-success alert-dismissable">
                           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -44,6 +46,7 @@
 
                         <!--Body-->
 
+                        <input type="hidden" name="avatar" value="@if($userinfo){{$userinfo->getAvatar()}}@endif">
                         <input type="hidden" name="service_id" value="@if($userinfo){{$userinfo->getId()}}@endif">
                         <div class="md-form input-field">
                             <input type="text" name="name" id="nombre" class="form-control" value="@if($userinfo){{$userinfo->getName()}}@endif" required>
