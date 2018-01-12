@@ -37,7 +37,7 @@ return [
     'facebook' => [
         'client_id' => '1691938924191854',
         'client_secret' => '0b704f99029af12fa55156fc6fbef185',
-        'redirect' => 'http://localhost/RifaWeb2.0/auth/facebook/retorno',
+        'redirect' => url('/auth/facebook/retorno'),
     ],
 
 ];
