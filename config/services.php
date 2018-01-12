@@ -37,7 +37,7 @@ return [
     'facebook' => [
         'client_id' => '1691938924191854',
         'client_secret' => '0b704f99029af12fa55156fc6fbef185',
-        'redirect' => ''.url('/auth/facebook/retorno'),
+        'redirect' => 'http://test.hadoukendev.com/auth/facebook/retorno',
     ],
 
 ];
