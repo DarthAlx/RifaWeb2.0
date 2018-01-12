@@ -55,7 +55,7 @@
                           <a class="nav-link" href="{{url('/salir')}}">SALIR</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#">CARRITO</a>
+                          <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO</a>
                         </li>
                       @endif
                       

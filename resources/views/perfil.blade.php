@@ -12,7 +12,7 @@
 						</div>
 						<div class="perfiltext right">
 							<h2>
-								Jesus {{Auth::user()->name}} Arguello
+								{{Auth::user()->name}}
 							</h2>
 							<div class="chip amber accent-3">
 								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> 100 <span class="hiddenmov">rifatokens</span>
@@ -33,51 +33,66 @@
 		
 	</div>
 	<p>&nbsp;</p>
-    <div >        
-        <div class="social-login">
-            <div class="">
-                <h4 style="margin-bottom: 0;">MI CUENTA</h4>
+	<div class="container">
+		<div class="row">
+        <div class="col-md-4">
+          <div class="card z-depth-3">
+            <div class="card-content">
+            	<h3 class="card-title">Tus rifas <i class="fa fa-ticket" aria-hidden="true"></i></h3>
+            	<p class="flow-text">
+            		Aquí puedes encontrar las rifas en las que estás participando actualmente
+            	</p>
             </div>
+            <div class="card-action">
+              <a href="#">Xbox One</a>
+              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>15</a>
+            </div>
+            <div class="card-action">
+              <a href="#">Iphone X</a>
+              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>30</a>
+            </div>
+            <div class="card-action">
+              <a href="#">Xbox One</a>
+              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>15</a>
+            </div>
+            <div class="card-action">
+              <a href="#">Iphone X</a>
+              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>30</a>
+            </div>
+            
+          </div>
         </div>
-    </div>
-	
-	
-    <div class="container">
-	    <div class="row">
-	        <div class="col-md-3 sidenav">
-	            <div class="panel panel-default perfilside">
-	            	<img class="circle" src="{{Auth::user()->avatar}}" alt="">
-	            	<h6 class="grey-text"><strong>{{Auth::user()->name}}</strong></h6>
-	                <ul class="list-group">
-	                    <a href="#" class="list-group-item grey-text">ESCRITORIO</a>
-	                    <a href="#" class="list-group-item grey-text">PEDIDOS</a>
-	                    <a href="#" class="list-group-item grey-text">DIRECCIONES</a>
-	                    <a href="#" class="list-group-item grey-text">CUENTA</a>
-	                    <a href="#" class="list-group-item grey-text">LISTA DE DESEOS</a>
-	                </ul>
-	            </div>
-	        </div>
-	        <div class="col-md-9">
-	        	<?php $nombre=explode(" ",Auth::user()->name);
-		        if ( ! isset($nombre[1])) {
-		            $nombre[1] = null;
-		        }?>
-	        	<p>Hola {{ucfirst($nombre[0])}} (¿no eres {{ucfirst($nombre[0])}}? <a href="{{url('/salir')}}">Cerrar sesión</a>)<br>
+        <div class="col-md-8">
+        	<div class="card z-depth-3 amber accent-2">
+            <div class="card-content">
+            	<h3 class="card-title">Rifas ganadas <i class="fa fa-trophy" aria-hidden="true"></i></h3>
+            	<p class="flow-text">
+            		Aun no has ganado ninguna rifa <i class="fa fa-frown-o" aria-hidden="true"></i>. ¡Sigue participando!
+            	</p>
+            </div>
+          </div>
 
-Desde el panel de control de tu cuenta puedes ver tus pedidos recientes, gestionar tus direcciones de envío y facturación y editar tu contraseña y los detalles de tu cuenta.</p>
-	        </div>
-		</div>
+          <div class="card z-depth-3  blue-grey darken-1">
+
+            <div class="card-content white-text">
+            	<h3 class="card-title white-text">Tus mensajes <i class="fa fa-envelope" aria-hidden="true"></i></h3>
+            	<p class="flow-text">
+            		No tienes ningún mensaje.
+            	</p>
+            </div>
+          </div>
+        </div>
+      </div>
 	</div>
-</section>
 
+</section>
+<p>&nbsp;</p>
 <div class="fixed-action-btn horizontal">
     <a class="btn-floating btn-large red" data-toggle="tooltip" data-placement="top" title="Gestión de cuenta">
       <i class="fa fa-user fa2x"></i>
     </a>
     <ul>
-      <li><a class="btn-floating yellow darken-1" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
-      <li><a class="btn-floating green" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
-      <li><a class="btn-floating blue" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
+      <li><a class="btn-floating blue" data-toggle="tooltip" data-placement="top" title="Direcciones"><i class="fa map-marker"></i></a></li>
       <li><a class="btn-floating red" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
     </ul>
   </div>
