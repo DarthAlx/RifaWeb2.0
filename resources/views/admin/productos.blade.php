@@ -52,7 +52,62 @@
 				  </div>
 				</div>
 			</div>
+
+			<div class="col-md-4">
+				<div class="card">
+				  <div class="card-body">
+				    <h5 class="card-title">Categorías</h5>
+				    <div class="card-text">
+					      <div class="row">
+					        <div class="col s6">
+					          <p>
+							      <input type="checkbox" id="cat1"/>
+							      <label for="cat1">Viajes</label>
+						      </p>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col s6">
+					          <p>
+							      <input type="checkbox" id="cat1"/>
+							      <label for="cat1">Celulares</label>
+						      </p>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="col s6">
+					          <p>
+							      <input type="checkbox" id="cat1"/>
+							      <label for="cat1">Videojuegos</label>
+						      </p>
+					        </div>
+					      </div>
+				    </div>
+
+				  </div>
+				</div>
+
+
+				<div class="card">
+				  <div class="card-body">
+				    <h5 class="card-title">Imágen destacada</h5>
+				    <div class="card-text">
+					      <div class="file-field input-field">
+						      <div class="btn">
+						        <span>Subir</span>
+						        <input type="file">
+						      </div>
+						      <div class="file-path-wrapper">
+						        <input class="file-path validate" type="text">
+						      </div>
+						    </div>
+				    </div>
+
+				  </div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 @endsection
+
