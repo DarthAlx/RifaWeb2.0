@@ -24,7 +24,7 @@
                         <a class="collapsible-header" class="waves-effect"><i class="fa fa-shopping-basket" aria-hidden="true"></i> E-commerce</a>
                         <div class="collapsible-body">
                           <ul>
-                            <li><a href="#!">Productos</a></li>
+                            <li><a href="{{url('/productos')}}">Productos</a></li>
                             <li><a href="#!">Ordenes</a></li>
                             <li><a href="#!">Categorías</a></li>
                           </ul>
