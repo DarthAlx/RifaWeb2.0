@@ -43,23 +43,25 @@
             		Aquí puedes encontrar las rifas en las que estás participando actualmente
             	</p>
             </div>
-            <div class="card-action">
-              <a href="#">Xbox One</a>
-              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>15</a>
-            </div>
-            <div class="card-action">
-              <a href="#">Iphone X</a>
-              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>30</a>
-            </div>
-            <div class="card-action">
-              <a href="#">Xbox One</a>
-              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>15</a>
-            </div>
-            <div class="card-action">
-              <a href="#">Iphone X</a>
-              <a href="#" class="secondary-content"><i class="fa fa-ticket" aria-hidden="true"></i>30</a>
-            </div>
-            
+
+            <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
+              <li>
+                <div class="collapsible-header"><div class="left">Xbox One </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>15</div></div>
+                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><div class="left">Iphone X </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>30</div></div>
+                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><div class="left">Xbox One </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>15</div></div>
+                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><div class="left">Iphone X </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>30</div></div>
+                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
+              </li>
+            </ul>            
           </div>
         </div>
         <div class="col-md-8">
@@ -88,7 +90,7 @@
 </section>
 <p>&nbsp;</p>
 <div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large red" data-toggle="tooltip" data-placement="top" title="Gestión de cuenta">
+    <a class="btn-floating btn-large red pulse" data-toggle="tooltip" data-placement="top" title="Gestión de cuenta">
       <i class="fa fa-user fa2x"></i>
     </a>
     <ul>

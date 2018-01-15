@@ -53,3 +53,6 @@ Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback
 Route::get('/admin', function () {
     return view('admin');
 })->middleware('admin');
+Route::get('/productos', function () {
+    return view('admin.productos');
+})->middleware('admin');

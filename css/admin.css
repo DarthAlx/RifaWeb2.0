@@ -1,0 +1,40 @@
+body {
+    background: #f6f7fa;
+}
+
+header, .main, footer {
+      padding-left: 300px;
+    }
+
+header{
+    background: #0e1a35;
+    border-color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+header a, header .btn-flat{
+    color: #fff;
+}
+nav img{
+    padding: 0 10%;
+}
+.row{
+        margin-bottom: 0px;
+}
+.side-nav .collapsible-header, .side-nav.fixed .collapsible-header {
+    background-color: transparent;
+    border: none;
+    line-height: inherit;
+    height: inherit;
+    padding: 0 32px;
+}
+.input-field label {
+    left: 0.75rem;
+}
+
+    @media only screen and (max-width : 992px) {
+      header, .main, footer {
+        padding-left: 0;
+      }
+    }

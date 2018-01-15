@@ -526,7 +526,10 @@ right: 0;
 .card p{
     font-weight: 500;
 }
-
+.collapsible-header .right{
+    position: absolute;
+    right: 25px;
+}
 
 
 

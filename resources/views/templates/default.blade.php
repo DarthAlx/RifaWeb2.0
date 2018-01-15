@@ -149,6 +149,7 @@
         <script>
           $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();     
+            $('.collapsible').collapsible();
           });
         </script>
     </body>
