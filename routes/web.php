@@ -53,6 +53,9 @@ Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback
 Route::get('/admin', function () {
     return view('admin');
 })->middleware('admin');
-Route::get('/productos', function () {
+
+Route::get('/productos/nuevo', function () {
     return view('admin.productos');
 })->middleware('admin');
+
+Route::post('agregar-producto', 'ProductoController@store')->middleware('admin');
