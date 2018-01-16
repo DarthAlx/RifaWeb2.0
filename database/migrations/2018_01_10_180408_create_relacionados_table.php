@@ -15,6 +15,8 @@ class CreateRelacionadosTable extends Migration
     {
         Schema::create('relacionados', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('producto_id');
+            $table->string('relacionado_id');
             $table->timestamps();
         });
     }

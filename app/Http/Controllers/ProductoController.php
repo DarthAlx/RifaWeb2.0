@@ -14,6 +14,7 @@ class ProductoController extends Controller
 {
 	public function store(Request $request)
     {
+
     	$producto = new Producto($request->all());
         $producto->nombre=$request->nombre;
         $producto->sku=$request->sku;
@@ -21,28 +22,27 @@ class ProductoController extends Controller
         $producto->precio=$request->precio;
         $producto->precio_especial=$request->precio_especial;
         $producto->boletos=$request->boletos;
-        $producto->vendidos=$request->vendidos;
         $producto->minimo=$request->minimo;
         $producto->fecha_limite=date_create($request->fecha_limite);
-        $producto->categoria=$request->categoria;
-
         
-		if (isset($request->categoria)) {
-			$categorias="";
-			foreach ($request->categoria as $categoria) {
-				$categorias.=$categoria;
-			}
-		}
-		else{
-			$producto->habilitado=0;
-		}
 
-		if (isset($request->habilitado)) {
-			$producto->habilitado=1;
-		}
-		else{
-			$producto->habilitado=0;
-		}
+
+        if (isset($request->categoria)) {
+          $producto->categoria=implode(",", $request->categoria);
+        }
+        else{
+            Session::flash('mensaje', 'Selecciona o crea por lo menos una categoría.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/productos/nuevo'))->withInput();
+        }
+
+
+    		if (isset($request->habilitado)) {
+    			$producto->habilitado=1;
+    		}
+    		else{
+    			$producto->habilitado=0;
+    		}
 
         if ($request->hasFile('imagen')) {
           $file = $request->file('imagen');
@@ -66,7 +66,6 @@ class ProductoController extends Controller
           Session::flash('class', 'danger');
           return redirect()->intended(url('/productos/nuevo'))->withInput();
         }
-
 
         if ($producto->save()) {
         	Session::flash('mensaje', 'Producto publicado con exito.');

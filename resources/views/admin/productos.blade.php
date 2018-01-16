@@ -3,6 +3,7 @@
 @section('pagecontent')
 <div class=" main">
 	<div class="container-fluid">
+		
 		<form action="{{ url('/agregar-producto') }}" method="post" enctype="multipart/form-data">
 			 {{ csrf_field() }}
 		<div class="row">
@@ -14,6 +15,11 @@
 					<input type="submit" value="Guardar" class="btn btn-primary right waves-effect waves-light btn-large">
 				</div>
 				
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				@include('snip.notificaciones')
 			</div>
 		</div>
 		
