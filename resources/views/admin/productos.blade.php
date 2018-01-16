@@ -4,6 +4,7 @@
 <div class=" main">
 	<div class="container-fluid">
 		<form action="{{ url('/agregar-producto') }}" method="post" enctype="multipart/form-data">
+			 {{ csrf_field() }}
 		<div class="row">
 			<div class="col-md-6">
 				<h3 class="">Añadir nuevo</h3>
