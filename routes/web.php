@@ -55,8 +55,8 @@ Route::get('/admin', function () {
 })->middleware('admin');
 
 Route::get('/productos/nuevo', function () {
-	$categorias=App\Categoria::all();
-    return view('admin.productos', ['categorias'=>$categorias]);
+	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+    return view('admin.productonuevo', ['categorias'=>$categorias]);
 })->middleware('admin');
 
 Route::post('agregar-producto', 'ProductoController@store')->middleware('admin');

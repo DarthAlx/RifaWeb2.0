@@ -19,6 +19,7 @@ class CreateProductosTable extends Migration
             $table->string('nombre');
             $table->string('descripcion');
             $table->boolean('habilitado')->default(true);
+            $table->boolean('destacado')->default(false);
             $table->string('precio');
             $table->string('precio_especial')->nullable(true);
             $table->integer('boletos');

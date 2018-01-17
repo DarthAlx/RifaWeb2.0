@@ -20,6 +20,14 @@
 		<div class="row">
 			<div class="col-md-12">
 				@include('snip.notificaciones')
+				@if(!$categorias)
+				<div class="alert alert-warning alert-dismissable">
+				    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				    <ul>
+				        <li>Aún no se han creado categorías, te recomendamos ir a la sección <a href="{{url('/categorias')}}">categorías</a> y crear las necesarias.</li>
+				    </ul>
+				  </div>
+				@endif
 			</div>
 		</div>
 		
@@ -48,9 +56,28 @@
 					      </div>
 					      <div class="row">
 					        <div class="col s6">
-					          <p>
-							      <input type="checkbox" name="habilitado" id="habilitado" checked="checked"/>
+					        	<div class="switch">
+								    <label>
+								      <input type="checkbox" name="habilitado" id="habilitado" checked="checked"/>
+								      <span class="lever"></span>
+								      
+								    </label>
+								  </div>
+					          <p>      
 							      <label for="habilitado">Habilitado</label>
+						      </p>
+					        </div>
+
+					        <div class="col s6">
+					        	<div class="switch">
+								    <label>
+								      <input type="checkbox" name="destacado" id="destacado"/>
+								      <span class="lever"></span>
+								      
+								    </label>
+								  </div>
+					          <p>      
+							      <label for="habilitado">Destacado</label>
 						      </p>
 					        </div>
 					      </div>
@@ -103,30 +130,18 @@
 				  <div class="card-body">
 				    <h5 class="card-title">Categorías</h5>
 				    <div class="card-text">
+				    	@if($categorias)
+				    	@foreach($categorias as $categoria)
 					      <div class="row">
 					        <div class="col s6">
 					          <p>
-							      <input type="checkbox" name="categoria[]" value="1" id="cat1"/>
-							      <label for="cat1">Viajes</label>
+							      <input type="checkbox" name="categoria[]" value="{{$categoria->id}}" id="cat{{$categoria->id}}"/>
+							      <label for="cat{{$categoria->id}}">{{$categoria->nombre}}</label>
 						      </p>
 					        </div>
 					      </div>
-					      <div class="row">
-					        <div class="col s6">
-					          <p>
-							      <input type="checkbox" name="categoria[]" value="2" id="cat2"/>
-							      <label for="cat2">Celulares</label>
-						      </p>
-					        </div>
-					      </div>
-					      <div class="row">
-					        <div class="col s6">
-					          <p>
-							      <input type="checkbox" name="categoria[]" value="3" id="cat3"/>
-							      <label for="cat3">Videojuegos</label>
-						      </p>
-					        </div>
-					      </div>
+					    @endforeach
+					    @endif
 				    </div>
 
 				  </div>
@@ -150,6 +165,59 @@
 
 				  </div>
 				</div>
+
+
+				<div class="card">
+				  <div class="card-body">
+				    <h5 class="card-title">Galería</h5>
+				    <input name="poplets" type="hidden" class="popletsnum">
+				    <div class="card-text popletsinput">
+				      <div class="file-field input-field">
+					      <div class="btn">
+					        <span>Subir</span>
+					        <input type="file" name="poplet1">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+
+				    </div>
+				    <div class="text-right popletscontrols">
+				    	<a class="minus" style="display: none;" onclick="popletremove();"><i class="fa fa-minus fa-2x" aria-hidden="true"></i></a>
+				    <a class="plus" onclick="popletappend();"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a>
+				    </div>
+				    
+
+				  </div>
+				</div>
+				<script>
+					var poplet=1;
+					function popletappend(){
+						poplet++;
+						$( ".popletsinput" ).append("<div class='file-field input-field poplet"+poplet+"'><div class='btn'><span>Subir</span><input type='file' name='poplet"+poplet+"'></div><div class='file-path-wrapper'><input class='file-path validate' type='text'></div></div>");
+						$('.minus').fadeIn();
+						$('.popletsnum').val(poplet);
+						if(poplet>=5){
+							$('.plus').fadeOut();
+						}
+					}
+					function popletremove(){
+						$( ".poplet"+poplet ).remove();
+						poplet--;
+						if(poplet<2){
+							$('.minus').fadeOut();
+						}
+						if(poplet<5){
+							$('.plus').fadeIn();
+						}
+						$('.popletsnum').val(poplet);
+					}
+				</script>
+
+
+
+
 			</div>
 		</div>
 		
@@ -157,4 +225,3 @@
 	</form>
 </div>
 @endsection
-
