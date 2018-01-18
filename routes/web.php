@@ -19,9 +19,26 @@ Route::get('/', function () {
 });
 
 
+
+Route::get('/catalogo/{catalogo}', function ($catalogo) {
+	$categoria=App\Categoria::where('nombre',$catalogo)->first();
+	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+	if ($categoria) {
+		$productos=App\Producto::where('categoria', 'like', '%'.$categoria->id.'%')->get();
+		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
+	}
+	else{
+		return redirect()->intended(url('/404'));
+	}
+	
+});
+
+
 Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
+
+
 
 
 
