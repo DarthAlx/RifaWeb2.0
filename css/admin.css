@@ -42,3 +42,13 @@ nav img{
 .popletscontrols a{
     cursor: pointer;
 }
+
+.row-fluid{
+    width: 100%;
+}
+.row-fluid:first-child{
+    float: left;
+}
+.row-fluid:last-child{
+    float: right;
+}

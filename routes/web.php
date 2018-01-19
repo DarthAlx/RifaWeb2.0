@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 
 
-Route::get('/catalogo/{catalogo}', function ($catalogo) {
+Route::get('/rifas/{catalogo}', function ($catalogo) {
 	$categoria=App\Categoria::where('nombre',$catalogo)->first();
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
 	if ($categoria) {
@@ -31,6 +31,13 @@ Route::get('/catalogo/{catalogo}', function ($catalogo) {
 		return redirect()->intended(url('/404'));
 	}
 	
+});
+
+Route::get('/rifas', function () {
+	$catalogo="Todos";
+	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+	$productos=App\Producto::orderBy('nombre','asc')->get();
+	return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
 });
 
 
@@ -69,6 +76,11 @@ Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback
 
 Route::get('/admin', function () {
     return view('admin');
+})->middleware('admin');
+
+Route::get('/productos', function () {
+	$productos=App\Producto::orderBy('nombre','asc')->get();
+    return view('admin.productos', ['productos'=>$productos]);
 })->middleware('admin');
 
 Route::get('/productos/nuevo', function () {

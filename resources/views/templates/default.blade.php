@@ -9,7 +9,8 @@
         <link rel="stylesheet" type="text/css" href="{{ url('css/materialize.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/font-awesome.min.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}?v={{rand()}}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
+        @yield('header')
+        
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
       </head>
@@ -146,6 +147,7 @@
         <script type="text/javascript" src="{{ url('js/materialize.js') }}"></script>
         <script type="text/javascript" src="{{ url('js/popper.js') }}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        @yield('scripts')
         <script type="text/javascript" src="{{ url('js/script.js') }}"></script>
         <script>
           $(document).ready(function() {

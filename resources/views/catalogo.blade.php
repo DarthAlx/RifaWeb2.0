@@ -1,5 +1,10 @@
 @extends('templates.default')
 
+@section('header')
+<link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
+@endsection
+
+
 @section('pagecontent')
 
 <section class="productsmain">
@@ -9,7 +14,7 @@
                 <div id="bc1" class="btn-group btn-breadcrumb">
                   <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
                   <a href="{{url('/rifas')}}" class="btn btn-default"><div>Rifas</div></a>
-                  <a href="{{url('/catalogo')}}/{{strtolower($catalogo)}}" class="btn btn-default"><div>{{ucfirst($catalogo)}}</div></a>
+                  <a href="{{url('/rifas')}}/{{strtolower($catalogo)}}" class="btn btn-default"><div>{{ucfirst($catalogo)}}</div></a>
 
                 </div>
               </div>
@@ -35,7 +40,7 @@
                 <p class="titleshop">Categorías</p>
                 <ul class="listacategorias">
                   @foreach($categorias as $categoria)
-                  <li><a href="{{url('/catalogo')}}/{{strtolower($categoria->nombre)}}">{{$categoria->nombre}}</a></li>
+                  <li><a href="{{url('/rifas')}}/{{strtolower($categoria->nombre)}}">{{$categoria->nombre}}</a></li>
                   @endforeach
                 </ul>
 
