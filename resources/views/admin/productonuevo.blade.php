@@ -123,6 +123,38 @@
 
 				  </div>
 				</div>
+
+
+				<div class="card">
+				  <div class="card-body">
+				    <h5 class="card-title">Ganadores</h5>
+				    <div class="card-text">
+				    	<div class="col s12">
+					      <div class="row">
+					        <div class="input-field col col-md-6">
+					          <input id="melate" name="melate" type="text" class="validate" value="{{old('melate')}}">
+					          <label for="melate">Ganador Melate</label>
+					        </div>
+					        <div class="input-field col col-md-6">
+					          <input id="melate_confirmation" name="melate_confirmation" type="number" class="validate" value="{{old('melate_confirmation')}}">
+					          <label for="melate_confirmation">Confirmar ganador Melate</label>
+					        </div>
+					      </div>
+					      <div class="row">
+					        <div class="input-field col col-md-6">
+					          <input id="ganador" name="ganador" type="text" class="validate" value="{{old('ganador')}}">
+					          <label for="ganador">Ganador RifaWeb</label>
+					        </div>
+					        <div class="input-field col col-md-6">
+					          <input id="ganador_confirmation" namee="ganador_confirmation" type="text" value="{{old('ganador_confirmation')}}" class="validate">
+					          <label for="ganador_confirmation">Confirmar ganador RifaWeb</label>
+					        </div>
+					      </div>					      
+					    </div>
+				    </div>
+
+				  </div>
+				</div>
 			</div>
 
 			<div class="col-md-4">

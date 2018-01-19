@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $table = 'productos';
-	protected $fillable = ['sku', 'nombre', 'descripcion','habilitado', 'destacado', 'precio', 'precio_especial', 'boletos', 'imagen', 'vendidos', 'minimo', 'fecha_limite', 'categoria'];
+	protected $fillable = ['sku', 'nombre', 'descripcion','habilitado', 'destacado', 'precio', 'precio_especial', 'boletos', 'imagen', 'vendidos', 'minimo', 'fecha_limite','melate','ganador', 'categoria'];
 
 	public function poplets(){
 	    return $this->hasMany('App\Poplets');

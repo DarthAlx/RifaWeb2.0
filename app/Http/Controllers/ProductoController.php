@@ -76,6 +76,10 @@ class ProductoController extends Controller
           return redirect()->intended(url('/productos/nuevo'))->withInput();
         }
 
+        if ($request->ganador||$request->melate) {
+            //ganador
+        }
+
 
         //guardar
         if ($producto->save()) {
