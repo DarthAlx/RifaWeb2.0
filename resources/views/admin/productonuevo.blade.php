@@ -92,6 +92,7 @@
 				    <h5 class="card-title">Boletos</h5>
 				    <div class="card-text">
 				    	<div class="col s12">
+				    		
 					      <div class="row">
 					        <div class="input-field col col-md-6">
 					          <input id="boletos" name="boletos" type="number" class="validate" value="{{old('boletos')}}" required>
@@ -117,7 +118,18 @@
 					          <input id="precio_especial" namee="precio_especial" type="text" value="{{old('precio_especial')}}" class="validate">
 					          <label for="precio_especial">Precio rebajado</label>
 					        </div>
-					      </div>					      
+					      </div>	
+					      <div class="row">
+						        <div class="input-field col s12">
+						        	<select id="loteria" name="loteria" required>
+								      <option value="" disabled selected>Elejir tipo</option>
+								      <option value="Melate">Melate</option>
+								      <option value="Lotería Nacional">Lotería Nacional</option>
+								    </select>
+						          <label for="loteria">Tipo de lotería</label>
+						        </div>
+					      	</div>	
+					      				      
 					    </div>
 				    </div>
 
@@ -127,13 +139,13 @@
 
 				<div class="card">
 				  <div class="card-body">
-				    <h5 class="card-title">Ganadores</h5>
+				    <h5 class="card-title">Ganador</h5>
 				    <div class="card-text">
 				    	<div class="col s12">
 					      <div class="row">
 					        <div class="input-field col col-md-6">
 					          <input id="melate" name="melate" type="text" class="validate" value="{{old('melate')}}">
-					          <label for="melate">Ganador Melate</label>
+					          <label for="melate">Ultimos </label>
 					        </div>
 					        <div class="input-field col col-md-6">
 					          <input id="melate_confirmation" name="melate_confirmation" type="number" class="validate" value="{{old('melate_confirmation')}}">
