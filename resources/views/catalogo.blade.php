@@ -30,8 +30,8 @@
 
                 <p class="titleshop">Ordenar publicaciones</p>
                 <div class="sorting">
-                  <a href="" data-toggle="tooltip" data-placement="top" title="Lista"><i class="fa fa-list"></i></a>
-                  <a href="" data-toggle="tooltip" data-placement="top" title="Grilla"><i class="fa fa-th-large"></i></a>
+                  <a onclick="list();" data-toggle="tooltip" data-placement="top" title="Lista"><i class="fa fa-list"></i></a>
+                  <a onclick="grid();"  data-toggle="tooltip" data-placement="top" title="Grilla"><i class="fa fa-th-large"></i></a>
                 </div>
                 
 
@@ -50,110 +50,42 @@
                 
               </div>
               <div class="col-md-9">
-                <div class="row">
+                <div class="row row-eq-height">
                   @foreach($productos as $producto)
-
-                  <div class="product col-md-12" style="padding: 0;">
-                    <div class="img-container col-md-4 valign-wrapper" >
-                      <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" class="responsive-img">
+                  
+                    
+                  
+                  <div class="product-type list col-md-12" style="padding: 0;">
+                    <div class="product-inner">
+                    <div class="p1 col m4 valign-wrapper" >
+                      <div class="img-container">
+                        <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" class="responsive-img">
+                      </div>
+                      
                     </div>
-                    <div class="product-info col-md-8">
+                    <div class="p2 product-info col m8">
                       <div class="product-content">
                         <h1>{{$producto->nombre}}</h1>
-                        <p>{{$producto->descripcion}}</p>
+                        <p>{{$producto->loteria}}</p>
                         <ul>
-                          <li>Lorem ipsum dolor sit ametconsectetu.</li>
-                          <li>adipisicing elit dlanditiis quis ip.</li>
-                          <li>lorem sde glanditiis dars fao.</li>
+                          <li>{{str_limit($producto->descripcion, $limit = 50, $end = '...')}}</li>
                         </ul>
                         <br><br>
                         <div class="buttons">
                           <span class="button" id="price">1 Boleto = ${{$producto->precio}}mxn</span>
+
+                          <div class="pbut hidden">
+                            <br>
+                          </div>
                           <a class="button buy" href="#">Ver rifa</a>
 
                           
                         </div>
                       </div>
                     </div>
+                    </div>
                   </div>
-                  <!--div class="col-md-3">
-                  <div class="product small hoverable" style="background: #fff;">
-                      <div class="product-container">
-                        <p>&nbsp;</p>
-                        <div class="product-image text-center">
-                          <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" alt="" class="responsive-img">
-                        </div>
-                        <div class="product-text uppercase">
-                          <h3>
-                            <span>{{$producto->nombre}}</span>
-                          </h3>
-                          <h5>1 Boleto = ${{$producto->precio}}mxn</h5>
-                          <div class="row cbox">
-                            <div class="col l3">
-                              <div class="countbox">
-                                <div class="countnumber">
-                                  <div class="number">
-                                    <h2>1</h2>
-                                  </div>
-                                  <div class="text">
-                                    <p>días</p>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                            <div class="col l3">
-                              <div class="countbox">
-                                <div class="countnumber">
-                                  <div class="number">
-                                    <h2>3</h2>
-                                  </div>
-                                  <div class="text">
-                                    <p>horas</p>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                            <div class="col l3">
-                              <div class="countbox">
-                                <div class="countnumber">
-                                  <div class="number">
-                                    <h2>36</h2>
-                                  </div>
-                                  <div class="text">
-                                    <p>minutos</p>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                            <div class="col l3">
-                              <div class="countbox">
-                                <div class="countnumber">
-                                  <div class="number">
-                                    <h2>19</h2>
-                                  </div>
-                                  <div class="text">
-                                    <p>segundos</p>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                          <div class="button text-center">
-                            <button class="btn btn-success success">
-                            Ir a sorteo
-                          </button>
-                          </div>
-                          
-                        </div>
-                      </div>
-                      </div>
-                      <div class="visiblemov"><br></div>
-                      
-                    </div-->
+                  
                     @endforeach
                 </div>
               </div>
@@ -162,4 +94,41 @@
             </div>
           </div>
         </section>
+
+
+        <script>
+          function list(){
+            $('.product-type').addClass('col-md-12');
+            $('.product-type').removeClass('col-md-4');
+
+            $('.p1').addClass('m4');
+            $('.p1').removeClass('m12');
+            $('.p2').addClass('m8');
+            $('.p2').removeClass('m12');
+
+            $('.product-type').addClass('list');
+            $('.product-type').removeClass('grid');
+
+            $('.pbut').addClass('hidden');
+            $('.pbut').removeClass('visible');
+
+          }
+          function grid(){
+            $('.product-type').removeClass('col-md-12');
+            $('.product-type').addClass('col-md-4');
+
+            $('.p1').removeClass('m4');
+            $('.p1').addClass('m12');
+            $('.p2').removeClass('m8');
+            $('.p2').addClass('m12');
+
+            $('.product-type').removeClass('list');
+            $('.product-type').addClass('grid');
+
+            $('.pbut').removeClass('hidden');
+            $('.pbut').addClass('visible');
+
+          }
+          
+        </script>
         @endsection

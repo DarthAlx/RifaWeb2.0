@@ -1139,7 +1139,7 @@ function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
   // and refer to originalPlacement to know the original value
   var placement = computeAutoPlacement(options.placement, referenceOffsets, popper, reference, options.modifiers.flip.boundariesElement, options.modifiers.flip.padding);
 
-  popper.setAttribute('x-placement', placement);
+  //popper.setAttribute('x-placement', placement);
 
   // Apply `position` to popper before anything else because
   // without the position applied we can't guarantee correct computations

@@ -10,9 +10,20 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProductoController extends Controller
 {
+
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'sku' => 'required|string|unique:productos',
+            'ganador' => 'required|string|min:3|confirmed'
+        ]);
+    }
 	public function store(Request $request)
     {
 

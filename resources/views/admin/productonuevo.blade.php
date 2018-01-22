@@ -92,7 +92,16 @@
 				    <h5 class="card-title">Boletos</h5>
 				    <div class="card-text">
 				    	<div class="col s12">
-				    		
+				    		<div class="row">
+						        <div class="input-field col s12">
+						        	<select id="loteria" name="loteria" required>
+								      <option value="" disabled selected>Elejir tipo</option>
+								      <option value="Melate">Melate</option>
+								      <option value="Lotería Nacional">Lotería Nacional</option>
+								    </select>
+						          <label for="loteria">Tipo de lotería</label>
+						        </div>
+					      	</div>	
 					      <div class="row">
 					        <div class="input-field col col-md-6">
 					          <input id="boletos" name="boletos" type="number" class="validate" value="{{old('boletos')}}" required>
@@ -119,16 +128,7 @@
 					          <label for="precio_especial">Precio rebajado</label>
 					        </div>
 					      </div>	
-					      <div class="row">
-						        <div class="input-field col s12">
-						        	<select id="loteria" name="loteria" required>
-								      <option value="" disabled selected>Elejir tipo</option>
-								      <option value="Melate">Melate</option>
-								      <option value="Lotería Nacional">Lotería Nacional</option>
-								    </select>
-						          <label for="loteria">Tipo de lotería</label>
-						        </div>
-					      	</div>	
+					      
 					      				      
 					    </div>
 				    </div>
@@ -144,22 +144,12 @@
 				    	<div class="col s12">
 					      <div class="row">
 					        <div class="input-field col col-md-6">
-					          <input id="melate" name="melate" type="text" class="validate" value="{{old('melate')}}">
-					          <label for="melate">Ultimos </label>
-					        </div>
-					        <div class="input-field col col-md-6">
-					          <input id="melate_confirmation" name="melate_confirmation" type="number" class="validate" value="{{old('melate_confirmation')}}">
-					          <label for="melate_confirmation">Confirmar ganador Melate</label>
-					        </div>
-					      </div>
-					      <div class="row">
-					        <div class="input-field col col-md-6">
 					          <input id="ganador" name="ganador" type="text" class="validate" value="{{old('ganador')}}">
-					          <label for="ganador">Ganador RifaWeb</label>
+					          <label for="ganador">Número ganador</label>
 					        </div>
 					        <div class="input-field col col-md-6">
 					          <input id="ganador_confirmation" namee="ganador_confirmation" type="text" value="{{old('ganador_confirmation')}}" class="validate">
-					          <label for="ganador_confirmation">Confirmar ganador RifaWeb</label>
+					          <label for="ganador_confirmation">Confirmar número ganador</label>
 					        </div>
 					      </div>					      
 					    </div>

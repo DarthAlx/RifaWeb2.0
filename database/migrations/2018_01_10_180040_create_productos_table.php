@@ -27,7 +27,7 @@ class CreateProductosTable extends Migration
             $table->string('imagen');
             $table->integer('minimo');
             $table->date('fecha_limite');
-            $table->string('melate')->nullable(true);
+            $table->string('loteria');
             $table->string('ganador')->nullable(true);
             $table->string('categoria');
             $table->timestamps();
