@@ -88,4 +88,13 @@ Route::get('/productos/nuevo', function () {
     return view('admin.productonuevo', ['categorias'=>$categorias]);
 })->middleware('admin');
 
+Route::get('/productos/{id}', function ($id) {
+	$producto=App\Producto::find($id);
+	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+	if ($producto) {
+		return view('admin.productosupdate', ['categorias'=>$categorias,'producto'=>$producto]);
+	}
+    
+})->middleware('admin');
+
 Route::post('agregar-producto', 'ProductoController@store')->middleware('admin');

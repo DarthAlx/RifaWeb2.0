@@ -107,7 +107,7 @@
   color: #fff;
 }
 
-.product-inner .img-container{
+.product-inner .img-container, .img-container{
       width: 240px;
     height: 240px;
     margin: 0 auto;

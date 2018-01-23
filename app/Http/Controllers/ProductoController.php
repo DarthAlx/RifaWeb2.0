@@ -20,12 +20,12 @@ class ProductoController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'sku' => 'required|string|unique:productos',
             'ganador' => 'required|string|min:3|confirmed'
         ]);
     }
 	public function store(Request $request)
     {
+        
 
     	$producto = new Producto($request->all());
         $producto->nombre=$request->nombre;
@@ -87,11 +87,6 @@ class ProductoController extends Controller
           return redirect()->intended(url('/productos/nuevo'))->withInput();
         }
 
-        if ($request->ganador||$request->melate) {
-            //ganador
-        }
-
-
         //guardar
         if ($producto->save()) {
             Session::flash('mensaje', 'Producto publicado con exito.');
@@ -139,5 +134,15 @@ class ProductoController extends Controller
 
 
 
+    }
+
+    function ganador(Request $request,$id){
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
     }
 }
