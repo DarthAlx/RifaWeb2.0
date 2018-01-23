@@ -74,6 +74,7 @@
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
             $('.collapsible').collapsible();
             $('#loteria').material_select();
+            $('.modal').modal();
           });
         </script>
     </body>

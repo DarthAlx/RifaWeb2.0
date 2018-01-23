@@ -14,19 +14,24 @@
                 <div id="bc1" class="btn-group btn-breadcrumb">
                   <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
                   <a href="{{url('/rifas')}}" class="btn btn-default"><div>Rifas</div></a>
+                  @if($catalogo!="Todos"&&$catalogo!="Resultados")
                   <a href="{{url('/rifas')}}/{{strtolower($catalogo)}}" class="btn btn-default"><div>{{ucfirst($catalogo)}}</div></a>
+                  @endif
 
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-3">
-                <div class="input-group mb-3 browser-default">
-                  <input type="text" class="form-control browser-default" placeholder="Buscar" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <form action="{{url('/rifas')}}">
+                  <div class="input-group mb-3 browser-default">
+                  <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
                   <div class="input-group-append browser-default">
-                    <button class="btn btn-outline-secondary browser-default" type="button"><i class="fa fa-search"></i></button>
+                    <button class="btn btn-outline-secondary browser-default" type="submit"><i class="fa fa-search"></i></button>
                   </div>
                 </div>
+                </form>
+                
 
                 <p class="titleshop">Ordenar publicaciones</p>
                 <div class="sorting">
@@ -57,8 +62,8 @@
                   
                   <div class="product-type list col-md-12" style="padding: 0;">
                     <div class="product-inner">
-                    <div class="p1 col m4 valign-wrapper" >
-                      <div class="img-container">
+                    <div class="p1 col m4" >
+                      <div class="img-container valign-wrapper">
                         <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" class="responsive-img">
                       </div>
                       

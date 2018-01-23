@@ -4,15 +4,16 @@
 <div class=" main">
 	<div class="container-fluid">
 		
-		<form action="{{ url('/agregar-producto') }}" method="post" enctype="multipart/form-data">
+		<form action="{{ url('/producto') }}/{{$producto->id}}" method="post" enctype="multipart/form-data">
 			 {{ csrf_field() }}
 		<div class="row">
 			<div class="col-md-6">
-				<h3 class="">Añadir nuevo</h3>
+				<h3 class="">Editar producto</h3>
 			</div>
 			<div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
 				<div class="text-center" style="margin-left: auto;">
-					<input type="submit" value="Guardar" class="btn btn-primary right waves-effect waves-light btn-large">
+					<a class="waves-effect waves-light btn btn-large modal-trigger red" href="#delete{{$producto->id}}">Eliminar</a>
+					<input type="submit" value="Actualizar" class="btn btn-primary right waves-effect waves-light btn-large">
 				</div>
 				
 			</div>
@@ -136,7 +137,7 @@
 					          <label for="precio">Precio normal</label>
 					        </div>
 					        <div class="input-field col col-md-6">
-					          <input id="precio_especial" namee="precio_especial" type="text" value="{{$producto->precio_especial or old('precio_especial')}}" class="validate">
+					          <input id="precio_especial" name="precio_especial" type="text" value="{{$producto->precio_especial or old('precio_especial')}}" class="validate">
 					          <label for="precio_especial">Precio rebajado</label>
 					        </div>
 					      </div>	
@@ -228,6 +229,14 @@
 				    <h5 class="card-title">Galería</h5>
 				    <input name="poplets" type="hidden" class="popletsnum">
 				    <div class="card-text popletsinput">
+
+				    	<div class="text-center">
+				    		@foreach($producto->poplets as $poplet)
+				    		<div class="img-container" style="max-width:100px; display: inline-block;">
+				    			<img src="{{url('/uploads/productos/poplets')}}/{{$producto->id}}/{{$poplet->imagen}}" alt="" class="responsive-img">
+				    		</div>
+				    		@endforeach
+				    	</div>
 				      <div class="file-field input-field">
 					      <div class="btn">
 					        <span>Subir</span>
@@ -280,4 +289,24 @@
 	</div>
 	</form>
 </div>
+
+
+
+<!-- Modal Structure -->
+  <div id="delete{{$producto->id}}" class="modal">
+    <div class="modal-content">
+      <h4>Eliminar producto</h4>
+      <p>¿Está seguro que desea eliminar este producto?</p>
+    </div>
+    <div class="modal-footer">
+    	<a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a> &nbsp; 
+		<form action="{{ url('/eliminar-producto') }}" method="post" enctype="multipart/form-data">
+			{{ method_field('DELETE') }}
+			{!! csrf_field() !!}
+			<input type="hidden" name="eliminar" value="{{$producto->id}}">
+			<input type="submit" class="modal-action modal-close waves-effect waves-green red btn" value="Eliminar">
+		</form>
+    	
+    </div>
+  </div>
 @endsection

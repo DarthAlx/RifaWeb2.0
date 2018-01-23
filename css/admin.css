@@ -52,3 +52,12 @@ nav img{
 .row-fluid:last-child{
     float: right;
 }
+
+.btn, .btn:active, .btn:hover, .btn:focus{
+    color: #fff;
+    text-decoration: none;
+}
+.modal {
+
+    bottom: auto !important;
+}

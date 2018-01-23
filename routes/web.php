@@ -41,6 +41,10 @@ Route::get('/rifas', function () {
 });
 
 
+
+Route::post('rifas', 'ProductoController@search');
+
+
 Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
@@ -88,7 +92,7 @@ Route::get('/productos/nuevo', function () {
     return view('admin.productonuevo', ['categorias'=>$categorias]);
 })->middleware('admin');
 
-Route::get('/productos/{id}', function ($id) {
+Route::get('/producto/{id}', function ($id) {
 	$producto=App\Producto::find($id);
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
 	if ($producto) {
@@ -98,3 +102,6 @@ Route::get('/productos/{id}', function ($id) {
 })->middleware('admin');
 
 Route::post('agregar-producto', 'ProductoController@store')->middleware('admin');
+Route::post('producto/{id}', 'ProductoController@update')->middleware('admin');
+
+Route::delete('eliminar-producto', 'ProductoController@destroy')->middleware('admin');

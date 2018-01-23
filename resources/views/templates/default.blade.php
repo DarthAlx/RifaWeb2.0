@@ -75,7 +75,7 @@
                 
                   <div class="bouton_google text-center">
                     <div class="google_volet" style="background-color:#dd4b39;"><i class="fa fa-ticket fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas</span> </div>
-                    <a href="#123" style="text-decoration:none; color:#dd4b39;">
+                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#dd4b39;">
                       <div class="txt_google"><span class="hiddenmov">Todas las rifas</span><span class="visiblemov">Rifas</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -85,7 +85,7 @@
                 
                   <div class="bouton_google text-center">
                     <div class="google_volet" style="background-color:#25B6D2;"><i class="fa fa-user fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Perfil</span> </div>
-                    <a href="#123" style="text-decoration:none; color:#25B6D2;">
+                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#25B6D2;">
                       <div class="txt_google"><span class="hiddenmov">Tus rifas, mensajes y premios</span><span class="visiblemov">Perfil</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>

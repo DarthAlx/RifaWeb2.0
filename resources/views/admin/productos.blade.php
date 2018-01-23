@@ -33,6 +33,7 @@
 			      	<th class="sorting"><i class="fa fa-picture-o"></i></th>
 					<th class="sorting_desc">Nombre</th>
 			      	<th>SKU</th>
+			      	<th>Lotería</th>
 			      	<th>Inventario</th>
 					<th>Precio</th>
 			      	<th>Categorías</th>
@@ -43,10 +44,11 @@
 			  	@if($productos)
 			  		@foreach($productos as $producto)
 
-						<tr style="cursor: pointer;">
+						<tr style="cursor: pointer;" onclick="location = '<?= url('/producto')?>/<?= $producto->id ?>'">
 							<td><img src="{{url('/uploads/productos')}}/{{$producto->imagen}}" alt="" style="max-width: 50px;"></td>
 							<td>{{$producto->nombre}}</td>
 							<td>{{$producto->sku}}</td>
+							<td>{{$producto->loteria}}</td>
 							<td>@if($producto->vendidos){{$producto->boletos-$producto->vendidos}}@else{{$producto->boletos}}@endif</td>
 							<td>${{$producto->precio}}</td>
 							<td><?php $categorias=explode(',', $producto->categoria) ?> @foreach($categorias as $categoria) <?php $cate=App\Categoria::find($categoria); ?>{{$cate->nombre}}&nbsp;&nbsp;@endforeach</td>
@@ -55,6 +57,7 @@
 					@endforeach
 				@else
 					<tr style="cursor: pointer;">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -75,6 +78,7 @@
 			      	<th class="sorting"><i class="fa fa-picture-o"></i></th>
 					<th class="sorting_desc">Nombre</th>
 			      	<th>SKU</th>
+			      	<th>Lotería</th>
 			      	<th>Inventario</th>
 					<th>Precio</th>
 			      	<th>Categorías</th>

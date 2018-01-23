@@ -108,7 +108,7 @@ class ProductoController extends Controller
 
                   if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
                     $name = $request->sku . "-" . $i . "-" . time()."." . $file->getClientOriginalExtension();
-                    $path = base_path('uploads/productos/poplets');
+                    $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
                     $file->move($path, $name);
                     $poplet->imagen = $name;
                     $poplet->producto_id = $producto->id;
@@ -117,9 +117,9 @@ class ProductoController extends Controller
 
 
                   else{
-                    Session::flash('mensaje', 'El archivo no es una imagen valida.');
+                    Session::flash('mensaje', 'Hubo un error al guardar la galería.');
                     Session::flash('class', 'danger');
-                    return redirect()->intended(url('/productos/nuevo'))->withInput();
+                    return redirect()->intended(url('/producto/'.$producto->id))->withInput();
                   }
 
                 }
@@ -145,4 +145,158 @@ class ProductoController extends Controller
             );
         }
     }
+
+
+
+
+
+    public function update(Request $request, $id)
+    {
+        $producto = Producto::find($id);
+        $producto->nombre=$request->nombre;
+        $producto->descripcion=$request->descripcion;
+        $producto->precio=$request->precio;
+        $producto->loteria=$request->loteria;
+        $producto->sku=$request->sku;
+        $producto->precio_especial=$request->precio_especial;
+        $producto->boletos=$request->boletos;
+        $producto->minimo=$request->minimo;
+        $producto->fecha_limite=date_create($request->fecha_limite);
+        
+        //categoria
+        if (isset($request->categoria)) {
+          $producto->categoria=implode(",", $request->categoria);
+        }
+        else{
+            Session::flash('mensaje', 'Selecciona o crea por lo menos una categoría.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/producto/'.$id))->withInput();
+        }
+
+        //habilitado
+        if (isset($request->habilitado)) {
+            $producto->habilitado=1;
+        }
+        else{
+            $producto->habilitado=0;
+        }
+        //destacado
+        if (isset($request->destacado)) {
+            $producto->destacado=1;
+        }
+        else{
+            $producto->destacado=0;
+        }
+
+        //producto general
+        if ($request->hasFile('imagen')) {
+          $file = $request->file('imagen');
+          if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+            $name = $request->sku . "-". time()."." . $file->getClientOriginalExtension();
+            $path = base_path('uploads/productos/');
+            File::delete($path . $producto->imagen);
+            $file-> move($path, $name);
+            $producto->imagen = $name;
+            }
+
+
+          else{
+            Session::flash('mensaje', 'El archivo no es una imagen valida.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/producto/'.$id))->withInput();
+          }
+
+        }
+
+        //guardar
+        if ($producto->save()) {
+            Session::flash('mensaje', 'Producto actualizado con exito.');
+            Session::flash('class', 'success');
+            
+        }
+        else{
+            Session::flash('mensaje', 'Hubo un error, por favor, verifica la información.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/producto/'.$id))->withInput();
+        }
+
+        //poplets
+        if ($request->poplets) {
+            $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
+            $oldpoplets=Poplets::where('producto_id', $producto->id)->get();
+            foreach ($oldpoplets as $oldpoplet) {
+                File::delete($path . $oldpoplet->imagen);
+                $oldpoplet->delete();
+            }
+
+            for ($i=1; $i <= intval($request->poplets); $i++) { 
+                $poplet = new Poplets();
+               if ($request->hasFile('poplet'.$i)) {
+                  $file = $request->file('poplet'.$i);
+
+                  if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
+                    $name = $request->sku . "-" . $i . "-" . time()."." . $file->getClientOriginalExtension();           
+                    $file->move($path, $name);
+                    $poplet->imagen = $name;
+                    $poplet->producto_id = $producto->id;
+                    $poplet->save();
+                    }
+
+
+                  else{
+                    Session::flash('mensaje', 'Hubo un error al guardar la galería.');
+                    Session::flash('class', 'danger');
+                    return redirect()->intended(url('/producto/'.$id))->withInput();
+                  }
+
+                }
+            }
+            
+        }
+
+
+
+        return redirect()->intended(url('/producto/'.$id))->withInput();
+        
+
+
+
+    }
+    
+
+
+
+
+    public function search(Request $request){
+
+    $catalogo="Resultados";
+    $categorias=App\Categoria::orderBy('nombre','asc')->get();
+    $productos=App\Producto::orWhere('nombre',$request->busqueda)->orWhere('sku',$request->busqueda)->orWhere('descripcion',$request->busqueda)->orWhere('loteria',$request->busqueda)->orderBy('nombre','asc')->get();
+    return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
+
+    }
+
+
+
+    public function destroy(Request $request)
+        {
+          $producto = Producto::find($request->eliminar);
+          $dir = base_path('uploads/productos/');
+          $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
+          File::delete($dir . $producto->imagen);
+            $oldpoplets=Poplets::where('producto_id', $producto->id)->get();
+            foreach ($oldpoplets as $oldpoplet) {
+                File::delete($path . $oldpoplet->imagen);
+                $oldpoplet->delete();
+            }
+          $producto->delete();
+          Session::flash('mensaje', 'Producto eliminado con éxito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/productos/'))->withInput();
+        }
+
+
+
+
+
 }
