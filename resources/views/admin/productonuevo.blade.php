@@ -137,7 +137,7 @@
 				</div>
 
 
-				<div class="card">
+				<!--div class="card">
 				  <div class="card-body">
 				    <h5 class="card-title">Ganador</h5>
 				    <div class="card-text">
@@ -156,7 +156,7 @@
 				    </div>
 
 				  </div>
-				</div>
+				</div-->
 			</div>
 
 			<div class="col-md-4">
