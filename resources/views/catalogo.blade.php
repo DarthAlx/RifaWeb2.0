@@ -23,7 +23,8 @@
             </div>
             <div class="row">
               <div class="col-md-3">
-                <form action="{{url('/rifas')}}">
+                <form action="{{url('/rifas')}}" method="post">
+                  {{ csrf_field() }}
                   <div class="input-group mb-3 browser-default">
                   <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
                   <div class="input-group-append browser-default">

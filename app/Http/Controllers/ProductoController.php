@@ -270,8 +270,8 @@ class ProductoController extends Controller
     public function search(Request $request){
 
     $catalogo="Resultados";
-    $categorias=App\Categoria::orderBy('nombre','asc')->get();
-    $productos=App\Producto::orWhere('nombre',$request->busqueda)->orWhere('sku',$request->busqueda)->orWhere('descripcion',$request->busqueda)->orWhere('loteria',$request->busqueda)->orderBy('nombre','asc')->get();
+    $categorias=Categoria::orderBy('nombre','asc')->get();
+    $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->get();
     return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
 
     }
