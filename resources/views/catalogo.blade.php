@@ -76,7 +76,7 @@
                         <ul>
                           <li>{{str_limit($producto->descripcion, $limit = 50, $end = '...')}}</li>
                         </ul>
-                        <br><br>
+                        <div id="contador"></div>
                         <div class="buttons">
                           <span class="button" id="price">1 Boleto = ${{$producto->precio}}mxn</span>
 
@@ -135,6 +135,47 @@
             $('.pbut').addClass('visible');
 
           }
+
+
           
         </script>
+        @endsection
+
+
+        @section('scripts')
+        <script type="text/javascript">
+          
+          function countdown(id, ano, mes, dia){
+  // los meses van del 0 al 11
+    var fecha=new Date(ano,mes,dia,'9','00','00')
+    var hoy=new Date()
+    var dias=0
+    var horas=0
+    var minutos=0
+    var segundos=0
+    var nid=id;
+    if (fecha>hoy){
+            var diferencia=(fecha.getTime()-hoy.getTime())/1000
+            dias=Math.floor(diferencia/86400)
+            diferencia=diferencia-(86400*dias)
+            horas=Math.floor(diferencia/3600)
+            diferencia=diferencia-(3600*horas)
+            minutos=Math.floor(diferencia/60)
+            diferencia=diferencia-(60*minutos)
+            segundos=Math.floor(diferencia)
+            
+            $("#contador").html('<div class="row cbox"><div class="col l3"><div class="countbox"><div class="countnumber"><div class="number"><h2>'+ dias +'</h2></div><div class="text"><p>días</p></div></div></div></div><div class="col l3"><div class="countbox"><div class="countnumber"><div class="number"><h2>'+ horas +'</h2></div><div class="text"><p>horas</p></div></div></div></div><div class="col l3"><div class="countbox"><div class="countnumber"><div class="number"><h2>'+ minutos +'</h2></div><div class="text"><p>minutos</p></div></div></div></div><div class="col l3"><div class="countbox"><div class="countnumber"><div class="number"><h2>'+ segundos +'</h2></div><div class="text"><p>segundos</p></div></div></div></div></div>');
+
+            if (dias>0 || horas>0 || minutos>0 || segundos>0){
+                    setTimeout("countdown('contador'"+","+ano+","+mes+","+dia+")",100)
+            }
+    }
+    else{
+            document.getElementById(id).innerHTML='<table><tr><td><span class="numerito" ' + dias + '</td><td> dÃ­as</td></tr><tr><td>, ' + horas + '</td><td>horas</td></tr><tr><td> ' + minutos + '</td><td>minutos</td></tr> </table>'
+    }
+}
+        countdown('contador','2018','0','26');
+        </script>
+
+
         @endsection
