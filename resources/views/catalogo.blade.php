@@ -166,6 +166,12 @@
             $('.pbut').addClass('hidden');
             $('.pbut').removeClass('visible');
 
+            $('.botonprecio').removeClass('col-md-12');
+            $('.botonprecio').addClass('col-md-5');
+
+            $('.botonescomprar').removeClass('col-md-6');
+            $('.botonescomprar').addClass('col-md-3 col-md-4');
+
           }
           function grid(){
             $('.product-type').removeClass('col-md-12');
