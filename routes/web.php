@@ -22,10 +22,16 @@ Route::get('/', function () {
 
 Route::get('/rifas/{catalogo}', function ($catalogo) {
 	$categoria=App\Categoria::where('nombre',$catalogo)->first();
+	$fuente=App\Fuente::where('nombre',$catalogo)->first();
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+	$fuentes=App\Fuente::orderBy('nombre','asc')->get();
 	if ($categoria) {
 		$productos=App\Producto::where('categoria', 'like', '%'.$categoria->id.'%')->get();
-		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
+		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
+	}
+	elseif ($fuente) {
+		$productos=App\Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->get();
+		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
 	}
 	else{
 		return redirect()->intended(url('/404'));
@@ -36,8 +42,9 @@ Route::get('/rifas/{catalogo}', function ($catalogo) {
 Route::get('/rifas', function () {
 	$catalogo="Todos";
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+	$fuentes=App\Fuente::orderBy('nombre','asc')->get();
 	$productos=App\Producto::orderBy('nombre','asc')->get();
-	return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
+	return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo,'fuentes'=>$fuentes]);
 });
 
 

@@ -17,5 +17,12 @@ class Categorias extends Seeder
         DB::table('categorias')->insert([
             'nombre'=>'Celulares',
         ]);
+
+        DB::table('fuentes')->insert([
+            'nombre'=>'Melate',
+        ]);
+        DB::table('fuentes')->insert([
+            'nombre'=>'Lotería Nacional',
+        ]);
     }
 }

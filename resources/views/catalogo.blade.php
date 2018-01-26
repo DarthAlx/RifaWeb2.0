@@ -52,6 +52,16 @@
 
                 @endif
 
+                @if($fuentes)
+                <hr>
+                <p class="titleshop">Fuentes</p>
+                <ul class="listacategorias">
+                  @foreach($fuentes as $fuente)
+                  <li><a href="{{url('/rifas')}}/{{strtolower($fuente->nombre)}}">{{$fuente->nombre}}</a></li>
+                  @endforeach
+                </ul>
+                @endif
+
 
                 
               </div>
@@ -93,7 +103,7 @@
                             </script>
                           </div>
                           <p style="margin:0;">Progreso de rifa:</p>
-                          <div class="progress">
+                          <div class="progress" data-toggle="tooltip" data-placement="top" title="{{$producto->vendidos}}/{{$producto->boletos}}">
                               <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%"></div>
                           </div>
                         
