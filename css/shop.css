@@ -27,9 +27,7 @@
   margin-bottom: 15px;
       margin: 0px 15px 15px 0;
 }
-.list .product-info{
-  height: 280px;
-}
+
 .sorting a{
   cursor: pointer;
 }
@@ -114,7 +112,11 @@
 }
 
 .product-inner .img-container, .img-container{
-      width: 280px;
-    height: 280px;
+      max-width: 280px;
+    max-height: 280px;
     margin: 0 auto;
+}
+
+.grid .botoncantidad, .grid .botoncomprar{
+  margin-top: 10px;
 }

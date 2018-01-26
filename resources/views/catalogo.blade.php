@@ -101,27 +101,37 @@
                         
                         
                         <div class="buttons">
-                          <div class="row" style="width: 100%;">
+                          <div class="row" style="width: 100%; margin: 0;">
                             <div class="botonprecio col-md-5">
-                              <span class="btn" id="price" style="padding: 0 1rem;">1 Boleto = ${{$producto->precio}}mxn</span>
+                              <span class="btn" id="price" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 Boleto = ${{$producto->precio}}</span>mxn</span>
                             </div>
-                            <div class="botonescomprar col-md-3">
+                            <div class="botoncantidad col-md-4">
                               <div class="input-group">
                               <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad"  style="width: 35px; padding: 0">
+                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
                                       <i class="fa fa-minus" aria-hidden="true"></i>
                                   </button>
                               </span>
-                              <input type="text" name="cantidad" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
+                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
                               <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad" style="width: 35px; padding: 0">
+                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad{{$producto->id}}" style="width: 35px; padding: 0">
                                       <i class="fa fa-plus" aria-hidden="true"></i>
                                   </button>
                               </span>
                               </div>
+
+                              <script>
+                                $('#cantidad{{$producto->id}}').change(function(){
+                                  probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
+                                  costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' Boletos = $'+costo);
+
+
+                                });
+                              </script>
                             </div>
-                            <div class="botonescomprar col-md-4">
-                              <a class="btn" href="#">Comprar</a>
+                            <div class="botoncomprar col-md-3">
+                              <a class="btn" href="#" style="padding: 0 15px; width: 100%; color:#fff;">Comprar</a>
                             </div>
                           </div>
                           
@@ -169,8 +179,11 @@
             $('.botonprecio').removeClass('col-md-12');
             $('.botonprecio').addClass('col-md-5');
 
-            $('.botonescomprar').removeClass('col-md-6');
-            $('.botonescomprar').addClass('col-md-3 col-md-4');
+            $('.botoncomprar').removeClass('col-md-6');
+            $('.botoncomprar').addClass('col-md-3');
+            $('.botoncantidad').removeClass('col-md-6');
+            $('.botoncantidad').addClass('col-md-4');
+
 
           }
           function grid(){
@@ -191,8 +204,11 @@
             $('.botonprecio').removeClass('col-md-5');
             $('.botonprecio').addClass('col-md-12');
 
-            $('.botonescomprar').removeClass('col-md-3 col-md-4');
-            $('.botonescomprar').addClass('col-md-6');
+            $('.botoncomprar').removeClass('col-md-3');
+            $('.botoncomprar').addClass('col-md-6');
+
+            $('.botoncantidad').removeClass('col-md-4');
+            $('.botoncantidad').addClass('col-md-6');
 
           }
 
@@ -246,7 +262,7 @@ $('.btn-number').click(function(e){
     
     fieldName = $(this).attr('data-field');
     type      = $(this).attr('data-type');
-    var input = $("input[name='"+fieldName+"']");
+    var input = $("input[id='"+fieldName+"']");
     var currentVal = parseInt(input.val());
     if (!isNaN(currentVal)) {
         if(type == 'minus') {
