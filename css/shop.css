@@ -34,6 +34,7 @@
 .productsmain .list .product-inner .product-info {
   background: #fff;
   max-height: 280px;
+  min-height: 280px;
 
 }
 
@@ -114,6 +115,7 @@
 .product-inner .img-container, .img-container{
       max-width: 280px;
     max-height: 280px;
+    min-height: 280px;
     margin: 0 auto;
 }
 

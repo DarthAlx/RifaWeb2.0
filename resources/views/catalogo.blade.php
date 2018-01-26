@@ -297,7 +297,7 @@ $('.input-number').change(function() {
     maxValue =  parseInt($(this).attr('max'));
     valueCurrent = parseInt($(this).val());
     
-    name = $(this).attr('name');
+    name = $(this).attr('id');
     if(valueCurrent >= minValue) {
         $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
     } else {
