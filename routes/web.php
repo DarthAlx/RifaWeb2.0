@@ -51,6 +51,16 @@ Route::get('/rifas', function () {
 
 Route::post('rifas', 'ProductoController@search');
 
+Route::post('carrito', 'OrdenController@addtocart');
+Route::get('/carrito', function () {
+  $items=Cart::content();
+  return view('carrito',['items'=>$items]);
+});
+
+ Route::get('removefromcart/{id}', 'OrdenController@destroy');
+
+  Route::post('updatecart', 'OrdenController@updatecart');
+
 
 Route::get('/perfil', function () {
     return view('perfil');

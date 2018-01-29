@@ -68,6 +68,9 @@
               <div class="col-md-9">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
+                  <form action="{{url('carrito')}}" method="post">
+                  {!! csrf_field() !!}
+                  <input type="hidden" name="productoid" value="{{$producto->id}}">
                   
                     
                   
@@ -113,7 +116,7 @@
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
                             <div class="botonprecio col-md-5">
-                              <span class="btn" id="price" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 Boleto = ${{$producto->precio}}</span>mxn</span>
+                              <span class="btn" id="price" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}</span>mxn</span>
                             </div>
                             <div class="botoncantidad col-md-4">
                               <div class="input-group">
@@ -133,15 +136,17 @@
                               <script>
                                 $('#cantidad{{$producto->id}}').change(function(){
                                   probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
+                                  Materialize.Toast.removeAll();
+                                  Materialize.toast(probabilidad+"% chance de ganar", 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' Boletos = $'+costo);
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo);
 
 
                                 });
                               </script>
                             </div>
                             <div class="botoncomprar col-md-3">
-                              <a class="btn" href="#" style="padding: 0 15px; width: 100%; color:#fff;">Comprar</a>
+                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;">Comprar</button>
                             </div>
                           </div>
                           
@@ -159,6 +164,7 @@
                     </div>
                     </div>
                   </div>
+                </form>
                   
                     @endforeach
                 </div>
@@ -341,6 +347,9 @@ $(".input-number").keydown(function (e) {
 
 
         </script>
+
+
+
 
 
         @endsection

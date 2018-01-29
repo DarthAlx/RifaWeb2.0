@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use App\User;
 use App\SocialProvider;
+use Cart;
 
 
 class LoginController extends Controller
@@ -80,7 +81,12 @@ class LoginController extends Controller
             $user = $socialProvider->user;
             auth()->login($user);
 
-            return redirect('/perfil');
+            if (Cart::content()->count()>0){
+              return url('/carrito');
+            }
+            else {
+              return url('/perfil');
+            }
         }
     }
 }

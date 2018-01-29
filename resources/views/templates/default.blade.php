@@ -59,7 +59,7 @@
                           <a class="nav-link" href="{{url('/salir')}}">SALIR</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO</a>
+                          <a class="nav-link" href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a>
                         </li>
                       @endif
                       

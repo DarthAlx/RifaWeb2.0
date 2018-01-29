@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-
+use Cart;
 class RolesController extends Controller
 {
 
@@ -21,7 +21,13 @@ class RolesController extends Controller
           	return redirect()->intended(url('/admin'));
         }
         else{
-         	return redirect()->intended(url('/perfil'));
+            if (Cart::content()->count()>0){
+              return url('/carrito');
+            }
+            else {
+              return redirect()->intended(url('/perfil'));
+            }
+         	
         }
     }
 }
