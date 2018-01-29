@@ -132,7 +132,7 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="input-field col col-md-6">
+					        <div class="input-field col col-md-12">
 					          <input id="precio" name="precio" type="text" class="validate" value="{{$producto->precio or old('precio')}}" required>
 					          <label for="precio">Precio normal</label>
 					        </div>
