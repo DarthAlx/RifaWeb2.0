@@ -137,9 +137,9 @@
                                 $('#cantidad{{$producto->id}}').change(function(){
                                   probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
                                   Materialize.Toast.removeAll();
-                                  Materialize.toast(probabilidad+"% chance de ganar", 4000);
+                                  Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo);
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(2));
 
 
                                 });
