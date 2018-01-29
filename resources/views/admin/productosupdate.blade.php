@@ -136,10 +136,10 @@
 					          <input id="precio" name="precio" type="text" class="validate" value="{{$producto->precio or old('precio')}}" required>
 					          <label for="precio">Precio normal</label>
 					        </div>
-					        <div class="input-field col col-md-6">
+					        <!--div class="input-field col col-md-6">
 					          <input id="precio_especial" name="precio_especial" type="text" value="{{$producto->precio_especial or old('precio_especial')}}" class="validate">
 					          <label for="precio_especial">Precio rebajado</label>
-					        </div>
+					        </div-->
 					      </div>	
 					      
 					      				      

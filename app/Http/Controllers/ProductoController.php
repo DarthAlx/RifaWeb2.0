@@ -32,7 +32,7 @@ class ProductoController extends Controller
         $producto->sku=$request->sku;
         $producto->descripcion=$request->descripcion;
         $producto->precio=$request->precio;
-        $producto->precio_especial=$request->precio_especial;
+        //$producto->precio_especial=$request->precio_especial;
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
         $producto->fecha_limite=date_create($request->fecha_limite);
@@ -158,7 +158,7 @@ class ProductoController extends Controller
         $producto->precio=$request->precio;
         $producto->loteria=$request->loteria;
         $producto->sku=$request->sku;
-        $producto->precio_especial=$request->precio_especial;
+        //$producto->precio_especial=$request->precio_especial;
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
         $producto->fecha_limite=date_create($request->fecha_limite);
