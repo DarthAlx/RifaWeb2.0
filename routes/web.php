@@ -122,3 +122,20 @@ Route::post('agregar-producto', 'ProductoController@store')->middleware('admin')
 Route::post('producto/{id}', 'ProductoController@update')->middleware('admin');
 
 Route::delete('eliminar-producto', 'ProductoController@destroy')->middleware('admin');
+
+
+Route::get('/catalogo/nuevo', function () {
+	$categorias=App\Categoria::orderBy('nombre','asc')->get();
+    return view('admin.catalogonuevo');
+})->middleware('admin');
+
+Route::post('agregar-catalogo', 'CatalogoController@store')->middleware('admin');
+
+Route::get('/catalogos', function () {
+	$catalogos=App\Categoria::orderBy('nombre','asc')->get();
+    return view('admin.catalogos', ['catalogos'=>$catalogos]);
+})->middleware('admin');
+
+Route::delete('eliminar-catalogo', 'CatalogoController@destroy')->middleware('admin');
+
+Route::post('actualizar-catalogo', 'CatalogoController@update')->middleware('admin');
