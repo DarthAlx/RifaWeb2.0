@@ -27,7 +27,8 @@
                           <ul>
                             <li><a href="{{url('/productos')}}">Productos</a></li>
                             <li><a href="#!">Ordenes</a></li>
-                            <li><a href="#!">Categorías</a></li>
+                            <li><a href="{{url('/catalogos')}}">Catálogos</a></li>
+                            <li><a href="{{url('/loterias')}}">Loterías</a></li>
                           </ul>
                         </div>
                       </li>

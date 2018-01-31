@@ -95,47 +95,66 @@ Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback');
 
 
-Route::get('/admin', function () {
+
+Route::group(['middleware' => 'admin'], function(){
+
+
+	Route::get('/admin', function () {
     return view('admin');
-})->middleware('admin');
+	});
 
-Route::get('/productos', function () {
-	$productos=App\Producto::orderBy('nombre','asc')->get();
-    return view('admin.productos', ['productos'=>$productos]);
-})->middleware('admin');
+	Route::get('/productos', function () {
+		$productos=App\Producto::orderBy('nombre','asc')->get();
+	    return view('admin.productos', ['productos'=>$productos]);
+	});
 
-Route::get('/productos/nuevo', function () {
-	$categorias=App\Categoria::orderBy('nombre','asc')->get();
-    return view('admin.productonuevo', ['categorias'=>$categorias]);
-})->middleware('admin');
+	Route::get('/productos/nuevo', function () {
+		$categorias=App\Categoria::orderBy('nombre','asc')->get();
+		$loterias=App\Fuente::orderBy('nombre','asc')->get();
+	    return view('admin.productonuevo', ['categorias'=>$categorias,'loterias'=>$loterias]);
+	});
 
-Route::get('/producto/{id}', function ($id) {
-	$producto=App\Producto::find($id);
-	$categorias=App\Categoria::orderBy('nombre','asc')->get();
-	if ($producto) {
-		return view('admin.productosupdate', ['categorias'=>$categorias,'producto'=>$producto]);
-	}
-    
-})->middleware('admin');
+	Route::get('/producto/{id}', function ($id) {
+		$producto=App\Producto::find($id);
+		$categorias=App\Categoria::orderBy('nombre','asc')->get();
+		$loterias=App\Fuente::orderBy('nombre','asc')->get();
+		if ($producto) {
+			return view('admin.productosupdate', ['categorias'=>$categorias,'producto'=>$producto,'loterias'=>$loterias]);
+		}
+	    
+	});
 
-Route::post('agregar-producto', 'ProductoController@store')->middleware('admin');
-Route::post('producto/{id}', 'ProductoController@update')->middleware('admin');
+	Route::post('agregar-producto', 'ProductoController@store');
+	Route::post('producto/{id}', 'ProductoController@update');
 
-Route::delete('eliminar-producto', 'ProductoController@destroy')->middleware('admin');
+	Route::delete('eliminar-producto', 'ProductoController@destroy');
 
 
-Route::get('/catalogo/nuevo', function () {
-	$categorias=App\Categoria::orderBy('nombre','asc')->get();
-    return view('admin.catalogonuevo');
-})->middleware('admin');
 
-Route::post('agregar-catalogo', 'CatalogoController@store')->middleware('admin');
+	Route::post('agregar-catalogo', 'CatalogoController@store');
 
-Route::get('/catalogos', function () {
-	$catalogos=App\Categoria::orderBy('nombre','asc')->get();
-    return view('admin.catalogos', ['catalogos'=>$catalogos]);
-})->middleware('admin');
+	Route::get('/catalogos', function () {
+		$catalogos=App\Categoria::orderBy('nombre','asc')->get();
+	    return view('admin.catalogos', ['catalogos'=>$catalogos]);
+	});
 
-Route::delete('eliminar-catalogo', 'CatalogoController@destroy')->middleware('admin');
+	Route::delete('eliminar-catalogo', 'CatalogoController@destroy');
 
-Route::post('actualizar-catalogo', 'CatalogoController@update')->middleware('admin');
+	Route::post('actualizar-catalogo', 'CatalogoController@update');
+
+
+	Route::post('agregar-loteria', 'LoteriaController@store');
+
+	Route::get('/loterias', function () {
+		$loterias=App\Fuente::orderBy('nombre','asc')->get();
+	    return view('admin.loterias', ['loterias'=>$loterias]);
+	});
+
+	Route::delete('eliminar-loteria', 'LoteriaController@destroy');
+
+	Route::post('actualizar-loteria', 'LoteriaController@update');
+
+
+});
+
+

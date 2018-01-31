@@ -106,8 +106,11 @@
 						        <div class="input-field col s12">
 						        	<select id="loteria" name="loteria" required>
 								      <option value="" disabled selected>Elejir tipo</option>
-								      <option value="Melate">Melate</option>
-								      <option value="Lotería Nacional">Lotería Nacional</option>
+								      	@if($loterias)
+				    					@foreach($loterias as $loteria)
+				    					<option value="{{$loteria->nombre}}">{{$loteria->nombre}}</option>
+										@endforeach
+										@endif
 								    </select>
 						          <label for="loteria">Tipo de lotería</label>
 						          	<script type="text/javascript">

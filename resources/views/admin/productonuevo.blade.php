@@ -24,7 +24,16 @@
 				<div class="alert alert-warning alert-dismissable">
 				    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				    <ul>
-				        <li>Aún no se han creado categorías, te recomendamos ir a la sección <a href="{{url('/categorias')}}">categorías</a> y crear las necesarias.</li>
+				        <li>Aún no se han creado catálogos, te recomendamos ir a la sección <a href="{{url('/catalogos')}}">catálogos</a> y crear los necesarias.</li>
+				    </ul>
+				  </div>
+				@endif
+
+				@if(!$loterias)
+				<div class="alert alert-warning alert-dismissable">
+				    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				    <ul>
+				        <li>Aún no se han creado loterías, te recomendamos ir a la sección <a href="{{url('/loterias')}}">loterías</a> y crear las necesarias.</li>
 				    </ul>
 				  </div>
 				@endif
@@ -96,8 +105,12 @@
 						        <div class="input-field col s12">
 						        	<select id="loteria" name="loteria" required>
 								      <option value="" disabled selected>Elejir tipo</option>
-								      <option value="Melate">Melate</option>
-								      <option value="Lotería Nacional">Lotería Nacional</option>
+
+								      	@if($loterias)
+				    					@foreach($loterias as $loteria)
+				    					<option value="{{$loteria->nombre}}">{{$loteria->nombre}}</option>
+										@endforeach
+										@endif
 								    </select>
 						          <label for="loteria">Tipo de lotería</label>
 						        </div>
@@ -162,7 +175,7 @@
 			<div class="col-md-4">
 				<div class="card">
 				  <div class="card-body">
-				    <h5 class="card-title">Categorías</h5>
+				    <h5 class="card-title">Catálogos</h5>
 				    <div class="card-text">
 				    	@if($categorias)
 				    	@foreach($categorias as $categoria)
