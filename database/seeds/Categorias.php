@@ -17,6 +17,16 @@ class Categorias extends Seeder
         DB::table('categorias')->insert([
             'nombre'=>'Celulares',
         ]);
+        DB::table('categorias')->insert([
+            'nombre'=>'Tabletas',
+        ]);
+        DB::table('categorias')->insert([
+            'nombre'=>'Relojes',
+        ]);
+        DB::table('categorias')->insert([
+            'nombre'=>'Audio',
+        ]);
+
 
         DB::table('fuentes')->insert([
             'nombre'=>'Melate',

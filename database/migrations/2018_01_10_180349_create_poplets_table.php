@@ -18,6 +18,7 @@ class CreatePopletsTable extends Migration
             $table->integer('producto_id');
             $table->string('imagen');
             $table->timestamps();
+            $table->collation = 'utf8_spanish_ci';
         });
     }
 

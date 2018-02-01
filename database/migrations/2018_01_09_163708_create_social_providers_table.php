@@ -19,6 +19,7 @@ class CreateSocialProvidersTable extends Migration
             $table->string('provider_id');
             $table->string('provider');
             $table->timestamps();
+            $table->collation = 'utf8_spanish_ci';
         });
     }
 

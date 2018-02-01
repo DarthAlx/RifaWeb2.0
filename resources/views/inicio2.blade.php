@@ -1,75 +1,89 @@
 @extends('templates.default')
-
 @section('header')
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
 @endsection
-
-
 @section('pagecontent')
 
-<section class="productsmain">
+<section class="">
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="First slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="Second slide">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="Third slide">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+
+        </section>
+
+        <section class="steps">
           <div class="container">
             <div class="row">
-              <div class="col-md-12">
-                <div id="bc1" class="btn-group btn-breadcrumb">
-                  <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
-                  <a href="{{url('/rifas')}}" class="btn btn-default"><div>Rifas</div></a>
-                  @if($catalogo!="Todos"&&$catalogo!="Resultados")
-                  <a href="{{url('/rifas')}}/{{strtolower($catalogo)}}" class="btn btn-default"><div>{{ucfirst($catalogo)}}</div></a>
-                  @endif
-
-                </div>
+              <div class="col l12">
+                <h3 class="section-title section-title-center">
+                  <b></b>
+                  <span class="secition-title-main">¿CÓMO FUNCIONA?</span>
+                  <b></b>
+                </h3>
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3">
-                <form action="{{url('/rifas')}}" method="post">
-                  {{ csrf_field() }}
-                  <div class="input-group mb-3 browser-default">
-                  <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
-                  <div class="input-group-append browser-default">
-                    <button class="btn btn-outline-secondary browser-default" type="submit"><i class="fa fa-search"></i></button>
-                  </div>
+              <div class="col l4 m4">
+                <div class="icon-box-img">
+                  <img src="{{url('img/form.png')}}" alt="">
                 </div>
-                </form>
-                
-
-                <p class="titleshop">Ordenar publicaciones</p>
-                <div class="sorting">
-                  <a onclick="list();" data-toggle="tooltip" data-placement="top" title="Lista"><i class="fa fa-list"></i></a>
-                  <a onclick="grid();"  data-toggle="tooltip" data-placement="top" title="Grilla"><i class="fa fa-th-large"></i></a>
+                <div class="icon-box-text text-center">
+                  <h5><strong>#1 – Registrate</strong></h5>
+                  <p>Crea tu cuenta, y recibe 100 tickets gratis.</p>
                 </div>
-                
-
-                @if($categorias)
-                <hr>
-                <p class="titleshop">Categorías</p>
-                <ul class="listacategorias">
-                  @foreach($categorias as $categoria)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($categoria->nombre)!!}">{{$categoria->nombre}}</a></li>
-                  @endforeach
-                </ul>
-
-                @endif
-
-                @if($fuentes)
-                <hr>
-                <p class="titleshop">Fuentes</p>
-                <ul class="listacategorias">
-                  @foreach($fuentes as $fuente)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($fuente->nombre)!!}">{{$fuente->nombre}}</a></li>
-                  @endforeach
-                </ul>
-                @endif
-
-
-                
               </div>
-              <div class="col-md-9">
+              <div class="col l4 m4">
+                <div class="icon-box-img">
+                  <img src="{{url('img/gift.png')}}" alt="">
+                </div>
+                <div class="icon-box-text text-center">
+                  <h5><strong>#2 – Escoge Un Sorteo</strong></h5>
+                  <p>Escoge la rifa a la que te gustaría entrar.</p>
+                </div>
+              </div>
+              <div class="col l4 m4">
+                <div class="icon-box-img">
+                  <img src="{{url('img/trophy.png')}}" alt="">
+                </div>
+                <div class="icon-box-text text-center">
+                  <h5><strong>#3 – Gana</strong></h5>
+                  <p>¡Espera a que ganes!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section class="productsmain">
+          <div class="container">
+            <div class="col-md-9">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
                   
-                  <div class="product-type list col-md-12" style="padding: 0;">
+                  <div class="product-type grid col-md-12" style="padding: 0;">
                     <form action="{{url('carrito')}}" method="post">
                   {!! csrf_field() !!}
                   <input type="hidden" name="productoid" value="{{$producto->id}}">
@@ -171,10 +185,29 @@
                   
 
             </div>
-          </div>
+            
+
+
+
+
+
+            
+
+
+
+
+
+
+
+            </div>            
         </section>
+        @endsection
 
 
+
+
+
+        @section('scripts')
         <script>
           function list(){
             $('.product-type').addClass('col-md-12');
@@ -227,13 +260,13 @@
 
           }
 
+          grid();
+
 
           
         </script>
-        @endsection
 
 
-        @section('scripts')
         <script type="text/javascript">
           
           function countdown(id, ano, mes, dia){

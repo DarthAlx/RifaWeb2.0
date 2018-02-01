@@ -19,6 +19,13 @@ Route::get('/', function () {
 });
 
 
+Route::get('/1', function () {
+	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
+	return view('inicio2', ['productos'=>$productos]);
+    return view('inicio');
+});
+
+
 
 Route::get('/rifas/{catalogo}', function ($catalogo) {
 	$categoria=App\Categoria::where('nombre',$catalogo)->first();

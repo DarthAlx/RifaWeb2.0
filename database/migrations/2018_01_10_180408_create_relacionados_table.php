@@ -18,6 +18,7 @@ class CreateRelacionadosTable extends Migration
             $table->integer('producto_id');
             $table->string('relacionado_id');
             $table->timestamps();
+            $table->collation = 'utf8_spanish_ci';
         });
     }
 

@@ -13,9 +13,10 @@ class CreateOrdensTable extends Migration
      */
     public function up()
     {
-        Schema::create('ordens', function (Blueprint $table) {
+        Schema::create('ordenes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->collation = 'utf8_spanish_ci';
         });
     }
 
@@ -26,6 +27,6 @@ class CreateOrdensTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ordens');
+        Schema::dropIfExists('ordenes');
     }
 }
