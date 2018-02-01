@@ -79,7 +79,13 @@
 
 <section class="productsmain">
           <div class="container">
-            <div class="col-md-9">
+            <h3 class="section-title section-title-center">
+                  <b></b>
+                  <span class="secition-title-main">Destacados</span>
+                  <b></b>
+                </h3>
+                <p>&nbsp;</p>
+            <div class="col-md-12">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
                   

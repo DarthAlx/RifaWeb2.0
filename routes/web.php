@@ -14,12 +14,12 @@
 Auth::routes();
 
 
-Route::get('/', function () {
+Route::get('/1', function () {
     return view('inicio');
 });
 
 
-Route::get('/1', function () {
+Route::get('/', function () {
 	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
 	return view('inicio2', ['productos'=>$productos]);
     return view('inicio');
@@ -161,6 +161,27 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::post('actualizar-loteria', 'LoteriaController@update');
 
+	Route::get('/enviar-mensaje', function () {
+		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
+		if (!$usuarios->isEmpty()) {
+			$string = "{";
+			json_encode(array(4 => "four", 8 => "eight"));
+		
+			foreach ($usuarios as $usuario) {
+				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',";
+	        }
+	        $string.="}";
+	        $usuarios=json_encode($string);
+
+
+	        
+	        
+	  
+		    return view('admin.mensajes', ['usuarios'=>$usuarios]);
+		}
+		
+	});
+	Route::post('enviar-mensaje', 'MensajeController@send');
 
 });
 
