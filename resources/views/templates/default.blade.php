@@ -43,6 +43,14 @@
                           <a class="nav-link" href="{{url('/entrar')}}">ENTRAR</a>
                         </li>
                       @else
+                      <?php
+                        $usuario=App\User::find(Auth::user()->id);
+
+                        if ($usuario->mensajes) {
+                          $nuevos=App\Mensaje::where('user_id',$usuario->id)->where('leido',0)->count();
+                        }
+                      ?>
+
                         
                         <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="{{url('/perfil')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,7 +58,7 @@
                           </a>
                           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{url('/perfil')}}">Perfil</a>
-                            <a class="dropdown-item" href="#">Mensajes <span class="new badge" data-badge-caption="nuevos">4</span></a>
+                            <a class="dropdown-item" href="#">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="nuevos">{{$nuevos}}</span>@endif</a>
                             <a class="dropdown-item" href="#">Mis Rifas</a>
                             <a class="dropdown-item" href="#">Direcciones</a>
                           </div>
@@ -147,8 +155,9 @@
         </footer>
         <a href="#" id="back-to-top" title="Regresar arriba">&uarr;</a>
         <script type="text/javascript" src="{{ url('js/materialize.js') }}"></script>
-        <script type="text/javascript" src="{{ url('js/popper.js') }}"></script>
+        
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 
         @yield('scripts')
 
@@ -157,6 +166,16 @@
           $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();     
             $('.collapsible').collapsible();
+            $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+            $('.collapsible').collapsible();
+            $('#loteria').material_select();
+            $('.modal').modal();
+            
+
+         
+
+
           });
         </script>
     </body>

@@ -533,7 +533,14 @@ right: 0;
 .modal-content {
     display: block;
 }
-
+.pagination {
+    background: #fff;
+    margin: 0;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 0;
+    display: block;
+}
 
 
 

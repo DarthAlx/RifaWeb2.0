@@ -78,9 +78,33 @@
 
             <div class="card-content white-text">
             	<h3 class="card-title white-text">Tus mensajes <i class="fa fa-envelope" aria-hidden="true"></i></h3>
+              <?php
+                        $usuario=App\User::find(Auth::user()->id);
+                       
+                        if ($usuario->mensajes) {
+                          $nuevos=App\Mensaje::where('user_id',$usuario->id)->count();
+                          $mensajes=App\Mensaje::where('user_id',$usuario->id)->orderBy('created_at','desc')->paginate(10);
+                        }
+                      ?>
+
+                @if($nuevos>0)
+              <div class="collection">
+                @foreach($mensajes as $mensaje)
+                    <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{{str_limit($mensaje->msg, $limit = 20, $end = '...')}} <span  class="secondary-content">
+                      @if($mensaje->leido)<i id="msj{{$mensaje->id}}" class="fa fa-envelope-open"></i>@else<i id="msj{{$mensaje->id}}" class="fa fa-envelope"></i>@endif
+
+                    </a>
+                @endforeach
+
+                {{ $mensajes->links() }}
+              </div>
+              @else
+
+
             	<p class="flow-text">
-            		No tienes ningún mensaje.
+            		No tienes ningún mensaje nuevo.
             	</p>
+              @endif
             </div>
           </div>
         </div>
@@ -94,8 +118,64 @@
       <i class="fa fa-user fa2x"></i>
     </a>
     <ul>
-      <li><a class="btn-floating blue" data-toggle="tooltip" data-placement="top" title="Direcciones"><i class="fa map-marker"></i></a></li>
+      <li><a class="btn-floating blue" data-toggle="tooltip" data-placement="top" title="Direcciones"><i class="fa fa-map-marker"></i></a></li>
       <li><a class="btn-floating red" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
     </ul>
   </div>
+
+
+
+  @if($usuario->mensajes)
+@foreach($usuario->mensajes as $mensaje)
+<!-- Modal Structure -->
+  <div id="leer{{$mensaje->id}}" class="modal modal-fixed-footer" style="display: none;">
+    <div class="modal-content" style="height: 100%;">
+      <div class="row">
+        <div class="col-md-12">
+          <small>Mensaje enviado el {{$mensaje->fecha}}</small>
+      <p>{{$mensaje->msg}}</p>
+      <div class="text-right">
+        
+      </div>
+      
+        </div>
+      </div>
+       
+    </div>
+ <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp;
+    </div>
+  </div>
+  @endforeach
+@endif
+
+
+
+
+
+
+
+
+  <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+@endsection
+
+@section("scripts")
+
+<script>
+
+  function leer(valor1){
+
+    mensaje = valor1;
+    _token = $('#token').val();
+    $.post("{{url('/leermensaje')}}", {
+        mensaje : mensaje,
+        _token : _token
+        }, function(data) {
+          $("#msj"+valor1).removeClass('fa-envelope');
+          $("#msj"+valor1).addClass('fa-envelope-open');
+        });
+
+  }
+  
+</script>
 @endsection

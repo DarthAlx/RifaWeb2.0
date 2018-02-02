@@ -42,11 +42,11 @@
 			  	@if($mensajes)
 			  		@foreach($mensajes as $mensaje)
 
-						<tr style="cursor: pointer;" onclick="location = '<?= url('/mensaje')?>/<?= $mensaje->id ?>'">
+						<tr style="cursor: pointer;">
 							<td>{{$mensaje->user->name}}</td>
 							<td>{{$mensaje->msg}}</td>
 							<td>{{$mensaje->fecha}}</td>
-							<td>@if($mensaje->leido)<i class="fas fa-check-square"></i>@else<i class="far fa-check-square"></i>@endif</td>
+							<td>@if($mensaje->leido)<i class="fa fa-check-circle" aria-hidden="true"></i>@else<i class="fa fa-check-circle-o" aria-hidden="true"></i>@endif</td>
 						</tr>
 					@endforeach
 				@else
@@ -129,18 +129,21 @@
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>
 
-
+@if ($usuarios!= '')
 <script>
+	
 	$(document).ready(function(){
 	$('input.autocomplete').autocomplete({
     data: {!!json_decode($usuarios)!!},
-    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
     onAutocomplete: function(val) {
       $('#autocomplete').val(val);
     },
     minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
   });
 	});
+
 </script>
+@endif
 
 @endsection

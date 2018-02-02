@@ -72,7 +72,7 @@ Route::get('/carrito', function () {
 Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
-
+Route::post('leermensaje', 'MensajeController@read')->middleware('auth');
 
 
 
@@ -162,42 +162,23 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::post('actualizar-loteria', 'LoteriaController@update');
 
 	Route::get('/mensajes', function () {
-		$mensajes=App\Mensaje::orderBy('fecha','desc')->get();
+		$mensajes=App\Mensaje::orderBy('created_at','desc')->get();
 		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
 		if (!$usuarios->isEmpty()) {
 			$string = "{";
 			foreach ($usuarios as $usuario) {
-				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',";
+				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',"."'".$usuario->email."'".":"."'".$usuario->avatar."',";
 	        }
 	        $string.="}";
-	        $usuarios=json_encode($string);
+	        $usuariosjson=json_encode($string);
 		}
 	  
-		    return view('admin.mensajes', ['mensajes'=>$mensajes,'usuarios'=>$usuarios]);
+		    return view('admin.mensajes', ['mensajes'=>$mensajes,'usuarios'=>$usuariosjson]);
 		
 		
 	});
 
-	Route::get('/enviar-mensaje', function () {
-		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
-		if (!$usuarios->isEmpty()) {
-			$string = "{";
-			json_encode(array(4 => "four", 8 => "eight"));
-		
-			foreach ($usuarios as $usuario) {
-				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',";
-	        }
-	        $string.="}";
-	        $usuarios=json_encode($string);
 
-
-	        
-	        
-	  
-		    return view('admin.mensajenuevo', ['usuarios'=>$usuarios]);
-		}
-		
-	});
 	Route::post('enviar-mensaje', 'MensajeController@send');
 
 });
