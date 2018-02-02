@@ -530,7 +530,9 @@ right: 0;
     position: absolute;
     right: 25px;
 }
-
+.modal-content {
+    display: block;
+}
 
 
 

@@ -61,3 +61,6 @@ nav img{
 
     bottom: auto !important;
 }
+.modal-content {
+    display: block;
+}

@@ -161,6 +161,23 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::post('actualizar-loteria', 'LoteriaController@update');
 
+	Route::get('/mensajes', function () {
+		$mensajes=App\Mensaje::orderBy('fecha','desc')->get();
+		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
+		if (!$usuarios->isEmpty()) {
+			$string = "{";
+			foreach ($usuarios as $usuario) {
+				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',";
+	        }
+	        $string.="}";
+	        $usuarios=json_encode($string);
+		}
+	  
+		    return view('admin.mensajes', ['mensajes'=>$mensajes,'usuarios'=>$usuarios]);
+		
+		
+	});
+
 	Route::get('/enviar-mensaje', function () {
 		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
 		if (!$usuarios->isEmpty()) {
@@ -177,7 +194,7 @@ Route::group(['middleware' => 'admin'], function(){
 	        
 	        
 	  
-		    return view('admin.mensajes', ['usuarios'=>$usuarios]);
+		    return view('admin.mensajenuevo', ['usuarios'=>$usuarios]);
 		}
 		
 	});
