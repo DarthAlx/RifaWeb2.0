@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url('css/materialize.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/font-awesome.min.css') }}" media="screen" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/jquery.flipcountdown.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url('js/bxslider/css/jquery.bxslider.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}?v={{rand()}}" media="screen" />
         @yield('header')
         
@@ -155,7 +156,7 @@
         </footer>
         <a href="#" id="back-to-top" title="Regresar arriba">&uarr;</a>
         <script type="text/javascript" src="{{ url('js/materialize.js') }}"></script>
-        
+        <script type="text/javascript" src="{{ url('js/bxslider/js/jquery.bxslider.js') }}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 
@@ -171,6 +172,17 @@
             $('.collapsible').collapsible();
             $('#loteria').material_select();
             $('.modal').modal();
+            $('.slider').bxSlider({
+              auto: true,
+
+              stopAutoOnClick: true,
+              adaptiveHeight: true,
+              infiniteLoop: true,
+              responsive: true,
+              touchEnabled: true,
+              mode: 'fade',
+
+            });
             
 
          

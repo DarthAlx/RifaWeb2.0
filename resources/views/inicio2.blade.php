@@ -5,31 +5,79 @@
 @section('pagecontent')
 
 <section class="">
-          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="First slide">
+          <div class="slider">
+            @foreach($productos as $producto)
+            <div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
+              <div class="container"  style="position: relative !important;">
+                <div class="row">
+
+
+                @if(rand(0, 1))
+                <div class="col-md-6 col-sm-12">
+                  <div class="slider-img" style="margin: 0 auto;">
+                    <img class="img-responsive" src="{{url('uploads/productos')}}/{{$producto->imagen}}" >
+                  </div>
+                </div>
+                <div class="col-md-6  text-right">
+                  <h2>Sorteo de {{$producto->nombre}}</h2>
+
+                  <h5>¡Quedan pocos boletos!</h5>
+                  <h5>1 Boleto = ${{$producto->precio}}</h5>
+                  <div id="contador{{$producto->id}}" style="float: right;">
+                            <?php $fecha = explode('-', $producto->fecha_limite); ?>
+                            <script>
+                              var Countdown{{$producto->id}} = new Countdown({
+                              year: {{$fecha[0]}},
+                              month : {{$fecha[1]}}, 
+                              day   : {{$fecha[2]}},
+                              width : 200, 
+                              height  : 50,
+                              rangeHi:"day"
+                              });
+
+                            </script>
+                          </div>
+                          <p>&nbsp;</p><p>&nbsp;</p>
+                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$producto->nombre}}!</a>
+                </div>
+                @else
+                  <div class="col-md-6">
+                    <h2>Sorteo de {{$producto->nombre}}</h2>
+
+                    <h5>¡Quedan pocos boletos!</h5>
+                    <h5>1 Boleto = ${{$producto->precio}}</h5>
+                    <div id="contador{{$producto->id}}">
+                              <?php $fecha = explode('-', $producto->fecha_limite); ?>
+                              <script>
+                                var Countdown{{$producto->id}} = new Countdown({
+                                year: {{$fecha[0]}},
+                                month : {{$fecha[1]}}, 
+                                day   : {{$fecha[2]}},
+                                width : 200, 
+                                height  : 50,
+                                rangeHi:"day"
+                                });
+
+                              </script>
+                            </div>
+                            <p>&nbsp;</p>
+                            <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$producto->nombre}}!</a>
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <div class="slider-img" style="margin: 0 auto;">
+                      <img class="img-responsive" src="{{url('uploads/productos')}}/{{$producto->imagen}}" >
+                    </div>
+                  </div>
+
+                @endif
+
+
+
               </div>
-              <div class="carousel-item">
-                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="Second slide">
               </div>
-              <div class="carousel-item">
-                <img class="d-block w-100" src="{{url('img/slide.png')}}" alt="Third slide">
-              </div>
+              
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
+            @endforeach
           </div>
 
         </section>

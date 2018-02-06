@@ -56,6 +56,31 @@ nav img{
 }
 
 
+
+.bx-wrapper {
+    border: 0px;
+}
+
+.slider-item{
+    padding: 50px 0;
+
+}
+.slider-item h2, h5{
+    color: #fff;
+}
+
+.slider-img{
+    max-width: 350px;
+    max-height: 350px;
+    min-height: 350px;
+    min-width: 350px;
+}
+
+.slider-item .btn{
+    border-radius: 30px;
+}
+
+
 /*footer*/
 footer{
     background: #5b5b5b;

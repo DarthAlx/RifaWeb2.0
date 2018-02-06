@@ -82,10 +82,10 @@ class LoginController extends Controller
             auth()->login($user);
 
             if (Cart::content()->count()>0){
-              return url('/carrito');
+              return redirect()->intended(url('carrito'))->withInput();
             }
             else {
-              return url('/perfil');
+              return redirect()->intended(url('/perfil'))->withInput();
             }
         }
     }
