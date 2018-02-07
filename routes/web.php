@@ -164,7 +164,7 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::get('/mensajes', function () {
 		$mensajes=App\Mensaje::orderBy('created_at','desc')->get();
 		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
-		if (!$usuarios->isEmpty()) {
+		if ($usuarios) {
 			$string = "{";
 			foreach ($usuarios as $usuario) {
 				$string .="'".$usuario->name."'".":"."'".$usuario->avatar."',"."'".$usuario->email."'".":"."'".$usuario->avatar."',";
@@ -180,6 +180,29 @@ Route::group(['middleware' => 'admin'], function(){
 
 
 	Route::post('enviar-mensaje', 'MensajeController@send');
+
+
+
+	Route::get('/slider', function () {
+		$slides=App\Slider::orderBy('orden','asc')->get();
+		$productos=App\Producto::where('habilitado',1)->orderBy('nombre','asc')->get();
+		if (!$productos->isEmpty()) {
+			$string = "{";
+			foreach ($productos as $producto) {
+				$string .="'".$producto->nombre."'".":"."'".url('uploads/productos')."/".$producto->imagen."',";
+	        }
+	        $string.="}";
+	        $productojson=json_encode($string);
+		}
+	    return view('admin.slider', ['slides'=>$slides,'productos'=>$productojson]);
+	});
+	Route::post('agregar-slide', 'SliderController@store');
+
+	
+
+	Route::delete('eliminar-slide', 'SliderController@destroy');
+
+	Route::post('actualizar-slide', 'SliderController@update');
 
 });
 

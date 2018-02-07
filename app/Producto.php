@@ -15,4 +15,7 @@ class Producto extends Model
 	public function relacionados(){
 	    return $this->hasMany('App\Relacionados');
 	}
+	public function slider(){
+	    return $this->hasOne('App\Slider');
+	}
 }

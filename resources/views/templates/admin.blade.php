@@ -73,7 +73,7 @@
 
 
 
-        @yield('scripts')
+        
         <script type="text/javascript" src="{{ url('js/script.js') }}"></script>
         <script>
           $(document).ready(function() {
@@ -84,12 +84,14 @@
             $('.collapsible').collapsible();
             $('#loteria').material_select();
             $('.modal').modal();
-            $('#tipo').material_select();
+            $('.select').material_select();
+
 
          
 
 
           });
         </script>
+        @yield('scripts')
     </body>
 </html>

@@ -78,6 +78,49 @@
               
             </div>
             @endforeach
+
+
+
+
+
+
+            <div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
+              <div class="container"  style="position: relative !important;">
+                <div class="row" style="max-height: 350px;">
+
+
+                
+                <div class="col-sm-12">
+                  <div style="min-height: 350px;">
+                    <h2 style="text-align: center">Las mejores rifas en un solo lugar</h2>
+                    <p style="text-align: center; color:#fff">Compra boletos y gana los mejores premios. Regístrate Hoy.</p>
+                    <p>&nbsp;</p>
+                    <div class="text-center">
+                      <a href="#" class="btn btn-primary">Ir a las rifas</a>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                
+
+
+
+              </div>
+              </div>
+              
+            </div>
+
+
+
+
+
+            <div>
+              <img src="{{url('/img/bg')}}/{{rand(1, 30)}}.jpg" style="width: 100%; max-height: 470px" alt="">
+            </div>
+
+
+
           </div>
 
         </section>
