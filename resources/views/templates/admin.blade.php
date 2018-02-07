@@ -45,13 +45,18 @@
                     <div class="col-md-12">
                         <a href="#" data-activates="slide-out" class="button-collapse d-block d-md-none left"><i class="fa fa-bars" aria-hidden="true"></i></a>
                         <div class="text-right">
-                          <button class="btn btn-flat dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <button class='dropdown-button btn' href='#' data-activates='dropdown1'>
                             Admin
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{url('/salir')}}">Cerrar sesión</a>
+                            
                           </div>
                         </div>
+
+                        <ul id='dropdown1' class='dropdown-content'>
+                            <li><a class="dropdown-item" href="{{url('/salir')}}">Cerrar sesión</a></li>
+                            
+                          </ul>
                     </div>
                 </div>
             </div>
@@ -79,6 +84,7 @@
             $('.collapsible').collapsible();
             $('#loteria').material_select();
             $('.modal').modal();
+            $('#tipo').material_select();
 
          
 

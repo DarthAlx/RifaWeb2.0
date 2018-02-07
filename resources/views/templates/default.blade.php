@@ -20,61 +20,57 @@
     <body>
         <section class="navigation">
             <div class="container">
-              <div class="col l12 text-center visiblemov">
-                        <a class="navbar-brand auto " href="{{url('/')}}"><img src="{{url('img/Rifaweb2.png')}}" alt="" class="responsive-img"></a>
-                    </div>
-                <nav class="navbar navbar-expand-lg navbar-light">
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                    <span class="text-left">Menú</span>
-                  </button>
+             @if (Auth::guest())
 
-                  <div class="collapse navbar-collapse row" id="navbarSupportedContent">
-
-                    <ul class="navbar-nav col l4">
-                      
-                    </ul>
-                    <div class="col l4 text-center">
-                        <a class="navbar-brand auto hiddenmov" href="{{url('/')}}"><img src="{{url('img/Rifaweb2.png')}}" alt=""></a>
-                    </div>
-                    
-                    <ul class="navbar-nav justify-content-end col l4">
-                      @if (Auth::guest())
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{url('/entrar')}}">ENTRAR</a>
-                        </li>
-                      @else
-                      <?php
+             @else
+             <?php
                         $usuario=App\User::find(Auth::user()->id);
 
                         if ($usuario->mensajes) {
                           $nuevos=App\Mensaje::where('user_id',$usuario->id)->where('leido',0)->count();
                         }
-                      ?>
+                      ?>  
 
-                        
-                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="{{url('/perfil')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            MI CUENTA
-                          </a>
-                          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{url('/perfil')}}">Perfil</a>
-                            <a class="dropdown-item" href="#">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="nuevos">{{$nuevos}}</span>@endif</a>
-                            <a class="dropdown-item" href="#">Mis Rifas</a>
-                            <a class="dropdown-item" href="#">Direcciones</a>
-                          </div>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{url('/salir')}}">SALIR</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a>
-                        </li>
-                      @endif
+                      <ul id="dropdown1" class="dropdown-content">
+                        <li><a href="{{url('/perfil')}}">Perfil</a></li>
+                        <li><a href="#">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
+                        <li><a href="#">Mis Rifas</a></li>
+                        <li><a href="#">Direcciones</a></li>
+                      </ul>
+                      <ul id="dropdown0" class="dropdown-content">
+                        <li><a href="#!">one</a></li>
+                        <li><a href="#!">two</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">three</a></li>
+                      </ul>
+              @endif
+              
+
+                <nav>
+                  <div class="nav-wrapper">
+                    <a class="brand-logo center auto hiddenmov" href="{{url('/')}}"><img src="{{url('img/Rifaweb2.png')}}" alt=""></a>
+                    
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars fa-2x"></i></a>
+                    <ul class="right hide-on-med-and-down valign-wrapper" style="height: -webkit-fill-available;">
+                      @if (Auth::guest())
+                        <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
+                      @else
                       
+                      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
+                      <li><a href="{{url('/salir')}}">SALIR</a></li>
+                      <li><a href="{{url('/carrito')}}"> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      @endif
                     </ul>
                     
-                    
+                    <ul class="side-nav" id="mobile-demo">
+                      @if (Auth::guest())
+                        <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
+                      @else
+                      <li><a class="dropdown-button" href="#!" data-activates="dropdown0">MI CUENTA</a></li>
+                      <li><a href="{{url('/salir')}}">SALIR</a></li>
+                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      @endif
+                    </ul>
                   </div>
                 </nav>
             </div>
@@ -170,7 +166,7 @@
             $(".button-collapse").sideNav();
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
             $('.collapsible').collapsible();
-            $('#loteria').material_select();
+            $('#tipo').material_select();
             $('.modal').modal();
             $('.slider').bxSlider({
               auto: true,
@@ -183,6 +179,8 @@
               mode: 'fade',
 
             });
+
+            
             
 
          

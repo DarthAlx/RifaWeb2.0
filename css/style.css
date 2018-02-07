@@ -566,9 +566,45 @@ right: 0;
     border-radius: 0;
     display: block;
 }
+.dropdown-button::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
 
+nav {
+    color: #000;
+    background-color: #fff;
+    box-shadow: none;
+}
+nav li a, nav li a:hover, nav li a:focus, nav a, nav a:hover, nav a:focus{
+    color: #000;
+}
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 130px;
+    line-height: 64px;
+}
+.txt_google span{
+    line-height: 1;
+}
+span.badge {
+    min-width: 1rem;
+    padding: 0 0px;
+}
 
-
+.tp-mask-wrap {
+    overflow: initial !important;
+}
+.text-center{
+    text-align: center;
+}
 
 
 

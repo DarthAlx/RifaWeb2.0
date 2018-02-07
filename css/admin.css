@@ -19,6 +19,7 @@ header a, header .btn-flat{
 nav img{
     padding: 0 10%;
 }
+
 .row{
         margin-bottom: 0px;
 }
@@ -31,6 +32,10 @@ nav img{
 }
 .input-field label {
     left: 0.75rem;
+}
+nav{
+        height: 0;
+    color: inherit;
 }
 
 @media only screen and (max-width : 992px) {

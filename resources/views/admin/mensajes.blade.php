@@ -94,6 +94,16 @@
 			{!! csrf_field() !!}
 			<div class="col s12">
 							<div class="row">
+								<div class="input-field col s12">
+						        	<select id="tipo" name="tipo" class="select" required>
+								      	<option value="" disabled selected>Elejir tipo</option>
+				    					<option value="Individual">Individual</option>
+				    					<option value="Masivo">Masivo</option>
+								    </select>
+						          <label for="tipo">Tipo de mensaje</label>
+						        </div>
+							  </div>
+							<div class="row" id="dest" style="display: none">
 							        <div class="input-field col s12">
 							          <input type="text" name="destinatario" id="autocomplete" class="autocomplete" value="">
 							          
@@ -120,6 +130,20 @@
 
     </form>
   </div>
+
+  <script>
+  	$('#tipo').change(function(){
+  		tipo = $('#tipo').val();
+  		if (tipo=="Individual") {
+  			$('#dest').fadeIn();
+  			$("#autocomplete").attr("required", true);
+  		}
+  		else{
+  			$('#dest').fadeOut();
+  			$("#autocomplete").attr("required", false);
+  		}
+  	});
+  </script>
 
 @endsection
 
