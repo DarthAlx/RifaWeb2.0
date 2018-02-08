@@ -21,7 +21,8 @@ Route::get('/1', function () {
 
 Route::get('/', function () {
 	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
-	return view('inicio2', ['productos'=>$productos]);
+	$slides=App\Slider::orderBy('orden','asc')->get();
+	return view('inicio2', ['productos'=>$productos,'slides'=>$slides]);
     return view('inicio');
 });
 

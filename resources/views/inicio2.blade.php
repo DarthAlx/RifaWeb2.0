@@ -4,9 +4,15 @@
 @endsection
 @section('pagecontent')
 
+@if(!$slides->isEmpty())
 <section class="">
           <div class="slider">
-            @foreach($productos as $producto)
+            @foreach($slides as $slide)
+
+
+            @if($slide->tipo=="Producto")
+
+
             <div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
               <div class="container"  style="position: relative !important;">
                 <div class="row">
@@ -15,18 +21,18 @@
                 @if(rand(0, 1))
                 <div class="col-md-6 col-sm-12">
                   <div class="slider-img" style="margin: 0 auto;">
-                    <img class="img-responsive" src="{{url('uploads/productos')}}/{{$producto->imagen}}" >
+                    <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
                   </div>
                 </div>
                 <div class="col-md-6  text-right">
-                  <h2>Sorteo de {{$producto->nombre}}</h2>
+                  <h2>Sorteo de {{$slide->producto->nombre}}</h2>
 
                   <h5>¡Quedan pocos boletos!</h5>
-                  <h5>1 Boleto = ${{$producto->precio}}</h5>
-                  <div id="contador{{$producto->id}}" style="float: right;">
-                            <?php $fecha = explode('-', $producto->fecha_limite); ?>
+                  <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
+                  <div id="contador{{$slide->producto->id}}" style="float: right;">
+                            <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
                             <script>
-                              var Countdown{{$producto->id}} = new Countdown({
+                              var Countdown{{$slide->producto->id}} = new Countdown({
                               year: {{$fecha[0]}},
                               month : {{$fecha[1]}}, 
                               day   : {{$fecha[2]}},
@@ -38,18 +44,18 @@
                             </script>
                           </div>
                           <p>&nbsp;</p><p>&nbsp;</p>
-                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$producto->nombre}}!</a>
+                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
                 </div>
                 @else
                   <div class="col-md-6">
-                    <h2>Sorteo de {{$producto->nombre}}</h2>
+                    <h2>Sorteo de {{$slide->producto->nombre}}</h2>
 
                     <h5>¡Quedan pocos boletos!</h5>
-                    <h5>1 Boleto = ${{$producto->precio}}</h5>
-                    <div id="contador{{$producto->id}}">
-                              <?php $fecha = explode('-', $producto->fecha_limite); ?>
+                    <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
+                    <div id="contador{{$slide->producto->id}}">
+                              <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
                               <script>
-                                var Countdown{{$producto->id}} = new Countdown({
+                                var Countdown{{$slide->producto->id}} = new Countdown({
                                 year: {{$fecha[0]}},
                                 month : {{$fecha[1]}}, 
                                 day   : {{$fecha[2]}},
@@ -61,11 +67,11 @@
                               </script>
                             </div>
                             <p>&nbsp;</p>
-                            <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$producto->nombre}}!</a>
+                            <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
                   </div>
                   <div class="col-md-6 col-sm-12">
                     <div class="slider-img" style="margin: 0 auto;">
-                      <img class="img-responsive" src="{{url('uploads/productos')}}/{{$producto->imagen}}" >
+                      <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
                     </div>
                   </div>
 
@@ -77,53 +83,54 @@
               </div>
               
             </div>
-            @endforeach
+            @endif
 
+            @if($slide->tipo=="Imagen")
+            <div>
+              <a href="{{$slide->enlace}}"><img src="{{url('/uploads/slider')}}/{{$slide->imagen}}" style="width: 100%; max-height: 470px" alt=""></a>
+            </div>
 
+            @endif
 
-
-
+            @if($slide->tipo=="Texto")
 
             <div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
-              <div class="container"  style="position: relative !important;">
-                <div class="row" style="max-height: 350px;">
+                          <div class="container"  style="position: relative !important;">
+                            <div class="row" style="max-height: 350px;">
 
 
-                
-                <div class="col-sm-12">
-                  <div style="min-height: 350px;">
-                    <h2 style="text-align: center">Las mejores rifas en un solo lugar</h2>
-                    <p style="text-align: center; color:#fff">Compra boletos y gana los mejores premios. Regístrate Hoy.</p>
-                    <p>&nbsp;</p>
-                    <div class="text-center">
-                      <a href="#" class="btn btn-primary">Ir a las rifas</a>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-                
-
-
-
-              </div>
-              </div>
-              
-            </div>
+                            
+                            <div class="col-sm-12">
+                              <div style="min-height: 350px;">
+                                <h2 style="text-align: center">{!!$slide->titulo!!}</h2>
+                                <p style="text-align: center; color:#fff">{!!$slide->subtitulo!!}</p>
+                                <p>&nbsp;</p>
+                                <div class="text-center">
+                                  <a href="{{$slide->enlace}}" class="btn btn-primary">{{$slide->accion}}</a>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                            
 
 
 
+                          </div>
+                          </div>
+                          
+                        </div>
+
+            @endif
 
 
-            <div>
-              <img src="{{url('/img/bg')}}/{{rand(1, 30)}}.jpg" style="width: 100%; max-height: 470px" alt="">
-            </div>
 
-
+            @endforeach
 
           </div>
 
         </section>
+        @endif
 
         <section class="steps">
           <div class="container">

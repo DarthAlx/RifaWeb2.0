@@ -25,7 +25,7 @@ class SliderController extends Controller
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
             Session::flash('class', 'success');
-            return redirect()->intended(url('/slider'))->withInput();
+            return redirect()->intended(url('/slider'));
     	}
 
     	if($tipo=="Texto"){
@@ -37,7 +37,7 @@ class SliderController extends Controller
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
             Session::flash('class', 'success');
-            return redirect()->intended(url('/slider'))->withInput();
+            return redirect()->intended(url('/slider'));
     	}
 
     	if($tipo=="Imagen"){
@@ -70,7 +70,7 @@ class SliderController extends Controller
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
             Session::flash('class', 'success');
-            return redirect()->intended(url('/slider'))->withInput();
+            return redirect()->intended(url('/slider'));
     	}
 
 
@@ -85,40 +85,18 @@ class SliderController extends Controller
           $slide->delete();
           Session::flash('mensaje', 'Slide eliminado con éxito.');
             Session::flash('class', 'success');
-            return redirect()->intended(url('/slider'))->withInput();
+            return redirect()->intended(url('/slider'));
         }
 
 
     public function update(Request $request){
-    	 $slide = Fuente::find($request->id);
-        $slide->nombre=ucfirst($request->nombre);
-//guardar
-        if ($slide->save()) {
-            Session::flash('mensaje', 'Lotería actualizada con exito.');
-            Session::flash('class', 'success');
-            return redirect()->intended(url('/slides/'))->withInput();
-        }
-        else{
-            Session::flash('mensaje', 'Hubo un error, por favor, verifica la información.');
-            Session::flash('class', 'danger');
-            return redirect()->intended(url('/slides/'))->withInput();
-        }
-
-
-
-
-
-
-
-
-
-
         $slide = Slider::find($request->id);
     	$tipo = $request->tipo;
     	$slide->tipo=$tipo;
 
     	if($tipo=="Producto"){
-    		$slide->producto_id=$request->id;
+            $producto=Producto::where('nombre',$request->producto_id)->first();
+            $slide->producto_id=$producto->id;
     		$slide->orden=$request->orden;
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
@@ -130,6 +108,7 @@ class SliderController extends Controller
     		$slide->titulo=$request->titulo;
     		$slide->subtitulo=$request->subtitulo;
     		$slide->accion=$request->accion;
+            $slide->enlace=$request->enlace;
     		$slide->orden=$request->orden;
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
@@ -163,6 +142,7 @@ class SliderController extends Controller
           Session::flash('class', 'danger');
           return redirect()->intended(url('/slider'))->withInput();
         }
+            $slide->enlace=$request->enlace;
 
     		$slide->orden=$request->orden;
     		$slide->save();

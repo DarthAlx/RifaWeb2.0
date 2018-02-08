@@ -7,7 +7,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-6">
-				<h3 class="">Catálogos</h3>
+				<h3 class="">Slider</h3>
 			</div>
 			<div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
 				<div class="text-center" style="margin-left: auto;">
@@ -32,19 +32,25 @@
 				  		@if($slide->tipo=="Imagen")
 					  		<li>
 						      <div class="collapsible-header">
-						      	<i class="fa fa-picture-o" aria-hidden="true"></i> {{$slide->orden}}
+						      	<i class="fa fa-picture-o" aria-hidden="true"></i> &nbsp; {{$slide->imagen}}
 						      </div>
 						      <div class="collapsible-body">
 						      	<div>
 					              <img src="{{url('/uploads/slider')}}/{{$slide->imagen}}" style="width: 100%; max-height: 470px" alt="">
 					            </div>
+								<div class="text-right">
+									<p>&nbsp;</p>
+									<a class="waves-effect waves-light btn  modal-trigger " href="#update{{$slide->id}}"><i class="fa fa-pencil"></i></a>
+								<a class="waves-effect waves-light btn  modal-trigger red" href="#delete{{$slide->id}}"><i class="fa fa-trash"></i></a>
+								</div>
+
 						      </div>
 						    </li>
 					    @endif
 					    @if($slide->tipo=="Texto")
 					  		<li>
 						      <div class="collapsible-header">
-						      	<i class="fa fa-align-center" aria-hidden="true"></i> {{$slide->orden}}
+						      	<i class="fa fa-align-center" aria-hidden="true"></i> &nbsp; {{$slide->titulo}}
 						      </div>
 						      <div class="collapsible-body">
 									<div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
@@ -73,13 +79,18 @@
 						              </div>
 						              
 						            </div>
+						            <div class="text-right">
+										<p>&nbsp;</p>
+										<a class="waves-effect waves-light btn  modal-trigger " href="#update{{$slide->id}}"><i class="fa fa-pencil"></i></a>
+									<a class="waves-effect waves-light btn  modal-trigger red" href="#delete{{$slide->id}}"><i class="fa fa-trash"></i></a>
+									</div>
 						      </div>
 						    </li>
 					    @endif
 					    @if($slide->tipo=="Producto")
 					  		<li>
 						      <div class="collapsible-header">
-						      	<i class="fa fa-shopping-basket" aria-hidden="true"></i> {{$slide->orden}} 
+						      	<i class="fa fa-shopping-basket" aria-hidden="true"></i> &nbsp; {{$slide->producto->nombre}} 
 						      </div>
 						      <div class="collapsible-body">
 
@@ -121,6 +132,11 @@
 						            </div>
 						            
 						          </div>
+						          <div class="text-right">
+									<p>&nbsp;</p>
+										<a class="waves-effect waves-light btn  modal-trigger " href="#update{{$slide->id}}"><i class="fa fa-pencil"></i></a>
+									<a class="waves-effect waves-light btn  modal-trigger red" href="#delete{{$slide->id}}"><i class="fa fa-trash"></i></a>
+									</div>
 									
 						      </div>
 						    </li>
@@ -270,7 +286,7 @@
 <!-- Modal Structure -->
   <div id="delete{{$slide->id}}" class="modal">
     <div class="modal-content">
-      <h4>Eliminar slide ({{$slide->nombre}})</h4>
+      <h4>Eliminar slide ({{$slide->orden}})</h4>
       <p>¿Está seguro que desea eliminar este slide?</p>
     </div>
     <div class="modal-footer">
@@ -291,14 +307,83 @@
   <div id="update{{$slide->id}}" class="modal">
   	<form action="{{ url('/actualizar-slide') }}" method="post" enctype="multipart/form-data">
     <div class="modal-content">
-      <h4>Editar ({{$slide->nombre}})</h4>
+      <h4>Editar ({{$slide->orden}})</h4>
 			{!! csrf_field() !!}
-			<div class="input-field col m8">
-				<input type="hidden" value="{{$slide->id}}" name="id">
-	          <input id="nombre" name="nombre" type="text" class="validate" value="{{ $slide->nombre or old('nombre')}}" required>
-	          <label for="nombre">Nombre de catálogo</label>
-	        </div>
-	        <div class="col m4">
+			
+
+
+	        <div class="row">
+		        <div class="input-field col s12">
+		        	<select id="tipo{{$slide->id}}" name="tipo" class="select" required>
+				      <option value="" disabled selected>Elejir tipo</option>
+
+				      	
+						<option value="Producto">Producto</option>
+						<option value="Imagen">Imágen</option>
+						<option value="Texto">Texto</option>
+						
+				    </select>
+		          <label for="tipo">Tipo de slide</label>
+		        </div>
+		        <script>
+		        	document.getElementById('tipo{{$slide->id}}').value="{!!$slide->tipo!!}"
+		        </script>
+
+	      	</div>
+
+
+	      	<div class="row tipotexto tipoall" style="display: none">
+		        <div class="input-field col col-md-12">
+		          <input id="titulo{{$slide->id}}" name="titulo" type="text" class="validate" value="{{$slide->titulo or old('titulo')}}" required>
+		          <label for="titulo">Título</label>
+		        </div>
+			</div>	
+			<div class="row tipotexto tipoall" style="display: none">
+		        <div class="input-field col col-md-12">
+		          <input id="subtitulo{{$slide->id}}" name="subtitulo" type="text" class="validate" value="{{$slide->subtitulo or old('subtitulo')}}" required>
+		          <label for="subtitulo">Subtítulo</label>
+		        </div>
+			</div>	
+			<div class="row tipotexto tipoall" style="display: none">
+		        <div class="input-field col col-md-12">
+		          <input id="accion{{$slide->id}}" name="accion" type="text" class="validate" value="{{$slide->accion or old('accion')}}" required>
+		          <label for="accion">Accion</label>
+		        </div>
+			</div>	
+			<div class="row tipoenlace tipoall" style="display: none">
+		        <div class="input-field col col-md-12">
+		          <input id="enlace{{$slide->id}}" name="enlace" type="text" class="validate" value="{{$slide->enlace or old('enlace')}}" required>
+		          <label for="enlace">Enlace</label>
+		        </div>
+			</div>
+			<div class="row tipoimagen tipoall" style="display: none">
+				<div class="file-field input-field">
+			      <div class="btn">
+			        <span>Subir imágen</span>
+			        <input type="file" name="imagen">
+			      </div>
+			      <div class="file-path-wrapper">
+			        <input class="file-path validate" type="text">
+			      </div>
+			    </div>
+			</div>
+
+			<div class="row tipoproducto tipoall" style="display: none">
+			        <div class="input-field col s12">
+			          <input type="text" name="producto_id" id="producto_id{{$slide->id}}" class="autocomplete" value="{{$slide->producto->nombre or old('producto_id')}}">
+			          
+			          <label for="producto_id">Producto</label>
+			        </div>
+			  </div>
+
+			  <div class="row">
+		        <div class="input-field col col-md-12">
+		          <input id="orden{{$slide->id}}" name="orden" type="number" class="validate" value="{{$slide->orden or old('orden')}}" required>
+		          <label for="orden">Orden</label>
+		        </div>
+			</div>
+			<input type="hidden" name="id" value="{{$slide->id}}">
+	        <div class="col m12">
 	        	<input type="submit" value="Guardar" class="btn btn-primary right waves-effect waves-light">
 	        </div>
 	        <p>&nbsp;</p><p>&nbsp;</p>
@@ -306,6 +391,34 @@
 
     </form>
   </div>
+  <script>
+  	$(document).ready(function() {
+  		tipo = $('#tipo{{$slide->id}}').val();
+  		if (tipo=="Producto") {
+  			$('#update{{$slide->id}} .tipoall').fadeOut();
+  			$("#update{{$slide->id}} .tipoall input").attr("required", false);
+  			$('#update{{$slide->id}} .tipoproducto').fadeIn();
+  			$("#update{{$slide->id}} .tipoproducto input").attr("required", true);
+  		}
+  		if (tipo=="Texto") {
+  			$('#update{{$slide->id}} .tipoall').fadeOut();
+  			$("#update{{$slide->id}} .tipoall input").attr("required", false);
+  			$('#update{{$slide->id}} .tipotexto').fadeIn();
+  			$('#update{{$slide->id}} .tipoenlace').fadeIn();
+  			$("#update{{$slide->id}} .tipotexto input").attr("required", true);
+  			$("#update{{$slide->id}} .tipoenlace input").attr("required", true);
+  		}
+  		if (tipo=="Imagen") {
+  			$('#update{{$slide->id}} .tipoall').fadeOut();
+  			$("#update{{$slide->id}} .tipoall input").attr("required", false);
+  			$('#update{{$slide->id}} .tipoimagen').fadeIn();
+  			$("#update{{$slide->id}} .tipoimagen input").attr("required", true);
+  			$('#update{{$slide->id}} .tipoenlace').fadeIn();
+			$("#update{{$slide->id}} .tipoenlace input").attr("required", true);
+  		}
+
+  	});
+</script>
 
   @endforeach
 @endif

@@ -10,6 +10,6 @@ class Slider extends Model
 	protected $fillable = ['tipo', 'producto_id', 'imagen','titulo', 'subtitulo', 'accion', 'slider', 'orden'];
 
 	public function producto(){
-	    return $this->BelongsTo('App\Producto');
+	    return $this->belongsTo('App\Producto');
 	}
 }
