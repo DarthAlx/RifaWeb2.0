@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Producto;
 use App\Categoria;
 use App\Poplets;
+use App\Fuente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
@@ -273,8 +274,175 @@ class ProductoController extends Controller
 
     $catalogo="Resultados";
     $categorias=Categoria::orderBy('nombre','asc')->get();
-    $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->get();
-    return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo]);
+    $fuentes=Fuente::orderBy('nombre','asc')->get();
+
+    if ($request->busqueda) {
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->paginate(20);
+    }
+
+    if ($request->orden) {
+        if ($request->orden=="A - Z") {
+            $productos=Producto::orderBy('nombre','asc')->paginate(20);
+        }
+        if ($request->orden=="Z - A") {
+            $productos=Producto::orderBy('nombre','desc')->paginate(20);
+        }
+        if ($request->orden=="Menor precio") {
+            $productos=Producto::orderBy('precio','asc')->paginate(20);
+        }
+        if ($request->orden=="Mayor precio") {
+            $productos=Producto::orderBy('precio','desc')->paginate(20);
+        }
+        
+    }
+
+
+    if ($request->minimo||$request->maximo) {
+        if ($request->minimo&&$request->maximo) {
+            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+        }
+        if ($request->minimo&&!$request->maximo) {
+            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+        }
+        if (!$request->minimo&&$request->maximo) {
+            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+        }
+        
+        
+    }
+}
+
+    public function searchcatalogo(Request $request, $catalogo){
+
+
+
+
+    $categoria=Categoria::where('nombre',$catalogo)->first();
+    $fuente=Fuente::where('nombre',$catalogo)->first();
+    $categorias=Categoria::orderBy('nombre','asc')->get();
+    $fuentes=Fuente::orderBy('nombre','asc')->get();
+    if ($categoria) {
+
+        if ($request->busqueda) {
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->paginate(20);
+        }
+
+        if ($request->orden) {
+            if ($request->orden=="A - Z") {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->paginate(20);
+            }
+            if ($request->orden=="Z - A") {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','desc')->paginate(20);
+            }
+            if ($request->orden=="Menor precio") {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','asc')->paginate(20);
+            }
+            if ($request->orden=="Mayor precio") {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','desc')->paginate(20);
+            }
+            
+        }
+
+
+        if ($request->minimo||$request->maximo) {
+            if ($request->minimo&&$request->maximo) {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            }
+            if ($request->minimo&&!$request->maximo) {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+            }
+            if (!$request->minimo&&$request->maximo) {
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            }
+            
+            
+        }
+
+        return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
+    }
+    elseif ($fuente) {
+
+        if ($request->busqueda) {
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->paginate(20);
+        }
+
+        if ($request->orden) {
+            if ($request->orden=="A - Z") {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->paginate(20);
+            }
+            if ($request->orden=="Z - A") {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','desc')->paginate(20);
+            }
+            if ($request->orden=="Menor precio") {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','asc')->paginate(20);
+            }
+            if ($request->orden=="Mayor precio") {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','desc')->paginate(20);
+            }
+            
+        }
+
+
+        if ($request->minimo||$request->maximo) {
+            if ($request->minimo&&$request->maximo) {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            }
+            if ($request->minimo&&!$request->maximo) {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+            }
+            if (!$request->minimo&&$request->maximo) {
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            }
+            
+            
+        }
+
+
+        return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
+    }
+    else{
+        return redirect()->intended(url('/404'));
+    }
+
+
+    if ($request->busqueda) {
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->paginate(20);
+    }
+
+    if ($request->orden) {
+        if ($request->orden=="A - Z") {
+            $productos=Producto::orderBy('nombre','asc')->paginate(20);
+        }
+        if ($request->orden=="Z - A") {
+            $productos=Producto::orderBy('nombre','desc')->paginate(20);
+        }
+        if ($request->orden=="Menor precio") {
+            $productos=Producto::orderBy('precio','asc')->paginate(20);
+        }
+        if ($request->orden=="Mayor precio") {
+            $productos=Producto::orderBy('precio','desc')->paginate(20);
+        }
+        
+    }
+
+
+    if ($request->minimo||$request->maximo) {
+        if ($request->minimo&&$request->maximo) {
+            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+        }
+        if ($request->minimo&&!$request->maximo) {
+            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+        }
+        if (!$request->minimo&&$request->maximo) {
+            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+        }
+        
+        
+    }
+
+
+   
+    return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo,'fuentes'=>$fuentes])->withInput();
 
     }
 

@@ -23,7 +23,7 @@
             </div>
             <div class="row">
               <div class="col-md-3">
-                <form action="{{url('/rifas')}}" method="post">
+                <form action="{{url()->current()}}" method="post">
                   {{ csrf_field() }}
                   <div class="input-group mb-3 browser-default">
                   <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
@@ -33,13 +33,32 @@
                 </div>
                 </form>
                 
+<form action="{{url()->current()}}" method="post" id="ordenform">
+                    {!! csrf_field() !!}
 
-                <p class="titleshop">Ordenar publicaciones</p>
-                <div class="sorting">
-                  <a onclick="list();" data-toggle="tooltip" data-placement="top" title="Lista"><i class="fa fa-list"></i></a>
-                  <a onclick="grid();"  data-toggle="tooltip" data-placement="top" title="Grilla"><i class="fa fa-th-large"></i></a>
+                <div class="row">
+                  <p class="titleshop col-sm-12">Ordenar publicaciones</p>
+                <div class="input-field col s8" style="margin: 0;">
+                      <select id="orden" name="orden" class="select" required>
+                        <option value="A - Z">A - Z</option>
+                        <option value="Z - A">Z - A</option>
+                        <option value="Menor precio">Menor precio</option>
+                        <option value="Mayor precio">Mayor precio</option>
+                      </select>
+                      
                 </div>
-                
+                <div class="sorting col s4 valign-wrapper">
+                  <a onclick="list();" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Lista"><i class="fa fa-list fa-2x"></i></a> &nbsp;
+                  <a onclick="grid();" class="tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Grilla"><i class="fa fa-th-large fa-2x"></i></a>
+                </div>
+                </div>
+                </form>
+                  <script>
+                    $('#orden').change(function(){
+                      $('#ordenform').submit();
+
+                    });
+                  </script>
 
                 @if($categorias)
                 <hr>
@@ -61,6 +80,44 @@
                   @endforeach
                 </ul>
                 @endif
+
+
+                
+                <hr>
+                <p class="titleshop">Precio</p>
+
+                <form action="{{url()->current()}}" method="post" id="precioform">
+                    {!! csrf_field() !!}
+
+
+                  <div class="input-group-append browser-default">
+                    <div class="row">
+                      <div class="col-4" style="padding-right: 0">
+                        <input type="text" class="form-control browser-default" name="minimo" placeholder="Minimo" aria-describedby="basic-addon2">
+                      </div>
+                      <div class="col-1 text-center valign-wrapper" style="max-width: inherit">
+                        <span class="guion"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                      </div>
+                      <div class="col-4" style="padding-left: 0">
+                        <input type="text" class="form-control browser-default" name="maximo" placeholder="Maximo" aria-describedby="basic-addon2">
+                      </div>
+                      <div class="col-xs-3 valign-wrapper">
+                        <a href="#" id="searchprice"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+
+                  </form>
+                  <script>
+                    $('#searchprice').click(function(){
+                      $('#precioform').submit();
+
+                    });
+                  </script>
+                
+                
 
 
                 
@@ -103,48 +160,16 @@
 
                             </script>
                           </div>
-                          <p style="margin:0;">Progreso de rifa:</p>
-                          <div class="progress" data-toggle="tooltip" data-placement="top" title="{{$producto->vendidos}}/{{$producto->boletos}}">
-                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%"></div>
-                          </div>
+                          
                         
                         
                         
                         
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
-                            <div class="botonprecio col-md-12">
-                              <span class="btn" id="price" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}</span>mxn</span>
-                            </div>
-                            <div class="botoncantidad col-md-6">
-                              <div class="input-group">
-                              <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
-                                      <i class="fa fa-minus" aria-hidden="true"></i>
-                                  </button>
-                              </span>
-                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
-                              <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad{{$producto->id}}" style="width: 35px; padding: 0">
-                                      <i class="fa fa-plus" aria-hidden="true"></i>
-                                  </button>
-                              </span>
-                              </div>
-
-                              <script>
-                                $('#cantidad{{$producto->id}}').change(function(){
-                                  probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
-                                  Materialize.Toast.removeAll();
-                                  Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
-                                  costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(2));
-
-
-                                });
-                              </script>
-                            </div>
-                            <div class="botoncomprar col-md-6">
-                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-shopping-cart"></i></button>
+                            
+                            <div class="botoncomprar col-md-12" style="padding: 0px;"">
+                              <a href="{{url('/rifa')}}/{{$producto->slug}}" class="btn" style="padding: 0 15px; width: 50%; color:#fff; margin: 0 auto">Ir a sorteo</a>
                             </div>
                           </div>
                           
@@ -166,6 +191,8 @@
                 
                   
                     @endforeach
+                    <p>&nbsp;</p>
+                    {{ $productos->links() }}
                 </div>
               </div>
                   

@@ -53,7 +53,7 @@
 						      	<i class="fa fa-align-center" aria-hidden="true"></i> &nbsp; {{$slide->titulo}}
 						      </div>
 						      <div class="collapsible-body">
-									<div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
+									<div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(1, 6)}}.jpg'); background-size: cover;">
 						              <div class="container"  style="position: relative !important;">
 						                <div class="row" style="max-height: 350px;">
 
@@ -96,7 +96,7 @@
 
 						      	<div class="slider">
 						            
-						            <div class="slider-item" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
+						            <div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(1, 6)}}.jpg'); background-size: cover;">
 						              <div class="container"  style="position: relative !important;">
 						                <div class="row">
 						                <div class="col-md-6 col-sm-12">

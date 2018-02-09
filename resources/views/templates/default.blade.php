@@ -48,6 +48,16 @@
 
                 <nav>
                   <div class="nav-wrapper">
+
+                    <ul class="left hide-on-med-and-down valign-wrapper" style="height: -webkit-fill-available;">
+                      @if (Auth::guest())
+                        <li><a href="{{url('/entrar')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> CANJEAR</a></li>
+                      @else
+                      
+                      <li><a href="{{url('/canjear')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> CANJEAR</a></li>
+                      @endif
+                    </ul>
+
                     <a class="brand-logo center auto hiddenmov" href="{{url('/')}}"><img src="{{url('img/Rifaweb2.png')}}" alt=""></a>
                     
                     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="fa fa-bars fa-2x"></i></a>
@@ -58,7 +68,7 @@
                       
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
                       <li><a href="{{url('/salir')}}">SALIR</a></li>
-                      <li><a href="{{url('/carrito')}}"> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
                       @endif
                     </ul>
                     
@@ -68,7 +78,9 @@
                       @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown0">MI CUENTA</a></li>
                       <li><a href="{{url('/salir')}}">SALIR</a></li>
-                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      <li><a href="{{url('/carrito')}}">CARRITO <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+
+                      <li><a href="{{url('/canjear')}}">CANJEAR <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
                       @endif
                     </ul>
                   </div>
@@ -81,8 +93,8 @@
               <div class="col l2 s12 m2">
                 
                   <div class="bouton_google text-center">
-                    <div class="google_volet" style="background-color:#dd4b39;"><i class="fa fa-ticket fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas</span> </div>
-                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#dd4b39;">
+                    <div class="google_volet" style="background-color:#8FC240;"><i class="fa fa-ticket fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas</span> </div>
+                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#8FC240;">
                       <div class="txt_google"><span class="hiddenmov">Todas las rifas</span><span class="visiblemov">Rifas</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -91,8 +103,8 @@
               <div class="col l2 s12 m2">
                 
                   <div class="bouton_google text-center">
-                    <div class="google_volet" style="background-color:#25B6D2;"><i class="fa fa-user fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Perfil</span> </div>
-                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#25B6D2;">
+                    <div class="google_volet" style="background-color:#1AA5B9;"><i class="fa fa-user fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Perfil</span> </div>
+                    <a href="{{url('/perfil')}}" style="text-decoration:none; color:#1AA5B9;">
                       <div class="txt_google"><span class="hiddenmov">Tus rifas, mensajes y premios</span><span class="visiblemov">Perfil</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -181,6 +193,8 @@
             });
 
             $('.materialboxed').materialbox();
+            $('.tooltipped').tooltip({delay: 50});
+            $('.select').material_select();
 
             
             

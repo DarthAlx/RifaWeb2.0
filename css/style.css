@@ -54,7 +54,14 @@ nav img{
 	-webkit-box-shadow: none; 
     box-shadow: none; 
 }
+nav i{
+    height: auto !important;
+}
 
+
+.toast{
+    font-weight: 700;
+}
 
 
 .bx-wrapper {
@@ -65,7 +72,7 @@ nav img{
     padding: 50px 0;
 
 }
-.slider-item h2, h5{
+.slider-item h2, .slider-item h5{
     color: #fff;
 }
 
@@ -502,6 +509,13 @@ right: 0;
     background-color: #446084;
 
 }
+
+
+.chip {
+    font-size: 16px;
+    font-weight: 600;
+}
+
 
 /* 404 */
 .error404 {background: #f4f4f4;}

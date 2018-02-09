@@ -1,193 +1,132 @@
 @extends('templates.default')
+
 @section('header')
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
 @endsection
+
+
 @section('pagecontent')
-
-@if($slides->count()>0)
-<section class="">
-          <div class="slider">
-            @foreach($slides as $slide)
-
-
-            @if($slide->tipo=="Producto")
-
-
-            <div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(1, 6)}}.jpg'); background-size: cover;">
-              <div class="container"  style="position: relative !important;">
-                <div class="row">
-
-
-                @if(rand(0, 1))
-                <div class="col-md-6 col-sm-12">
-                  <div class="slider-img" style="margin: 0 auto;">
-                    <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
-                  </div>
-                </div>
-                <div class="col-md-6  text-right">
-                  <h2>Sorteo de {{$slide->producto->nombre}}</h2>
-
-                  <h5>¡Quedan pocos boletos!</h5>
-                  <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
-                  <div id="contador{{$slide->producto->id}}" style="float: right;">
-                            <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
-                            <script>
-                              var Countdown{{$slide->producto->id}} = new Countdown({
-                              year: {{$fecha[0]}},
-                              month : {{$fecha[1]}}, 
-                              day   : {{$fecha[2]}},
-                              width : 200, 
-                              height  : 50,
-                              rangeHi:"day"
-                              });
-
-                            </script>
-                          </div>
-                          <p>&nbsp;</p><p>&nbsp;</p>
-                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
-                </div>
-                @else
-                  <div class="col-md-6">
-                    <h2>Sorteo de {{$slide->producto->nombre}}</h2>
-
-                    <h5>¡Quedan pocos boletos!</h5>
-                    <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
-                    <div id="contador{{$slide->producto->id}}">
-                              <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
-                              <script>
-                                var Countdown{{$slide->producto->id}} = new Countdown({
-                                year: {{$fecha[0]}},
-                                month : {{$fecha[1]}}, 
-                                day   : {{$fecha[2]}},
-                                width : 200, 
-                                height  : 50,
-                                rangeHi:"day"
-                                });
-
-                              </script>
-                            </div>
-                            <p>&nbsp;</p>
-                            <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="slider-img" style="margin: 0 auto;">
-                      <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
-                    </div>
-                  </div>
-
-                @endif
-
-
-
-              </div>
-              </div>
-              
-            </div>
-            @endif
-
-            @if($slide->tipo=="Imagen")
-            <div>
-              <a href="{{$slide->enlace}}"><img src="{{url('/uploads/slider')}}/{{$slide->imagen}}" style="width: 100%; max-height: 470px" alt=""></a>
-            </div>
-
-            @endif
-
-            @if($slide->tipo=="Texto")
-
-            <div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(1, 6)}}.jpg'); background-size: cover;">
-                          <div class="container"  style="position: relative !important;">
-                            <div class="row" style="max-height: 350px;">
-
-
-                            
-                            <div class="col-sm-12">
-                              <div style="min-height: 350px;">
-                                <h2 style="text-align: center">{!!$slide->titulo!!}</h2>
-                                <p style="text-align: center; color:#fff">{!!$slide->subtitulo!!}</p>
-                                <p>&nbsp;</p>
-                                <div class="text-center">
-                                  <a href="{{$slide->enlace}}" class="btn btn-primary">{{$slide->accion}}</a>
-                                </div>
-                                
-                              </div>
-                              
-                            </div>
-                            
-
-
-
-                          </div>
-                          </div>
-                          
-                        </div>
-
-            @endif
-
-
-
-            @endforeach
-
-          </div>
-
-        </section>
-        @endif
-
-        <section class="steps">
-          <div class="container">
-            <div class="row">
-              <div class="col l12">
-                <h3 class="section-title section-title-center">
-                  <b></b>
-                  <span class="secition-title-main">¿CÓMO FUNCIONA?</span>
-                  <b></b>
-                </h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col l4 m4">
-                <div class="icon-box-img">
-                  <img src="{{url('img/form.png')}}" alt="">
-                </div>
-                <div class="icon-box-text text-center">
-                  <h5><strong>#1 – Registrate</strong></h5>
-                  <p>Crea tu cuenta, y recibe 100 tickets gratis.</p>
-                </div>
-              </div>
-              <div class="col l4 m4">
-                <div class="icon-box-img">
-                  <img src="{{url('img/gift.png')}}" alt="">
-                </div>
-                <div class="icon-box-text text-center">
-                  <h5><strong>#2 – Escoge Un Sorteo</strong></h5>
-                  <p>Escoge la rifa a la que te gustaría entrar.</p>
-                </div>
-              </div>
-              <div class="col l4 m4">
-                <div class="icon-box-img">
-                  <img src="{{url('img/trophy.png')}}" alt="">
-                </div>
-                <div class="icon-box-text text-center">
-                  <h5><strong>#3 – Gana</strong></h5>
-                  <p>¡Espera a que ganes!</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
 <section class="productsmain">
           <div class="container">
-            <h3 class="section-title section-title-center">
-                  <b></b>
-                  <span class="secition-title-main">Destacados</span>
-                  <b></b>
-                </h3>
-                <p>&nbsp;</p>
-            <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-12">
+                <div id="bc1" class="btn-group btn-breadcrumb">
+                  <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
+                  <a href="{{url('/rifas')}}" class="btn btn-default"><div>Rifas</div></a>
+                  @if($catalogo!="Todos"&&$catalogo!="Resultados")
+                  <a href="{{url('/rifas')}}/{{strtolower($catalogo)}}" class="btn btn-default"><div>{{ucfirst($catalogo)}}</div></a>
+                  @endif
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <form action="{{url()->current()}}" method="post">
+                  {{ csrf_field() }}
+                  <div class="input-group mb-3 browser-default">
+                  <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
+                  <div class="input-group-append browser-default">
+                    <button class="btn btn-outline-secondary browser-default" type="submit"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+                </form>
+                
+<form action="{{url()->current()}}" method="post" id="ordenform">
+                    {!! csrf_field() !!}
+
+                <div class="row">
+                  <p class="titleshop col-sm-12">Ordenar publicaciones</p>
+                <div class="input-field col s8" style="margin: 0;">
+                      <select id="orden" name="orden" class="select" required>
+                        <option value="A - Z">A - Z</option>
+                        <option value="Z - A">Z - A</option>
+                        <option value="Menor precio">Menor precio</option>
+                        <option value="Mayor precio">Mayor precio</option>
+                      </select>
+                      
+                </div>
+                <div class="sorting col s4 valign-wrapper">
+                  <a onclick="list();" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Lista"><i class="fa fa-list fa-2x"></i></a> &nbsp;
+                  <a onclick="grid();" class="tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Grilla"><i class="fa fa-th-large fa-2x"></i></a>
+                </div>
+                </div>
+                </form>
+                  <script>
+                    $('#orden').change(function(){
+                      $('#ordenform').submit();
+
+                    });
+                  </script>
+
+                @if($categorias)
+                <hr>
+                <p class="titleshop">Categorías</p>
+                <ul class="listacategorias">
+                  @foreach($categorias as $categoria)
+                  <li><a href="{{url('/rifas')}}/{!!strtolower($categoria->nombre)!!}">{{$categoria->nombre}}</a></li>
+                  @endforeach
+                </ul>
+
+                @endif
+
+                @if($fuentes)
+                <hr>
+                <p class="titleshop">Fuentes</p>
+                <ul class="listacategorias">
+                  @foreach($fuentes as $fuente)
+                  <li><a href="{{url('/rifas')}}/{!!strtolower($fuente->nombre)!!}">{{$fuente->nombre}}</a></li>
+                  @endforeach
+                </ul>
+                @endif
+
+
+                
+                <hr>
+                <p class="titleshop">Precio</p>
+
+                <form action="{{url()->current()}}" method="post" id="precioform">
+                    {!! csrf_field() !!}
+
+
+                  <div class="input-group-append browser-default">
+                    <div class="row">
+                      <div class="col-4" style="padding-right: 0">
+                        <input type="text" class="form-control browser-default" name="minimo" placeholder="Minimo" aria-describedby="basic-addon2">
+                      </div>
+                      <div class="col-1 text-center valign-wrapper" style="max-width: inherit">
+                        <span class="guion"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                      </div>
+                      <div class="col-4" style="padding-left: 0">
+                        <input type="text" class="form-control browser-default" name="maximo" placeholder="Maximo" aria-describedby="basic-addon2">
+                      </div>
+                      <div class="col-xs-3 valign-wrapper">
+                        <a href="#" id="searchprice"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+
+                  </form>
+                  <script>
+                    $('#searchprice').click(function(){
+                      $('#precioform').submit();
+
+                    });
+                  </script>
+                
+                
+
+
+                
+              </div>
+              <div class="col-md-9">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
                   
-                  <div class="product-type grid col-md-12" style="padding: 0;">
+                  <div class="product-type list col-md-12" style="padding: 0;">
                     <form action="{{url('carrito')}}" method="post">
                   {!! csrf_field() !!}
                   <input type="hidden" name="productoid" value="{{$producto->id}}">
@@ -284,34 +223,17 @@
                 
                   
                     @endforeach
+                    <p>&nbsp;</p>
+                    {{ $productos->links() }}
                 </div>
               </div>
                   
 
             </div>
-            
-
-
-
-
-
-            
-
-
-
-
-
-
-
-            </div>            
+          </div>
         </section>
-        @endsection
 
 
-
-
-
-        @section('scripts')
         <script>
           function list(){
             $('.product-type').addClass('col-md-12');
@@ -364,13 +286,13 @@
 
           }
 
-          grid();
-
 
           
         </script>
+        @endsection
 
 
+        @section('scripts')
         <script type="text/javascript">
           
           function countdown(id, ano, mes, dia){
