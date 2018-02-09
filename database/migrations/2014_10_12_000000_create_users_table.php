@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('genero');
             $table->string('avatar')->default(url('/img/dummy.png'));
             $table->boolean('is_admin')->default(false);
+            $table->string('status')->default('Activo');
+            $table->bigInteger('rt')->default(0);
             $table->rememberToken();
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';

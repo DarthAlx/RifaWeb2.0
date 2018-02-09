@@ -41,6 +41,13 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => ["Los datos no coinciden."],
+        ]);
+    }
    
     public function redirectToProvider()
     {

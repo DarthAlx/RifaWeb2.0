@@ -29,6 +29,7 @@ class ProductoController extends Controller
 
     	$producto = new Producto($request->all());
         $producto->nombre=$request->nombre;
+        $producto->slug = str_slug($request->nombre, '-');
         $producto->sku=$request->sku;
         $producto->descripcion=$request->descripcion;
         $producto->precio=$request->precio;
@@ -154,6 +155,7 @@ class ProductoController extends Controller
     {
         $producto = Producto::find($id);
         $producto->nombre=$request->nombre;
+        $producto->slug = str_slug($request->nombre, '-');
         $producto->descripcion=$request->descripcion;
         $producto->precio=$request->precio;
         $producto->loteria=$request->loteria;

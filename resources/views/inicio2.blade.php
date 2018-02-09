@@ -4,7 +4,7 @@
 @endsection
 @section('pagecontent')
 
-@if(!$slides->isEmpty())
+@if($slides->count()>0)
 <section class="">
           <div class="slider">
             @foreach($slides as $slide)

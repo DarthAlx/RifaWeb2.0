@@ -180,6 +180,8 @@
 
             });
 
+            $('.materialboxed').materialbox();
+
             
             
 

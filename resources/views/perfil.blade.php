@@ -1,6 +1,9 @@
 @extends('templates.default')
 
 @section('pagecontent')
+<?php
+                        $usuario=App\User::find(Auth::user()->id);
+?>
 <section class="perfil">
 	<div class="perfilheader z-depth-3" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
 		<div class="container">
@@ -15,7 +18,7 @@
 								{{Auth::user()->name}}
 							</h2>
 							<div class="chip amber accent-3">
-								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> 100 <span class="hiddenmov">rifatokens</span>
+								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{$usuario->rt}} <span class="hiddenmov">rifatokens</span>
 							</div>
 							<div class="chip light-blue lighten-3">
 								<i class="fa fa-flag" aria-hidden="true"></i> 3 <span class="hiddenmov">participaciones</span>
@@ -79,7 +82,7 @@
             <div class="card-content white-text">
             	<h3 class="card-title white-text">Tus mensajes <i class="fa fa-envelope" aria-hidden="true"></i></h3>
               <?php
-                        $usuario=App\User::find(Auth::user()->id);
+                       
                        
                         if ($usuario->mensajes) {
                           $nuevos=App\Mensaje::where('user_id',$usuario->id)->count();

@@ -78,7 +78,7 @@ nav{
     padding: 50px 0;
 
 }
-.slider-item h2, h5{
+.slider-item h2, .slider-item h5{
     color: #fff;
 }
 
@@ -94,4 +94,18 @@ nav{
 }
 .img-responsive{
     width: 100%;
+}
+
+.tabs .indicator {
+    display: none;
+}
+.tabs li a{
+    transition: 5s;
+    transition:
+      border-bottom-width 0s linear 0.35s; // Solid edge post-rotation
+  
+}
+.tabs li a.active{
+    border-bottom: 2px solid #f6b2b5;
+    will-change: left, right;
 }

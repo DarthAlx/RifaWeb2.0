@@ -14,6 +14,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'sku'=>'XBX1',
             'nombre'=>'Xbox One',
+            'slug'=>'xbox-one',
             'descripcion'=>'Consola de videojuegos de ultima generación, 1TB de disco duro.',
             'habilitado'=>1,
             'destacado'=>1,
@@ -29,6 +30,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'sku'=>'IPDX',
             'nombre'=>'Iphone X',
+            'slug'=>'iphone-x',
             'descripcion'=>'Teléfono celular de gama alta de la marca Apple.',
             'habilitado'=>1,
             'destacado'=>1,
@@ -44,6 +46,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'sku'=>'IWCP1',
             'nombre'=>'I Watch',
+            'slug'=>'i-watch',
             'descripcion'=>'SmartWatch de la marca apple, se sincroniza con IPhone e IPad.',
             'habilitado'=>1,
             'destacado'=>1,
@@ -59,6 +62,7 @@ class ProductoSeeder extends Seeder
         DB::table('productos')->insert([
             'sku'=>'BBSND',
             'nombre'=>'Bocina Bose',
+            'slug'=>'bocina-bose',
             'descripcion'=>'Bocina altavoz de la marca Bose, audio de gran calidad.',
             'habilitado'=>1,
             'destacado'=>1,

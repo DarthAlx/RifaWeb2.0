@@ -17,6 +17,7 @@ class CreateProductosTable extends Migration
             $table->increments('id');
             $table->string('sku');
             $table->string('nombre');
+            $table->string('slug');
             $table->string('descripcion');
             $table->boolean('habilitado')->default(true);
             $table->boolean('destacado')->default(false);

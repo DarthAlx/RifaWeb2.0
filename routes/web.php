@@ -73,6 +73,14 @@ Route::get('/carrito', function () {
 Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
+
+
+Route::get('/rifa/{slug}', function ($slug) {
+	$producto=App\Producto::where('slug',$slug)->first();
+    return view('producto',['producto'=>$producto]);
+});
+
+
 Route::post('leermensaje', 'MensajeController@read')->middleware('auth');
 
 
@@ -129,6 +137,9 @@ Route::group(['middleware' => 'admin'], function(){
 		if ($producto) {
 			return view('admin.productosupdate', ['categorias'=>$categorias,'producto'=>$producto,'loterias'=>$loterias]);
 		}
+		else{
+			return redirect()->intended(url('/404'));
+		}
 	    
 	});
 
@@ -164,7 +175,7 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::get('/mensajes', function () {
 		$mensajes=App\Mensaje::orderBy('created_at','desc')->get();
-		$usuarios=App\User::where('is_admin',0)->orderBy('name','asc')->get();
+		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
 		if ($usuarios) {
 			$string = "{";
 			foreach ($usuarios as $usuario) {
@@ -204,6 +215,26 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::delete('eliminar-slide', 'SliderController@destroy');
 
 	Route::post('actualizar-slide', 'SliderController@update');
+
+
+	Route::get('/crm', function () {
+		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
+	    return view('admin.usuarios', ['usuarios'=>$usuarios]);
+	});
+
+	Route::get('/usuario/{id}', function ($id) {
+		$usuario=App\User::find($id);
+		if ($usuario) {
+			return view('admin.usuario', ['usuario'=>$usuario]);
+		}
+		else{
+			return redirect()->intended(url('/404'));
+		}
+	    
+	});
+	Route::post('cambiar-contrasena', 'UserController@changepass');
+
+	Route::delete('eliminar-usuario', 'UserController@destroy');
 
 });
 
