@@ -37,7 +37,8 @@ class ProductoController extends Controller
         //$producto->precio_especial=$request->precio_especial;
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
-        $producto->fecha_limite=date_create($request->fecha_limite);
+        $producto->fundacion=$request->fundacion;
+        $producto->fecha_limite=date_create($request->fecha_limite. " ". $request->hora);
         
 
         //categoria
@@ -164,7 +165,8 @@ class ProductoController extends Controller
         //$producto->precio_especial=$request->precio_especial;
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
-        $producto->fecha_limite=date_create($request->fecha_limite);
+        $producto->fundacion=$request->fundacion;
+        $producto->fecha_limite=date_create($request->fecha_limite. " ". $request->hora);
         
         //categoria
         if (isset($request->categoria)) {
@@ -310,6 +312,8 @@ class ProductoController extends Controller
         
         
     }
+
+    return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
 }
 
     public function searchcatalogo(Request $request, $catalogo){

@@ -1,10 +1,28 @@
 @extends('templates.default')
 @section('header')
+
+
+  <meta property="og:url"           content="{{url()->current()}}" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="{{$producto->nombre}}" />
+  <meta property="og:description"   content="{{$producto->descripcion}}" />
+  <meta property="og:image"         content="{{url('/uploads/productos')}}/{{$producto->imagen}}" />
+
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
+
+
 @endsection
 @section('pagecontent')
+
+
+
 <section class="productsmain" style="background:#fff;">
   <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        @include('snip.notificaciones')
+      </div>
+    </div>
     <div class="row">
           <div class="col-md-12">
             <div id="bc1" class="btn-group btn-breadcrumb">
@@ -42,26 +60,39 @@
           <input type="hidden" name="productoid" value="{{$producto->id}}">
                   {!! csrf_field() !!}
         <h4>{{$producto->nombre}}</h4>
-        <p>Fuente: {{$producto->loteria}}</p>
-                        <ul>
+        <ul>
                           <li>{{$producto->descripcion}}</li>
                         </ul>
-                        
-                          
-                          <div id="contador{{$producto->id}}">
-                            <?php $fecha = explode('-', $producto->fecha_limite); ?>
+        <div id="contador{{$producto->id}}">
+                            <?php 
+                            $datetime = explode(' ', $producto->fecha_limite); 
+                            $fecha = explode('-', $datetime[0]); 
+
+                            $hora = explode(':', $datetime[1]); 
+
+
+                            ?>
                             <script>
                               var Countdown{{$producto->id}} = new Countdown({
                               year: {{$fecha[0]}},
                               month : {{$fecha[1]}}, 
                               day   : {{$fecha[2]}},
-                              width : 200, 
-                              height  : 50,
+                              hour   : {{$hora[0]}},
+                              minutes   : {{$hora[1]}},
+                              width : 300, 
+                              height  : 80,
                               rangeHi:"day"
                               });
 
                             </script>
                           </div>
+
+
+        <p>Fuente: {{$producto->loteria}}</p>
+                        
+                        
+                          
+                          
                           <p>&nbsp;</p>
                           <p style="margin:0;">Progreso de rifa:</p>
                           <div class="progress tooltipped" data-position="top" data-delay="50" data-tooltip="{{$producto->vendidos}}/{{$producto->boletos}}">
@@ -79,10 +110,8 @@
                         
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
-                            <div class="botonprecio col-md-12" style="padding: 0">
-                              <span class="btn" id="price" style="color: #5e5e5e; background: rgba(137, 137, 137, 0.04);padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}mxn - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$producto->precio*10}}</span></span>
-                            </div>
-                            <div class="botoncantidad col-md-6" style="padding: 0">
+                            
+                            <div class="botoncantidad col-md-6" style="padding-left: 0">
                               <div class="input-group">
                               <span class="input-group-btn" style="width: 35px;">
                                   <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
@@ -104,14 +133,14 @@
                                   Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
                                   costort=$('#cantidad{{$producto->id}}').val()*{{$producto->precio*10}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+'mxn - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>'+costort.toFixed(0));
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+' - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>'+costort.toFixed(0));
 
 
                                 });
                               </script>
                             </div>
-                            <div class="botoncomprar col-md-6 " style="padding: 0">
-                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-shopping-cart"></i></button>
+                            <div class="botoncomprar col-md-6" style="padding-right: 0">
+                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-cart-plus"></i></button>
                             </div>
                           </div>
                           
@@ -119,6 +148,9 @@
                           <div class="pbut hidden">
                             <br>
                           </div>
+                          <p>&nbsp;</p>
+                          <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button" data-size="large" data-mobile-iframe="true"></div>
+                          <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
       </div>
     </form>
     </div>

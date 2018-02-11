@@ -27,10 +27,11 @@ class CreateProductosTable extends Migration
             $table->integer('vendidos')->default(0);
             $table->string('imagen');
             $table->integer('minimo');
-            $table->date('fecha_limite');
+            $table->dateTime('fecha_limite');
             $table->string('loteria');
             $table->string('ganador')->nullable(true);
             $table->string('categoria');
+            $table->string('fundacion')->nullable(true);
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';
         });

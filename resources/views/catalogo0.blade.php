@@ -160,48 +160,16 @@
 
                             </script>
                           </div>
-                          <p style="margin:0;">Progreso de rifa:</p>
-                          <div class="progress" data-toggle="tooltip" data-placement="top" title="{{$producto->vendidos}}/{{$producto->boletos}}">
-                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%"></div>
-                          </div>
+                          
                         
                         
                         
                         
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
-                            <div class="botonprecio col-md-12">
-                              <span class="btn" id="price" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}</span>mxn</span>
-                            </div>
-                            <div class="botoncantidad col-md-6">
-                              <div class="input-group">
-                              <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
-                                      <i class="fa fa-minus" aria-hidden="true"></i>
-                                  </button>
-                              </span>
-                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
-                              <span class="input-group-btn" style="width: 35px;">
-                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad{{$producto->id}}" style="width: 35px; padding: 0">
-                                      <i class="fa fa-plus" aria-hidden="true"></i>
-                                  </button>
-                              </span>
-                              </div>
-
-                              <script>
-                                $('#cantidad{{$producto->id}}').change(function(){
-                                  probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
-                                  Materialize.Toast.removeAll();
-                                  Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
-                                  costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(2));
-
-
-                                });
-                              </script>
-                            </div>
-                            <div class="botoncomprar col-md-6">
-                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-shopping-cart"></i></button>
+                            
+                            <div class="botoncomprar col-md-12" style="padding: 0px;"">
+                              <a href="{{url('/rifa')}}/{{$producto->slug}}" class="btn" style="padding: 0 15px; width: 50%; color:#fff; margin: 0 auto">Ir a sorteo</a>
                             </div>
                           </div>
                           

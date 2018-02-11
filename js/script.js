@@ -42,6 +42,19 @@ $(document).ready(function() {
       });
 
 
+      $('.timepicker').pickatime({
+              default: 'now', 
+              fromnow: 0,       
+              twelvehour: false, 
+              donetext: 'OK', 
+              cleartext: 'Limpiar', 
+              canceltext: 'Cancelar', 
+              autoclose: false, 
+              ampmclickable: true
+              
+            });
+
+
     
       
       

@@ -10,6 +10,11 @@
 <section class="productsmain">
           <div class="container">
             <div class="row">
+              <div class="row">
+      <div class="col-md-12">
+        @include('snip.notificaciones')
+      </div>
+    </div>
               <div class="col-md-12">
                 <div id="bc1" class="btn-group btn-breadcrumb">
                   <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
@@ -60,30 +65,7 @@
                     });
                   </script>
 
-                @if($categorias)
-                <hr>
-                <p class="titleshop">Categorías</p>
-                <ul class="listacategorias">
-                  @foreach($categorias as $categoria)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($categoria->nombre)!!}">{{$categoria->nombre}}</a></li>
-                  @endforeach
-                </ul>
-
-                @endif
-
-                @if($fuentes)
-                <hr>
-                <p class="titleshop">Fuentes</p>
-                <ul class="listacategorias">
-                  @foreach($fuentes as $fuente)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($fuente->nombre)!!}">{{$fuente->nombre}}</a></li>
-                  @endforeach
-                </ul>
-                @endif
-
-
-                
-                <hr>
+                  <hr>
                 <p class="titleshop">Precio</p>
 
                 <form action="{{url()->current()}}" method="post" id="precioform">
@@ -116,6 +98,33 @@
 
                     });
                   </script>
+
+
+
+                @if($categorias)
+                <hr>
+                <p class="titleshop">Categorías</p>
+                <ul class="listacategorias">
+                  @foreach($categorias as $categoria)
+                  <li><a href="{{url('/rifas')}}/{!!strtolower($categoria->nombre)!!}">{{$categoria->nombre}}</a></li>
+                  @endforeach
+                </ul>
+
+                @endif
+
+                @if($fuentes)
+                <hr>
+                <p class="titleshop">Fuentes</p>
+                <ul class="listacategorias">
+                  @foreach($fuentes as $fuente)
+                  <li><a href="{{url('/rifas')}}/{!!strtolower($fuente->nombre)!!}">{{$fuente->nombre}}</a></li>
+                  @endforeach
+                </ul>
+                @endif
+
+
+                
+                
                 
                 
 
@@ -133,34 +142,60 @@
                     <div class="product-inner">
                     <div class="p1 col m4" >
                       <div class="img-container valign-wrapper">
+                        <a href="{{url('/rifa')}}/{{$producto->slug}}">
+                        @if($producto->fundacion&&$producto->fundacion!="")
+                        <span class="fundacion">En beneficio de: {{$producto->fundacion}}</span>
+                        @endif
                         <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" class="responsive-img">
+                        <span class="product-price" id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}} - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$producto->precio*10}}</span>
+                        </a>
                       </div>
                       
                     </div>
                     <div class="p2 product-info col m8">
                       <div class="product-content">
+                        <a href="{{url('/rifa')}}/{{$producto->slug}}" style="color: inherit; text-decoration: none;">
                         <h1>{{$producto->nombre}}</h1>
                         <p>Fuente: {{$producto->loteria}}</p>
                         <ul>
                           <li>{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
                         </ul>
-                        
+                        </a>
                           
                           <div id="contador{{$producto->id}}">
-                            <?php $fecha = explode('-', $producto->fecha_limite); ?>
+                            <?php 
+                            $datetime = explode(' ', $producto->fecha_limite); 
+                            $fecha = explode('-', $datetime[0]); 
+
+                            $hora = explode(':', $datetime[1]); 
+
+
+                            ?>
                             <script>
                               var Countdown{{$producto->id}} = new Countdown({
                               year: {{$fecha[0]}},
                               month : {{$fecha[1]}}, 
                               day   : {{$fecha[2]}},
-                              width : 200, 
-                              height  : 50,
+                              hour   : {{$hora[0]}},
+                              minutes   : {{$hora[1]}},
+                              width : 250, 
+                              height  : 60,
                               rangeHi:"day"
                               });
 
                             </script>
                           </div>
-                          
+                          <br>
+                          <p style="margin:0;">Progreso de rifa:</p>
+                          <div class="progress tooltipped" data-position="top" data-delay="50" data-tooltip="{{$producto->vendidos}}/{{$producto->boletos}}">
+                            <?php if((($producto->vendidos*100)/$producto->boletos)<=33){?>
+                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: red;"></div>
+                              <?php } else if(($producto->vendidos*100)/$producto->boletos <= 66) {?>
+                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: yellow;"></div>
+                              <?php }else{ ?>
+                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: green;"></div>
+                              <?php } ?>
+                          </div>
                         
                         
                         
@@ -168,8 +203,36 @@
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
                             
-                            <div class="botoncomprar col-md-12" style="padding: 0px;"">
-                              <a href="{{url('/rifa')}}/{{$producto->slug}}" class="btn" style="padding: 0 15px; width: 50%; color:#fff; margin: 0 auto">Ir a sorteo</a>
+                            <div class="botoncantidad col-md-6" style="padding-left: 0">
+                              <div class="input-group">
+                              <span class="input-group-btn" style="width: 35px;">
+                                  <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
+                                      <i class="fa fa-minus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
+                              <span class="input-group-btn" style="width: 35px;">
+                                  <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad{{$producto->id}}" style="width: 35px; padding: 0">
+                                      <i class="fa fa-plus" aria-hidden="true"></i>
+                                  </button>
+                              </span>
+                              </div>
+
+                              <script>
+                                $('#cantidad{{$producto->id}}').change(function(){
+                                  probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
+                                  Materialize.Toast.removeAll();
+                                  Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
+                                  costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
+                                  costort=$('#cantidad{{$producto->id}}').val()*{{$producto->precio*10}};
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+' - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>'+costort.toFixed(0));
+
+
+                                });
+                              </script>
+                            </div>
+                            <div class="botoncomprar col-md-6" style="padding-right: 0">
+                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-cart-plus"></i></button>
                             </div>
                           </div>
                           

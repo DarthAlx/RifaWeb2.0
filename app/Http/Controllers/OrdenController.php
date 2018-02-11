@@ -20,9 +20,11 @@ class OrdenController extends Controller
     	if ($producto) {
     		# code...
     	}
-      	Cart::add($producto->id,$producto->nombre,$request->cantidad,$producto->precio, ['imagen'=>$producto->imagen, 'loteria'=>$producto->loteria, 'descripcion' => $producto->descripcion]);
+      	Cart::add($producto->id,$producto->nombre,$request->cantidad,$producto->precio, ['imagen'=>$producto->imagen, 'loteria'=>$producto->loteria, 'descripcion' => $producto->descripcion, 'slug' => $producto->slug]);
 	    $items=Cart::content();
-	    return redirect()->intended(url('/carrito'));
+      Session::flash('toast', 'Boletos agregados al carrito.');
+            
+	    return redirect()->intended(url()->previous());
     }
 
     public function updatecart(Request $request)

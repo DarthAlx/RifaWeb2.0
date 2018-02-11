@@ -56,10 +56,12 @@
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="{{url('uploads/productos')}}/{{ $product->options->imagen }}" class="responsive-img"/></div>
 									<div class="col-sm-10">
+										<a href="{{url('/rifa')}}/{{$product->options->slug}}" style="color: inherit; text-decoration: none;">
 										<h4 class="nomargin">{{ $product->name }}</h4>
 										<p>Fuente: {{$product->options->loteria}}</p>
 
 										<p>{{str_limit($product->options->descripcion, $limit = 50, $end = '...')}}</p>
+										</a>
 									</div>
 								</div>
 							</td>

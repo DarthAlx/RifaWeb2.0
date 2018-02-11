@@ -18,6 +18,15 @@
         <script type="text/javascript" src="{{ url('js/countdown.js') }}"></script>
       </head>
     <body>
+
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/es_MX/sdk.js#xfbml=1&version=v2.12&appId=1691938924191854&autoLogAppEvents=1';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
         <section class="navigation">
             <div class="container">
              @if (Auth::guest())
@@ -33,17 +42,20 @@
 
                       <ul id="dropdown1" class="dropdown-content">
                         <li><a href="{{url('/perfil')}}">Perfil</a></li>
-                        <li><a href="#">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
-                        <li><a href="#">Mis Rifas</a></li>
-                        <li><a href="#">Direcciones</a></li>
+                        <li><a href="{{url('/perfil')}}">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
+                        <li><a href="{{url('/perfil')}}">Mis Rifas</a></li>
+                        <li><a href="{{url('/perfil')}}">Direcciones</a></li>
+                        <li><a href="{{url('/salir')}}">Salir</a></li>
                       </ul>
                       <ul id="dropdown0" class="dropdown-content">
-                        <li><a href="#!">one</a></li>
-                        <li><a href="#!">two</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#!">three</a></li>
+                        <li><a href="{{url('/perfil')}}">Perfil</a></li>
+                        <li><a href="{{url('/perfil')}}">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
+                        <li><a href="{{url('/perfil')}}">Mis Rifas</a></li>
+                        <li><a href="{{url('/perfil')}}">Direcciones</a></li>
+                        <li><a href="{{url('/salir')}}">Salir</a></li>
                       </ul>
               @endif
+
               
 
                 <nav>
@@ -67,8 +79,8 @@
                       @else
                       
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
-                      <li><a href="{{url('/salir')}}">SALIR</a></li>
-                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> CARRITO @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      <li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li>
+                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) ${{Cart::total(2,'.',',')}} - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{Cart::total(2,'.',',')*10}} @endif</a></li>
                       @endif
                     </ul>
                     
@@ -77,7 +89,7 @@
                         <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
                       @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown0">MI CUENTA</a></li>
-                      <li><a href="{{url('/salir')}}">SALIR</a></li>
+                      <li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li>
                       <li><a href="{{url('/carrito')}}">CARRITO <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
 
                       <li><a href="{{url('/canjear')}}">CANJEAR <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
@@ -93,8 +105,8 @@
               <div class="col l2 s12 m2">
                 
                   <div class="bouton_google text-center">
-                    <div class="google_volet" style="background-color:#8FC240;"><i class="fa fa-ticket fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas</span> </div>
-                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#8FC240;">
+                    <div class="google_volet" style="background-color:#dd4b39;"><i class="fa fa-ticket fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas</span> </div>
+                    <a href="{{url('/rifas')}}" style="text-decoration:none; color:#dd4b39;">
                       <div class="txt_google"><span class="hiddenmov">Todas las rifas</span><span class="visiblemov">Rifas</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -103,8 +115,8 @@
               <div class="col l2 s12 m2">
                 
                   <div class="bouton_google text-center">
-                    <div class="google_volet" style="background-color:#1AA5B9;"><i class="fa fa-user fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Perfil</span> </div>
-                    <a href="{{url('/perfil')}}" style="text-decoration:none; color:#1AA5B9;">
+                    <div class="google_volet" style="background-color:#8FC240;"><i class="fa fa-user fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Perfil</span> </div>
+                    <a href="{{url('/perfil')}}" style="text-decoration:none; color:#8FC240;">
                       <div class="txt_google"><span class="hiddenmov">Tus rifas, mensajes y premios</span><span class="visiblemov">Perfil</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -123,8 +135,8 @@
               <div class="col l2 s12 m2">
                 
                   <div class="bouton_google text-center">
-                    <div class="google_volet" style="background-color:#2072A0;"><i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <br> <span class="hiddenmov">¿Cómo Funciona?</span> </div>
-                    <a href="#123" style="text-decoration:none; color:#2072A0;">
+                    <div class="google_volet" style="background-color:#1AA5B9;"><i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <br> <span class="hiddenmov">¿Cómo Funciona?</span> </div>
+                    <a href="#123" style="text-decoration:none; color:#1AA5B9;">
                       <div class="txt_google"><span class="hiddenmov">Ayuda sobre la plataforma</span><span class="visiblemov">Ayuda</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -197,8 +209,16 @@
             $('.select').material_select();
 
             
-            
 
+            
+            
+@if (Session::get('toast'))
+
+  var url="{{url('/carrito')}}"
+  var $toastContent = $('<span>{{ Session::get('toast') }}</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
+  Materialize.toast($toastContent, 10000);
+
+@endif
          
 
 

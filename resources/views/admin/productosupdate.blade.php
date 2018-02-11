@@ -129,9 +129,17 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="input-field col s12">
-					          <input id="fecha_limite" name="fecha_limite" type="text" class="datepicker" value="{{$producto->fecha_limite or old('fecha_limite')}}" required>
+					        <div class="input-field col s6">
+					        	<?php 
+									$datetime = explode(' ', $producto->fecha_limite);  
+									$hora = explode(':', $datetime[1]);  
+					        	?>
+					          <input id="fecha_limite" name="fecha_limite" type="text" class="datepicker" value="{{$datetime[0] or old('fecha_limite')}}" required>
 					          <label for="fecha_limite">Fecha limite</label>
+					        </div>
+					        <div class="input-field col s6">
+					          <input id="hora" name="hora" type="text" class="timepicker" value="{{$hora[0].':'.$hora[1]}}" required>
+					          <label for="hora">Hora</label>
 					        </div>
 					      </div>
 					      <div class="row">

@@ -126,9 +126,13 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="input-field col s12">
+					        <div class="input-field col s6">
 					          <input id="fecha_limite" name="fecha_limite" type="text" class="datepicker" value="{{old('fecha_limite')}}" required>
 					          <label for="fecha_limite">Fecha limite</label>
+					        </div>
+					        <div class="input-field col s6">
+					          <input id="hora" name="hora" type="text" class="timepicker" value="{{old('hora')}}" required>
+					          <label for="hora">Hora</label>
 					        </div>
 					      </div>
 					      <div class="row">
