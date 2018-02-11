@@ -149,8 +149,10 @@
                             <br>
                           </div>
                           <p>&nbsp;</p>
-                          <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button" data-size="large" data-mobile-iframe="true"></div>
-                          <div class="fb-share-button" data-href="{{url()->current()}}" data-layout="button" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url()->current()}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+                          
+                       
+
+                          <iframe src="https://www.facebook.com/plugins/share_button.php?href={{url()->current()}}&layout=button&size=large&mobile_iframe=true&appId=1516214558672727&width=99&height=28" width="99" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
       </div>
     </form>
     </div>
