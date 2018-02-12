@@ -47,7 +47,12 @@
               </div>
               <div class="col-md-9">
                 <div class="img-containerlarge">
-                  <img src="{{url('/uploads/productos')}}/{{$producto->imagen}}" alt="" class="responsive-img materialboxed">
+                      @if($producto->fundacion&&$producto->fundacion!="")
+                        <span class="fundacion">En beneficio de: {{$producto->fundacion}}</span>
+                      @endif
+
+                  <img src="{{url('/uploads/productos')}}/{{$producto->imagen}}" alt="" class="responsive-img materialboxed">              
+                  <span class="product-price" id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}} - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$producto->precio*10}}</span>
                 </div>
               </div>
             </div>

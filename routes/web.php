@@ -67,6 +67,12 @@ Route::get('/carrito', function () {
   return view('carrito',['items'=>$items]);
 });
 
+Route::get('/checkout', function () {
+  $items=Cart::content();
+  $usuario = App\User::find(Auth::user()->id);
+  return view('checkout',['items'=>$items,'usuario'=>$usuario]);
+});
+
  Route::get('removefromcart/{id}', 'OrdenController@destroy');
 
   Route::post('updatecart', 'OrdenController@updatecart');

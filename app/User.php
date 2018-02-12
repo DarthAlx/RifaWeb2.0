@@ -40,4 +40,10 @@ class User extends Authenticatable
     public function mensajes(){
         return $this->hasMany('App\Mensaje');
     }
+    public function operaciones(){
+        return $this->hasMany('App\Operacion');
+    }
+    public function ordenes(){
+        return $this->hasMany('App\Orden');
+    }
 }
