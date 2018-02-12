@@ -83,19 +83,30 @@
 						@endforeach
 					</tbody>
 					<tfoot>
-						<tr class="d-block d-sm-none">
-							<td class="text-center"><strong>Total ${{Cart::total(2,'.',',')}}</strong></td>
+
+						<tr>	
+							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Subtotal</strong> ${{Cart::subtotal(2,'.',',')}}</td>
+						</tr>
+
+						<tr>	
+							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Tus RT</strong> <i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</td>
+						</tr>
+
+						<tr>	
+							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong> ${{Cart::total(2,'.',',')-$usuario->rt}}</td>
 						</tr>
 						<tr>
 							<td><a href="{{url('/rifas')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar comprando</a></td>
-							<td colspan="2" class="d-none d-sm-block" style="display: table-cell !important;"></td>
-							<td class="d-none d-sm-block text-center"><strong>Total ${{Cart::total(2,'.',',')}}</strong></td>
-							<td><a href="#" class="btn btn-success btn-block">Pagar <i class="fa fa-angle-right"></i></a></td>
+							<td colspan="3" class="d-none d-sm-block" style="display: table-cell !important;"></td>
+							
+							<td><a href="{{url('/checkout')}}" class="btn btn-success btn-block">Pagar <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>
 				@endif
-
 
 @endif
 </div>

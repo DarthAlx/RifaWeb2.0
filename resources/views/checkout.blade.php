@@ -29,7 +29,7 @@
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-credit-card-alt" style="line-height: 1.5;"></i> <span> &nbsp; Tarjeta</span> </div>
 			      <div class="collapsible-body">
-			      	<form action="{{url('checkout')}}" method="POST">
+			      	<form action="{{url('checkout')}}" method="POST" id="card-form">
 			      		{!! csrf_field() !!}
 					<div class="row">
 				        <div class="input-field col s6">
@@ -58,6 +58,12 @@
 
 				          <input class="validate tooltipped" id="cvv" autocomplete="off"  data-conekta="card[cvc]" type="text" data-position="bottom" data-delay="50" data-tooltip="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente." >
 				          <label for="nombretitular">CVV</label>
+				        </div>
+				        
+				    </div>
+				    <div class="row">
+				    	<div class="col s12">
+				        	<button type="submit" class="btn btn-primary right">Pagar</button>
 				        </div>
 				    </div>
 					</form>
@@ -135,7 +141,6 @@
   //jQuery para que genere el token después de dar click en submit
   $(function () {
     $("#card-form").submit(function(event) {
-      fbq('track', 'InitiateCheckout');
       var $form = $(this);
       // Previene hacer submit más de una vez
       $form.find("button").prop("disabled", true);

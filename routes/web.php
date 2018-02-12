@@ -64,7 +64,8 @@ Route::post('rifas', 'ProductoController@search');
 Route::post('carrito', 'OrdenController@addtocart');
 Route::get('/carrito', function () {
   $items=Cart::content();
-  return view('carrito',['items'=>$items]);
+  $usuario = App\User::find(Auth::user()->id);
+  return view('carrito',['items'=>$items,'usuario'=>$usuario]);
 });
 
 Route::get('/checkout', function () {
@@ -72,6 +73,7 @@ Route::get('/checkout', function () {
   $usuario = App\User::find(Auth::user()->id);
   return view('checkout',['items'=>$items,'usuario'=>$usuario]);
 });
+Route::post('checkout', 'OrdenController@cargo');
 
  Route::get('removefromcart/{id}', 'OrdenController@destroy');
 
