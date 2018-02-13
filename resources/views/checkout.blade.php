@@ -123,7 +123,7 @@
 
 <script type="text/javascript">
 
-    Conekta.setPublishableKey('key_FpVx4BQSbCuR9xNkw9gxRug');
+    Conekta.setPublishableKey('key_O2AUfqG6Rsv3ZgKVi38uSdA');
 
   var conektaSuccessResponseHandler = function(token) {
     var $form = $("#card-form");

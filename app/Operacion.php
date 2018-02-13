@@ -16,4 +16,4 @@ class Operacion extends Model
 	    return $this->belongsTo('App\Orden');
 	}
 }
-}
+

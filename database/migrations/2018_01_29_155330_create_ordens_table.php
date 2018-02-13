@@ -16,8 +16,8 @@ class CreateOrdensTable extends Migration
         Schema::create('ordenes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('order_id');
-            $table->integer('folio');
+            $table->string('order_id');
+            $table->string('folio');
             $table->string('status');
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';

@@ -13,6 +13,7 @@ use App\User;
 use App\Producto;
 use App\Item;
 use App\Operacion;
+use App\Folio;
 
 class OrdenController extends Controller
 {
@@ -60,7 +61,7 @@ class OrdenController extends Controller
 
     public function cargo(Request $request)
     {
-      \Conekta\Conekta::setApiKey("key_4HrFMgBax4SqEqZU1MBx8A");
+      \Conekta\Conekta::setApiKey("key_ty3oYz86wwJVi8yCdqMwtw");
       $items=Cart::content();
       $usuario=User::find(Auth::user()->id);
       $rt=$usuario->rt;
@@ -74,11 +75,14 @@ class OrdenController extends Controller
             'name' => $product->name,
             'unit_price' => $precio,
             'quantity' => $product->qty,
+            'metadata' => array(      
+              'id' => $product->id
+            )
           );
         }
         $descuentos[]=array(
             'code'   => 'RifaTokens',
-            'amount' => $rt*-1,
+            'amount' => $rt,
             'type'   => 'sign'
           );
       }
@@ -96,12 +100,8 @@ class OrdenController extends Controller
               "phone" => "+521".Auth::user()->tel
             ), //customer_info
             'line_items' => $productos,
-            "shipping_lines" => array(
-              array(
-                "amount" => 0,
-                 "carrier" => "None"
-              )
-            ),
+            
+
             'discount_lines' => $descuentos,
             'charges' => array(
               array(
@@ -143,16 +143,38 @@ class OrdenController extends Controller
            $operacion->rt = $rt;
            $operacion->pesos = Cart::total(2,'.',',')-$rt;
            $operacion->tipo ="Compra";
-           $operacion->fecha = date("Y-m-d");
+           $operacion->fecha = date_create(date("Y-m-d"));
+           $operacion->save();
 
         foreach ($productos as $producto) {
+          $product = Producto::find($producto['metadata']['id']);
 
+          $boletos = $product->boletos;
+          $vendidos = $product->vendidos;
+          $tickets = array();
+
+          if ($boletos<=10) {
+            if ($boletos==10) {
+              for ($i=$product->vendidos+1; $i <= $product->vendidos+$producto['quantity']; $i++) { 
+                $tickets[]="t".$i."t";
+              }
+            }
+            else{
+              for ($i=$product->vendidos+1; $i <= $product->vendidos+$producto['quantity']; $i++) { 
+                $tickets[]="t0".$i."t";
+              }
+            }
+            
+          }
+          $product->vendidos=$vendidos+$producto['quantity'];
+          $product->save();
           
-          $producto = new Item();
-          $producto->orden_id = $guardar->id;
-          $producto->producto = $producto['quantity'];
-          $producto->boletos = $producto['quantity'];
-          $producto->save();
+          $item = new Item();
+          $item->orden_id = $guardar->id;
+          $item->producto = $producto['name'];
+          $item->producto_id = $producto['metadata']['id'];
+          $item->boletos = implode(",", $tickets);;
+          $item->save();
         }
   
 
@@ -164,8 +186,8 @@ class OrdenController extends Controller
         //$this->sendinvoice($order->id);
         //$this->sendclassrequest($order->id);
         Session::flash('total', $order->amount);
-        dd("hecho");
-        return redirect()->intended(url('/recibo'));
+     
+        return redirect()->intended(url('/carrito'));
 
       } catch (\Conekta\ProccessingError $error){
         Session::flash('mensaje', $error->getMessage());
