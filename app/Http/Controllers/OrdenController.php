@@ -173,7 +173,7 @@ class OrdenController extends Controller
           $item->orden_id = $guardar->id;
           $item->producto = $producto['name'];
           $item->producto_id = $producto['metadata']['id'];
-          $item->boletos = implode(",", $tickets);;
+          $item->boletos = implode(",", $tickets);
           $item->save();
         }
   
