@@ -19,7 +19,10 @@ class CreateItemsTable extends Migration
             $table->integer('producto_id');
             $table->string('producto');
             $table->string('boletos');
+            $table->integer('cantidad');
+            $table->integer('precio');
             $table->timestamps();
+
         });
     }
 

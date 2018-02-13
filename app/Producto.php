@@ -18,4 +18,7 @@ class Producto extends Model
 	public function slider(){
 	    return $this->hasOne('App\Slider');
 	}
+	public function items(){
+	    return $this->hasMany('App\Item');
+	}
 }

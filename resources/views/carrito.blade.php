@@ -14,6 +14,7 @@
           	<a href="{{url('/entrar')}}" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</a></h1>
       </div>
     @else
+    <?php $usuario = App\User::find(Auth::user()->id); ?>
 
 
 	<div class="col-sm-12">
@@ -96,7 +97,7 @@
 
 						<tr>	
 							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
-							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong> ${{Cart::total(2,'.',',')-$usuario->rt}}</td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong>@if($usuario->rt>=Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}} @else ${{Cart::total(2,'.',',')-$usuario->rt}} @endif</td>
 						</tr>
 						<tr>
 							<td><a href="{{url('/rifas')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar comprando</a></td>

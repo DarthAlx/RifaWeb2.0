@@ -14,6 +14,7 @@
           	<a href="{{url('/entrar')}}" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</a></h1>
       </div>
     @else
+    <?php $usuario = App\User::find(Auth::user()->id); ?>
 
 
 	<div class="col-sm-12">
@@ -26,6 +27,31 @@
 
 
 			<ul class="collapsible" data-collapsible="accordion">
+			    @if($usuario->rt>=Cart::total(2,'.',','))
+
+			    <li>
+			      <div class="collapsible-header active"><i class="fa fa-circle-o-notch" style="line-height: 1.5;"></i> <span> &nbsp; RifaTokens</span> </div>
+			      <div class="collapsible-body">
+			      	<form action="{{url('checkout')}}" method="POST">
+			      		{!! csrf_field() !!}
+				    
+				    <div class="row">
+				        <div class="col s12">
+				          <h3><i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}}</h3>
+				        </div>
+				    </div>
+
+				   
+				    <div class="row">
+				    	<div class="col s12">
+				        	<button type="submit" class="btn btn-primary right">Pagar</button>
+				        </div>
+				    </div>
+					</form>
+			      </div>
+			    </li>
+			    
+				@else
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-credit-card-alt" style="line-height: 1.5;"></i> <span> &nbsp; Tarjeta</span> </div>
 			      <div class="collapsible-body">
@@ -69,7 +95,7 @@
 					</form>
 			      </div>
 			    </li>
-			    
+			    @endif
 			  </ul>
 
 
@@ -86,7 +112,7 @@
 		        @endforeach
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Tus RifaTokens</strong><a class="secondary-content"><i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</a></div></li>
-		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">${{Cart::total(2,'.',',')-$usuario->rt}}</a></div></li>
+		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if($usuario->rt>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}} @else ${{Cart::total(2,'.',',')-$usuario->rt}} @endif</a></div></li>
 		        
 		      </ul>
 

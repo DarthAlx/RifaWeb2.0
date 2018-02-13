@@ -76,6 +76,11 @@ class ProductoSeeder extends Seeder
         ]);
 
 
+        DB::table('folio')->insert([
+            'folio'=>10000
+        ]);
+
+
             
 
 

@@ -64,14 +64,13 @@ Route::post('rifas', 'ProductoController@search');
 Route::post('carrito', 'OrdenController@addtocart');
 Route::get('/carrito', function () {
   $items=Cart::content();
-  $usuario = App\User::find(Auth::user()->id);
-  return view('carrito',['items'=>$items,'usuario'=>$usuario]);
+  
+  return view('carrito',['items'=>$items]);
 });
 
 Route::get('/checkout', function () {
   $items=Cart::content();
-  $usuario = App\User::find(Auth::user()->id);
-  return view('checkout',['items'=>$items,'usuario'=>$usuario]);
+  return view('checkout',['items'=>$items]);
 });
 Route::post('checkout', 'OrdenController@cargo');
 
