@@ -82,4 +82,28 @@ class UserController extends Controller
 
     }
     
+
+
+    public function changepassuser(Request $request){
+        if ($request->password=="") {
+            Session::flash('mensaje', '¡Las contraseñas no pueden estar vacias!');
+            Session::flash('class', 'danger');
+            return redirect(url()->previous());
+        }
+      if ($request->password==$request->password_confirmation) {
+        $user = User::find(Auth::user()->id);
+        $user->password=bcrypt($request->password);
+        $user->save();
+        Session::flash('mensaje', '¡Contraseña actualizada!');
+        Session::flash('class', 'success');
+        return redirect(url()->previous());
+      }
+      else {
+        Session::flash('mensaje', '¡Las contraseñas deben coincidir!');
+        Session::flash('class', 'danger');
+        return redirect(url()->previous());
+      }
+
+
+    }
 }

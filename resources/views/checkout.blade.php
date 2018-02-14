@@ -59,7 +59,7 @@
 			      		{!! csrf_field() !!}
 					<div class="row">
 				        <div class="input-field col s6">
-				          <input class="validate" id="numtarjeta"  name="numero" autocomplete="off"  data-conekta="card[number]" type="text" >
+				          <input class="validate" id="numtarjeta"  name="numero" autocomplete="off"  data-conekta="card[number]" type="text" maxlength="16" minlength="16">
 				          <label for="numtarjeta">Número de tarjeta <span><i class="fa fa-cc-visa" aria-hidden="true"></i> <i class="fa fa-cc-mastercard" aria-hidden="true"></i> <i class="fa fa-cc-amex" aria-hidden="true"></i></span></label>
 				        </div>
 				    </div>
@@ -72,20 +72,33 @@
 
 				    <div class="row">
 				        <div class="input-field col s4">
-				          <input class="validate" id="mm" name="mes" data-conekta="card[exp_month]" type="text" type="text" >
+				          <input class="validate" id="mm" name="mes" data-conekta="card[exp_month]" type="text" type="text"  maxlength="2">
 				          
 				          <label for="nombretitular">Mes</label>
 				        </div>
 				        <div class="input-field col s4">
-				          <input class="validate" id="aa" name="año"  data-conekta="card[exp_year]" type="text">
+				          <input class="validate" id="aa" name="año"  data-conekta="card[exp_year]" type="text"  maxlength="2">
 				          <label for="nombretitular">Año</label>
 				        </div>
 				        <div class="input-field col s4">
 
-				          <input class="validate tooltipped" id="cvv" autocomplete="off"  data-conekta="card[cvc]" type="text" data-position="bottom" data-delay="50" data-tooltip="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente." >
+				          <input class="validate tooltipped" id="cvv" autocomplete="off"  data-conekta="card[cvc]" type="text" data-position="bottom" data-delay="50" data-tooltip="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente."   maxlength="4">
 				          <label for="nombretitular">CVV</label>
 				        </div>
 				        
+				    </div>
+				    <div class="row">
+				    	<div class="col s12">
+				    		<div class="switch">
+								    <label>
+								      <input type="checkbox" name="tarjeta" id="tarjeta"/>
+								      <span class="lever"></span>
+								      Guardar para compras futuras
+								    </label>
+								  </div>
+					               
+						      
+				    	</div>
 				    </div>
 				    <div class="row">
 				    	<div class="col s12">

@@ -76,6 +76,79 @@
 				    <div class="card">
 				      		<div class="card-content">
 				      			<h5>Rifas</h5>
+
+
+				      			@if($usuario->ordenes)
+								<div class="row">
+									<div class="col-md-12">
+										<div class="adv-table table-responsive">
+									  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+									  <thead>
+									  	<tr>
+									      	<th class="sorting">ID</th>
+											<th class="sorting_desc">Usuario</th>
+									      	<th>Folio</th>
+									      	<th>Estatus</th>
+									      	<th>RifaTokens</th>
+											<th>Pesos</th>
+									      	<th>Fecha</th>
+
+									  	</tr>
+									  </thead>
+									  <tbody>
+									  	@if($usuario->ordenes)
+									  		@foreach($usuario->ordenes as $orden)
+
+												<tr style="cursor: pointer;" class="modal-trigger " href="#orden{{$orden->id}}">
+													<td>{{$orden->order_id}}</td>
+													<td>{{$orden->user->name}}</td>
+													<td>{{$orden->folio}}</td>
+													<td>{{$orden->status}}</td>
+													<td>{{$orden->operacion->rt}}</td>
+													<td>{{$orden->operacion->pesos}}</td>
+													<td>{{$orden->operacion->fecha}}</td>
+												</tr>
+											@endforeach
+										@else
+											<tr style="cursor: pointer;">
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>						
+											</tr>
+
+										@endif
+										
+
+
+
+									  </tbody>
+									  <tfoot>
+									  	<tr>
+									      	<th class="sorting">ID</th>
+											<th class="sorting_desc">Usuario</th>
+									      	<th>Folio</th>
+									      	<th>Estatus</th>
+									      	<th>RifaTokens</th>
+											<th>Pesos</th>
+									      	<th>Fecha</th>
+									  	</tr>
+									  </tfoot>
+									  </table>
+
+									  </div>
+									</div>
+										
+								</div>
+
+								@endif
+
+
+
+
 				      		</div>
 				      		
 				      	</div></div>
@@ -83,6 +156,63 @@
 						<div class="card">
 				      		<div class="card-content">
 				      			<h5>Operaciones</h5>
+
+
+				      			@if($usuario->operaciones)
+								<div class="row">
+									<div class="col-md-12">
+										<div class="adv-table table-responsive">
+									  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+									  <thead>
+									  	<tr>
+											<th class="sorting_desc">Tipo</th>
+									      	<th>RifaTokens</th>
+											<th>Pesos</th>
+									      	<th>Fecha</th>
+
+									  	</tr>
+									  </thead>
+									  <tbody>
+									  	@if($usuario->operaciones)
+									  		@foreach($usuario->operaciones as $operacion)
+
+												<tr style="cursor: pointer;" class="modal-trigger " href="#operacion{{$operacion->id}}">
+													<td>{{$operacion->tipo}}</td>
+													<td>{{$operacion->rt}}</td>
+													<td>{{$operacion->pesos}}</td>
+													<td>{{$operacion->fecha}}</td>
+												</tr>
+											@endforeach
+										@else
+											<tr style="cursor: pointer;">
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>						
+											</tr>
+
+										@endif
+										
+
+
+
+									  </tbody>
+									  <tfoot>
+									  	<tr>
+									      	<th class="sorting_desc">Tipo</th>
+									      	<th>RifaTokens</th>
+											<th>Pesos</th>
+									      	<th>Fecha</th>
+									  	</tr>
+									  </tfoot>
+									  </table>
+
+									  </div>
+									</div>
+										
+								</div>
+
+								@endif
 
 					      	
 				      		</div>
@@ -112,7 +242,32 @@
 
 
 
+@if($usuario->ordenes)
+@foreach($usuario->ordenes as $orden)
+<!-- Modal Structure -->
+  <div id="orden{{$orden->id}}" class="modal">
+    <div class="modal-content">
+      <h4>Orden ({{$orden->order_id}})</h4>
+      <h5>Rifas</h5>
+  
+      <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
+			@foreach($orden->items as $item)
+              <li>
+                <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>{{$item->cantidad}}</div></div>
+                <div class="collapsible-body"><span># {{str_replace("t", "", $item->boletos)}}</span></div>
+              </li>
+            @endforeach
+ 
+            </ul>  
 
+    </div>
+    <div class="modal-footer">
+    	<a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp; 
+    </div>
+  </div>
+
+  @endforeach
+@endif
 
 @endsection
 

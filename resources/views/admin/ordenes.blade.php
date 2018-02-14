@@ -18,7 +18,7 @@
 		</div>
 		<p>&nbsp;</p>
 
-
+		@if($ordenes)
 		<div class="row">
 			<div class="col-md-12">
 				<div class="adv-table table-responsive">
@@ -83,6 +83,8 @@
 			</div>
 				
 		</div>
+
+		@endif
 		
 		
 		

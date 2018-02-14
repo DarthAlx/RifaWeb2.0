@@ -57,7 +57,9 @@ nav img{
 nav i{
     height: auto !important;
 }
-
+.modal {
+    bottom: auto !important;
+}
 
 .toast{
     font-weight: 700;

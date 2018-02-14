@@ -83,6 +83,7 @@ Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
 
+Route::post('cambiar-contrasena-user', 'UserController@changepassuser')->middleware('auth');
 
 Route::get('/rifa/{slug}', function ($slug) {
 	$producto=App\Producto::where('slug',$slug)->first();
@@ -93,7 +94,7 @@ Route::get('/rifa/{slug}', function ($slug) {
 Route::post('leermensaje', 'MensajeController@read')->middleware('auth');
 
 
-
+Route::delete('eliminar-tarjeta', 'TarjetaController@destroy')->middleware('auth');
 
 
 

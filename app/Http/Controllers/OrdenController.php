@@ -14,6 +14,7 @@ use App\Producto;
 use App\Item;
 use App\Operacion;
 use App\Folio;
+use App\Tarjeta;
 
 class OrdenController extends Controller
 {
@@ -188,18 +189,16 @@ class OrdenController extends Controller
             ));
 
 
-
-  /*
-          if ($request->tarjeta==""&&$request->identificadortarjeta) {
-            $tarjeta = new Tarjeta();
-            $tarjeta->identificador = $request->identificadortarjeta;
-            $tarjeta->num= $request->numero;
-            $tarjeta->nombre = $request->nombre;
-            $tarjeta->mes = $request->mes;
-            $tarjeta->año = $request->año;
-            $tarjeta->user_id = Auth::user()->id;
-            $tarjeta->save();
-          }*/
+            if (isset($request->tarjeta)) {
+              $tarjeta = new Tarjeta();
+              $tarjeta->identificador= substr_replace($request->numero, '************', 0, -4);
+              $tarjeta->num= $request->numero;
+              $tarjeta->nombre = $request->nombre;
+              $tarjeta->mes = $request->mes;
+              $tarjeta->año = $request->año;
+              $tarjeta->user_id = Auth::user()->id;
+              $tarjeta->save();
+            }
 
 
           $folio=Folio::first();

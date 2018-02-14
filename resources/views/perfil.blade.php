@@ -21,7 +21,7 @@
 								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{$usuario->rt}} <span class="hiddenmov">rifatokens</span>
 							</div>
 							<div class="chip light-blue lighten-3">
-								<i class="fa fa-flag" aria-hidden="true"></i> 3 <span class="hiddenmov">participaciones</span>
+								<i class="fa fa-flag" aria-hidden="true"></i> {{$usuario->ordenes->count()}} <span class="hiddenmov">participaciones</span>
 							</div>
 							<div class="chip light-green lighten-3">
 								<i class="fa fa-trophy" aria-hidden="true"></i> 0 <span class="hiddenmov">ganadas</span>
@@ -37,6 +37,11 @@
 	</div>
 	<p>&nbsp;</p>
 	<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        @include('snip.notificaciones')
+      </div>
+    </div>
 		<div class="row">
         <div class="col-md-4">
           <div class="card z-depth-3">
@@ -48,15 +53,17 @@
             </div>
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
-              @foreach($usuario->ordenes as $orden)
+              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Completa')->orderBy('created_at','desc')->paginate(10); ?>
+              @foreach($ordenes as $orden)
                 @foreach($orden->items as $item)
                   <li>
-                    <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>{{$item->cantidad}}</div></div>
+                    <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
                     <div class="collapsible-body"><span># {{str_replace("t", "", $item->boletos)}}</span></div>
                   </li>
                 @endforeach
               @endforeach
-            </ul>            
+            </ul>  
+            {{ $ordenes->links() }}          
           </div>
         </div>
         <div class="col-md-8">
@@ -109,12 +116,14 @@
 </section>
 <p>&nbsp;</p>
 <div class="fixed-action-btn horizontal">
-    <a class="btn-floating btn-large red pulse" data-toggle="tooltip" data-placement="top" title="Gestión de cuenta">
+    <a class="btn-floating btn-large red pulse tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Gestión de cuenta">
       <i class="fa fa-user fa2x"></i>
     </a>
     <ul>
-      <li><a class="btn-floating blue" data-toggle="tooltip" data-placement="top" title="Direcciones"><i class="fa fa-map-marker"></i></a></li>
-      <li><a class="btn-floating red" data-toggle="tooltip" data-placement="top" title="Editar perfil"><i class="fa fa-pencil"></i></a></li>
+      <li><a class="btn-floating blue tooltipped modal-trigger " href="#tarjetas" data-position="bottom" data-delay="50" data-tooltip="Tarjetas"><i class="fa fa-credit-card-alt"></i></a></li>
+      <li><a class="btn-floating green tooltipped modal-trigger " href="#passwordmodal" data-position="bottom" data-delay="50" data-tooltip="Cambiar contraseña"><i class="fa fa-lock"></i></a></li>
+      <!--li><a class="btn-floating red tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar perfil"><i class="fa fa-pencil"></i></a></li-->
+
     </ul>
   </div>
 
@@ -144,7 +153,86 @@
   @endforeach
 @endif
 
+@if($usuario)
 
+<!-- Modal Structure -->
+  <div id="passwordmodal" class="modal modal-fixed-footer" style="display: none;">
+    <div class="modal-content" style="height: 100%;">
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Contraseña</h5>
+
+                  <form action="{{ url('/cambiar-contrasena-user') }}" method="post" enctype="multipart/form-data">
+                    {!! csrf_field() !!}
+                    <input type="hidden" name="usuario_id" value="{{$usuario->id}}">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="password" type="password" name="password" class="validate" required>
+                      <label for="password">Nueva contraseña</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="password_confirmation" name="password_confirmation" type="password" class="validate" required>
+                      <label for="password_confirmation">Confirmar nueva contraseña</label>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col s12">
+                      <input type="submit" value="Cambiar" class="btn btn-primary right waves-effect waves-light">
+                    </div>
+                  </div>
+                </form>
+      
+        </div>
+      </div>
+       
+    </div>
+ <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp;
+    </div>
+  </div>
+
+@endif
+
+
+
+
+@if($usuario->tarjetas)
+
+<!-- Modal Structure -->
+  <div id="tarjetas" class="modal">
+    <div class="modal-content">
+      <h4>Tarjetas</h4>
+  @if(!$usuario->tarjetas->isEmpty())
+      <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
+      @foreach($usuario->tarjetas as $tarjeta)
+              <li>
+                <div class="collapsible-header"><div class="left">{{$tarjeta->identificador}} </div>
+                  <div class="right">
+                    <form action="{{url('/eliminar-tarjeta')}}" method="post" enctype="multipart/form-data">
+                      {{ method_field('DELETE') }}
+                      {!! csrf_field() !!}
+                      <input type="hidden" name="eliminar" value="{{$tarjeta->id}}">
+                      <button type="submit" class="modal-action modal-close waves-effect waves-green red btn"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                    </form> &nbsp; &nbsp;
+                  </div>
+                </div>
+               
+              </li>
+            @endforeach
+
+ 
+            </ul>
+            @else
+            <p>Aún no hay tarjetas guardadas.</p>  
+@endif
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp; 
+    </div>
+  </div>
+
+@endif
 
 
 
