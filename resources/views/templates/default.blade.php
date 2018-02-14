@@ -81,7 +81,7 @@
                       
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
                       <li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li>
-                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) ${{Cart::total(2,'.',',')}} - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{Cart::total(2,'.',',')*10}} @endif</a></li>
+                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) ${{Cart::total(2,'.',',')}} @endif</a></li>
                       @endif
                     </ul>
                     
@@ -91,7 +91,7 @@
                       @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown0">MI CUENTA</a></li>
                       <li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li>
-                      <li><a href="{{url('/carrito')}}">CARRITO <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) ({{Cart::content()->count()}}) @endif</a></li>
+                      <li><a href="{{url('/carrito')}}">CARRITO <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) ${{Cart::total(2,'.',',')}} @endif</a></li>
 
                       <li><a href="{{url('/canjear')}}">CANJEAR <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
                       @endif

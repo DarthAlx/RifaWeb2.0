@@ -48,22 +48,14 @@
             </div>
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
-              <li>
-                <div class="collapsible-header"><div class="left">Xbox One </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>15</div></div>
-                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
-              </li>
-              <li>
-                <div class="collapsible-header"><div class="left">Iphone X </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>30</div></div>
-                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
-              </li>
-              <li>
-                <div class="collapsible-header"><div class="left">Xbox One </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>15</div></div>
-                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
-              </li>
-              <li>
-                <div class="collapsible-header"><div class="left">Iphone X </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>30</div></div>
-                <div class="collapsible-body"><span># 1, 2, 3, 4, 5</span></div>
-              </li>
+              @foreach($usuario->ordenes as $orden)
+                @foreach($orden->items as $item)
+                  <li>
+                    <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>{{$item->cantidad}}</div></div>
+                    <div class="collapsible-body"><span># {{str_replace("t", "", $item->boletos)}}</span></div>
+                  </li>
+                @endforeach
+              @endforeach
             </ul>            
           </div>
         </div>

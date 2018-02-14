@@ -217,7 +217,7 @@ class OrdenController extends Controller
              $operacion->rt = $rt;
              $operacion->pesos = Cart::total(2,'.',',')-$rt;
              $operacion->tipo ="Compra";
-             $operacion->fecha = date_create(date("Y-m-d"));
+             $operacion->fecha = date_create(date("Y-m-d H:i:s"));
              $operacion->save();
 
              

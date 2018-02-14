@@ -241,6 +241,14 @@ Route::group(['middleware' => 'admin'], function(){
 		}
 	    
 	});
+
+	Route::get('/ordenes', function () {
+		$ordenes=App\Orden::all();
+	    return view('admin.ordenes', ['ordenes'=>$ordenes]);
+	});
+
+
+
 	Route::post('cambiar-contrasena', 'UserController@changepass');
 
 	Route::delete('eliminar-usuario', 'UserController@destroy');

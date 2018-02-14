@@ -37,11 +37,12 @@
 			      	<th>Teléfono</th>
 					<th>Genero</th>
 			      	<th>Rifa Tokens</th>
+			      	<th>Participaciones</th>
 			      	<th></th>
 			  	</tr>
 			  </thead>
 			  <tbody>
-			  	@if($usuarios->count()>0)
+			  	@if($usuarios)
 			  		@foreach($usuarios as $usuario)
 
 						<tr>
@@ -52,6 +53,7 @@
 							<td>{{$usuario->tel}}</td>
 							<td>{{$usuario->genero}}</td>
 							<td>{{$usuario->rt}}</td>
+							<td>{{$usuario->ordenes->count()}}</td>
 							<td>
 								<a class="waves-effect waves-light btn" href="{{url('/usuario')}}/{{$usuario->id}}"><i class="fa fa-search-plus"></i></a>
 								<a class="waves-effect waves-light btn  modal-trigger " href="#mensaje{{$usuario->id}}"><i class="fa fa-envelope"></i></a>
@@ -61,6 +63,8 @@
 					@endforeach
 				@else
 					<tr style="cursor: pointer;">
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -85,6 +89,7 @@
 			      	<th>Teléfono</th>
 					<th>Genero</th>
 			      	<th>Rifa Tokens</th>
+			      	<th>Participaciones</th>
 			      	<th></th>
 			  	</tr>
 			  </tfoot>

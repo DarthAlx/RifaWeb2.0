@@ -147,7 +147,7 @@
                         <span class="fundacion">En beneficio de: {{$producto->fundacion}}</span>
                         @endif
                         <img src="{{url('uploads/productos')}}/{{$producto->imagen}}" class="responsive-img">
-                        <span class="product-price" id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}} - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$producto->precio*10}}</span>
+                        <span class="product-price">${{$producto->precio}}</span>
                         </a>
                       </div>
                       
@@ -178,14 +178,14 @@
                               day   : {{$fecha[2]}},
                               hour   : {{$hora[0]}},
                               minutes   : {{$hora[1]}},
-                              width : 250, 
-                              height  : 60,
+                              width : 200, 
+                              height  : 50,
                               rangeHi:"day"
                               });
 
                             </script>
                           </div>
-                          <br>
+                          
                           <p style="margin:0;">Progreso de rifa:</p>
                           <div class="progress tooltipped" data-position="top" data-delay="50" data-tooltip="{{$producto->vendidos}}/{{$producto->boletos}}">
                             <?php if((($producto->vendidos*100)/$producto->boletos)<=33){?>
@@ -202,6 +202,9 @@
                         
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
+                            <div class="botonprecio col-md-12" style="padding: 0">
+                              <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}</span>mxn</span>
+                            </div>
                             
                             <div class="botoncantidad col-md-6" style="padding-left: 0">
                               <div class="input-group">
@@ -224,8 +227,8 @@
                                   Materialize.Toast.removeAll();
                                   Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
-                                  costort=$('#cantidad{{$producto->id}}').val()*{{$producto->precio*10}};
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+' - <i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>'+costort.toFixed(0));
+
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0));
 
 
                                 });
