@@ -256,6 +256,8 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::delete('eliminar-usuario', 'UserController@destroy');
 
+	Route::post('asignar-ganador', 'ProductoController@ganador');
+
 });
 
 

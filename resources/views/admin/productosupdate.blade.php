@@ -4,20 +4,27 @@
 <div class=" main">
 	<div class="container-fluid">
 		
-		<form action="{{ url('/producto') }}/{{$producto->id}}" method="post" enctype="multipart/form-data">
-			 {{ csrf_field() }}
+		
 		<div class="row">
 			<div class="col-md-6">
 				<h3 class="">Editar producto</h3>
 			</div>
 			<div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
-				<div class="text-center" style="margin-left: auto;">
-					<a class="waves-effect waves-light btn btn-large modal-trigger red" href="#delete{{$producto->id}}">Eliminar</a>
-					<input type="submit" value="Actualizar" class="btn btn-primary right waves-effect waves-light btn-large">
-				</div>
 				
+					
+				
+
+				<form action="{{ url('/producto') }}/{{$producto->id}}" method="post" enctype="multipart/form-data">
+				 	{{ csrf_field() }}
+					<div class="text-right" style="margin-left: auto;">
+						<a class="waves-effect waves-light btn btn-large modal-trigger red" href="#delete{{$producto->id}}">Eliminar</a>
+						@if(!$producto&&$producto!="")<a class="waves-effect waves-light btn btn-large modal-trigger " href="#ganador" style="margin-left: 15px;">Ganador</a>@endif
+						<input type="submit" value="Actualizar" class="btn btn-primary right waves-effect waves-light btn-large">
+					</div>
+				</form>
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="col-md-12">
 				@include('snip.notificaciones')
@@ -159,6 +166,7 @@
 
 				  </div>
 				</div>
+
 
 
 				<!--div class="card">
@@ -319,5 +327,46 @@
 		</form>
     	
     </div>
+  </div>
+
+
+  <!-- Modal Structure -->
+  <?php 
+	$boletos = $producto->boletos;
+	$digitos = strlen(intval($boletos));
+	?>
+  <div id="ganador" class="modal">
+  	<form action="{{ url('/asignar-ganador') }}" method="post" enctype="multipart/form-data">
+  		{!! csrf_field() !!}
+  		<input type="hidden" name="producto" value="{{$producto->id}}">
+    <div class="modal-content">
+      <h4>Asignar Ganador</h4>
+      <p>Ingresa los ultimos {{$digitos}} digitos del boleto ganador</p>
+	
+	    	<div class="col s12">
+		      <div class="row">
+		        <div class="input-field col col-md-6">
+		          <input id="ganador" name="ganador" type="text" class="validate" value="{{old('ganador')}}" maxlength="{{$digitos}}" minlength="{{$digitos}}">
+		          <label for="ganador">Número ganador</label>
+		        </div>
+		        <div class="input-field col col-md-6">
+		          <input id="ganador_confirmation" name="ganador_confirmation" type="text" value="{{old('ganador_confirmation')}}" class="validate" maxlength="{{$digitos}}" minlength="{{$digitos}}">
+		          <label for="ganador_confirmation">Confirmar número ganador</label>
+		        </div>
+		      </div>					      
+		    </div>
+
+    </div>
+    <div class="modal-footer">
+    	<a href="#!" class="modal-action modal-close waves-effect waves-green btn red">Cancelar</a> &nbsp; 
+		
+			
+			
+
+			<input type="submit" class="modal-action waves-effect waves-green btn" value="Terminar">
+		
+    	
+    </div>
+    </form>
   </div>
 @endsection

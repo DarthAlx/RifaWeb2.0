@@ -45,14 +45,14 @@
                         <li><a href="{{url('/perfil')}}">Perfil</a></li>
                         <li><a href="{{url('/perfil')}}">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
                         <li><a href="{{url('/perfil')}}">Mis Rifas</a></li>
-                        <li><a href="{{url('/perfil')}}">Direcciones</a></li>
+                        
                         <li><a href="{{url('/salir')}}">Salir</a></li>
                       </ul>
                       <ul id="dropdown0" class="dropdown-content">
                         <li><a href="{{url('/perfil')}}">Perfil</a></li>
                         <li><a href="{{url('/perfil')}}">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
                         <li><a href="{{url('/perfil')}}">Mis Rifas</a></li>
-                        <li><a href="{{url('/perfil')}}">Direcciones</a></li>
+                        
                         <li><a href="{{url('/salir')}}">Salir</a></li>
                       </ul>
               @endif

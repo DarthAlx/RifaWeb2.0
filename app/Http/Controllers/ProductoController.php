@@ -139,13 +139,24 @@ class ProductoController extends Controller
 
     }
 
-    function ganador(Request $request,$id){
+    public function ganador(Request $request){
         $validator = $this->validator($request->all());
 
         if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
+
+
+            Session::flash('mensaje', 'Los números deben coincidir.');
+              Session::flash('class', 'danger');
+              return redirect()->intended(url()->previous());
+        }
+        else{
+              $producto = Producto::find($request->producto);
+              $producto->ganador=$request->ganador;
+              $producto->save();
+
+              Session::flash('mensaje', 'Ganador asignado.');
+              Session::flash('class', 'success');
+              return redirect()->intended(url()->previous());
         }
     }
 
