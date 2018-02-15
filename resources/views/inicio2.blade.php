@@ -30,12 +30,23 @@
                   <h5>¡Quedan pocos boletos!</h5>
                   <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
                   <div id="contador{{$slide->producto->id}}" style="float: right;">
-                            <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
+                            
+
+                            <?php 
+                            $datetime = explode(' ', $slide->producto->fecha_limite); 
+                            $fecha = explode('-', $datetime[0]); 
+
+                            $hora = explode(':', $datetime[1]); 
+
+
+                            ?>
                             <script>
                               var Countdown{{$slide->producto->id}} = new Countdown({
                               year: {{$fecha[0]}},
                               month : {{$fecha[1]}}, 
                               day   : {{$fecha[2]}},
+                              hour   : {{$hora[0]}},
+                              minutes   : {{$hora[1]}},
                               width : 200, 
                               height  : 50,
                               rangeHi:"day"
