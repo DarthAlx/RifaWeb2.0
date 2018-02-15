@@ -21,6 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('boletos');
             $table->integer('cantidad');
             $table->integer('precio');
+            $table->dateTime('fecha');
             $table->timestamps();
 
         });

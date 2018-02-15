@@ -54,6 +54,37 @@ class MensajeController extends Controller
     		return redirect()->intended(url('/mensajes'))->withInput();
     		
     	}
+    	elseif ($request->tipo=="Multi") {
+
+    		$usuarios=$request->mensajeuser;
+
+
+    		foreach ($usuarios as $usuario) {
+    			$mensaje=new Mensaje($request->all());
+		    	$mensaje->sender_id=Auth::user()->id;
+		    	$mensaje->fecha=date('Y-m-d');
+	    		$destinatario= User::find($usuario);
+	    		$mensaje->user_id=$destinatario->id;
+	    		if ($destinatario) {
+		    		if ($mensaje->save()) {
+		    		Session::flash('mensaje', 'Mensaje enviado correctamente.');
+			        Session::flash('class', 'success');
+			        return redirect()->intended(url('/mensajes'))->withInput();
+			    	}
+			    	else
+			    	{
+			    		Session::flash('mensaje', 'No se pudo enviar el mensaje, intentalo nuevamente.');
+				        Session::flash('class', 'danger');
+				        return redirect()->intended(url('/mensajes'))->withInput();
+			    	}
+		    	}
+		    	else{
+		    		Session::flash('mensaje', 'No se puede encontrar al destinatario.');
+			        Session::flash('class', 'danger');
+			        return redirect()->intended(url('/mensajes'))->withInput();
+		    	}
+    		}
+    	}
     	
     	
     	

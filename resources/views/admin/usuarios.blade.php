@@ -27,10 +27,17 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="adv-table table-responsive">
+					<form action="{{ url('/enviar-mensaje') }}" method="post" enctype="multipart/form-data">
+					{!! csrf_field() !!}
+					<input type="hidden" name="tipo" value="Multi">
+					
 			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
 			  <thead>
 			  	<tr>
-			      	<th class="sorting"><i class="fa fa-picture-o"></i></th>
+			      	<th class="sorting">
+			      		<i class="fa fa-envelope-square" aria-hidden="true"></i>
+                    </th>
+			      	<th><i class="fa fa-picture-o"></i></th>
 					<th class="sorting_desc">Nombre</th>
 			      	<th>Email</th>
 			      	<th>Fecha de nacimiento</th>
@@ -46,6 +53,12 @@
 			  		@foreach($usuarios as $usuario)
 
 						<tr>
+							<td>
+								<p>
+		                          <input type="checkbox" id="mensajeuser{{$usuario->id}}" name="mensajeuser[]" value="{{$usuario->id}}" required/>
+		                          <label for="mensajeuser{{$usuario->id}}"></label>
+		                        </p>
+							</td>
 							<td><img src="{{$usuario->avatar}}" alt="" style="max-width: 50px;"></td>
 							<td>{{$usuario->name}}</td>
 							<td>{{$usuario->email}}</td>
@@ -82,6 +95,9 @@
 			  </tbody>
 			  <tfoot>
 			  	<tr>
+			  		<th class="sorting">
+			      		<i class="fa fa-envelope-square" aria-hidden="true"></i>
+                    </th>
 			      	<th class="sorting"><i class="fa fa-picture-o"></i></th>
 					<th class="sorting_desc">Nombre</th>
 			      	<th>Email</th>
@@ -92,8 +108,27 @@
 			      	<th>Participaciones</th>
 			      	<th></th>
 			  	</tr>
+			  	<tr>
+			  		<td colspan="10">
+			  			<ul class="collapsible" data-collapsible="accordion">
+						    <li>
+						      <div class="collapsible-header">Enviar mensaje</div>
+						      <div class="collapsible-body">
+						      	<div class="input-field">
+						          <textarea id="msg" name="msg" class="materialize-textarea" required>{{old('msg')}}</textarea>
+						          <label for="msg">Mensaje</label>
+						        </div>
+								<button type="submit" class="btn waves-effect waves-light">Enviar</button>
+						      </div>
+						    </li>
+						  </ul>
+			  			
+
+			  		</td>
+			  	</tr>
 			  </tfoot>
 			  </table>
+			  </form>
 
 			  </div>
 			</div>
@@ -195,7 +230,7 @@
 	$(document).ready(function() {
 		$('.table tr th:first-child').removeClass('sorting_desc');
 		$('.table tr th:first-child').addClass('sorting');
-		$('.table tr th:nth-child(2)').addClass('sorting_asc');
+		$('.table tr th:nth-child(3)').addClass('sorting_asc');
 	});
 	
 </script>

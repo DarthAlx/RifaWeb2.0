@@ -53,12 +53,46 @@
             </div>
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
-              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Completa')->orderBy('created_at','desc')->paginate(10); ?>
+              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Completa')->orderBy('created_at','desc')->paginate(10); $li=0;?>
               @foreach($ordenes as $orden)
                 @foreach($orden->items as $item)
+
+                
                   <li>
-                    <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
-                    <div class="collapsible-body"><span># {{str_replace("t", "", $item->boletos)}}</span></div>
+                    <div class="collapsible-header @if($li==0) active <?php $li++;?>@endif"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
+                    <?php $boletos=explode(',',str_replace("t", "", $item->boletos)); $contador=0;?>
+                    <div class="collapsible-body">
+                          
+
+
+
+                      <span># @foreach($boletos as $boleto) @if($contador==0){{$boleto}} <?php $contador++;?> @else , {{$boleto}} @endif @endforeach</span>
+
+                    <div id="contador{{$item->id}}" >
+                            
+
+                            <?php 
+                            $datetime = explode(' ', $item->fecha); 
+                            $fecha = explode('-', $datetime[0]); 
+
+                            $hora = explode(':', $datetime[1]); 
+
+
+                            ?>
+                            <script>
+                              var Countdown{{$item->id}} = new Countdown({
+                              year: {{$fecha[0]}},
+                              month : {{$fecha[1]}}, 
+                              day   : {{$fecha[2]}},
+                              hour   : {{$hora[0]}},
+                              minutes   : {{$hora[1]}},
+                              width : 200, 
+                              height  : 50,
+                              rangeHi:"day"
+                              });
+
+                            </script>
+                          </div></div>
                   </li>
                 @endforeach
               @endforeach

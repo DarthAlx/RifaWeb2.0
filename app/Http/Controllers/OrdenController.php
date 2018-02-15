@@ -124,6 +124,7 @@ class OrdenController extends Controller
             $item->boletos = implode(",", $tickets);
             $item->cantidad = $producto['quantity'];
             $item->precio = $producto['unit_price']/100;
+            $item->fecha = date_create($product->fecha);
             $item->save();
           }
     
@@ -245,6 +246,7 @@ class OrdenController extends Controller
             $item->boletos = implode(",", $tickets);
             $item->cantidad = $producto['quantity'];
             $item->precio = $producto['unit_price']/100;
+            $item->fecha = date_create($product->fecha);
             $item->save();
           }
     
