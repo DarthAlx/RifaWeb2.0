@@ -57,6 +57,26 @@
 			      <div class="collapsible-body">
 			      	<form action="{{url('checkout')}}" method="POST" id="card-form">
 			      		{!! csrf_field() !!}
+					@if(!$usuario->tarjetas->isEmpty())
+			      	<div class="row">
+						        <div class="input-field col s12">
+						        	<select id="mitarjeta" name="mitarjeta" class="select" required>
+								      <option value="" disabled selected>Seleccionar tarjeta</option>
+
+								      	
+				    					@foreach($usuario->tarjetas as $tarjeta)
+				    					<option value="{{$tarjeta->id}}">{{$tarjeta->identificador}}</option>
+										@endforeach
+										<option value="">Nueva tarjeta</option>
+										
+								    </select>
+						          <label for="mitarjeta">Tus tarjetas</label>
+						        </div>
+					      	</div>
+
+
+
+					      	@endif
 					<div class="row">
 				        <div class="input-field col s6">
 				          <input class="validate" id="numtarjeta"  name="numero" autocomplete="off"  data-conekta="card[number]" type="text" maxlength="16" minlength="16">
@@ -87,7 +107,7 @@
 				        </div>
 				        
 				    </div>
-				    <div class="row">
+				    <div class="row" id="guardartarjeta">
 				    	<div class="col s12">
 				    		<div class="switch">
 								    <label>
@@ -142,11 +162,11 @@
 
 
 
+ <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 
 
-
-
+<div id="llenar"></div>
 
 
 
@@ -187,6 +207,33 @@
       return false;
     });
   });
+</script>
+
+
+<script>
+
+  $('#mitarjeta').change(function(){
+  	if ($('#mitarjeta').val()!="") {
+  		$("#guardartarjeta").hide();
+  	}
+  	else{
+  		$("#guardartarjeta").show();
+  	}
+  	
+  	tarjeta = $('#mitarjeta').val();
+    _token = $('#token').val();
+    $.post("{{url('/traertarjeta')}}", {
+        tarjeta : tarjeta,
+        _token : _token
+        }, function(data) {
+          $("#llenar").append(data);
+        });
+  });
+
+    
+
+  
+  
 </script>
 
 

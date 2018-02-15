@@ -96,6 +96,8 @@ Route::post('leermensaje', 'MensajeController@read')->middleware('auth');
 
 Route::delete('eliminar-tarjeta', 'TarjetaController@destroy')->middleware('auth');
 
+Route::post('traertarjeta', 'TarjetaController@traertarjeta')->middleware('auth');
+
 
 
 // Authentication routes...

@@ -17,4 +17,18 @@ class TarjetaController extends Controller
             Session::flash('class', 'success');
             return redirect()->intended(url()->previous());
         }
+
+        public function traertarjeta(Request $request)
+	    {
+	      $tarjeta = Tarjeta::find($request->tarjeta);  
+	      echo "<script type='text/javascript'>
+			$('#numtarjeta').val('$tarjeta->num');    
+			$('#nombretitular').val('$tarjeta->nombre');    
+			$('#mm').val('$tarjeta->mes');    
+			$('#aa').val('$tarjeta->año');
+			$('#cvv').focus();
+	      </script>";
+			    
+
+	    }
 }
