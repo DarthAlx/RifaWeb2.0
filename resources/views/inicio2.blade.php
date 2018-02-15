@@ -13,7 +13,7 @@
             @if($slide->tipo=="Producto")
 
 
-            <div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(2, 6)}}.jpg'); background-size: cover;">
+            <div class="slider-item" style="background: url('{{url('/img/bgslide')}}/{{rand(1, 7)}}.jpg'); background-size: cover;">
               <div class="container"  style="position: relative !important;">
                 <div class="row">
 
