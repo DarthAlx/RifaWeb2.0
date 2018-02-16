@@ -21,7 +21,7 @@
 						@if(!$producto->ganador||$producto->ganador=="")<a class="waves-effect waves-light btn btn-large modal-trigger " href="#ganador" style="margin-left: 15px;">Ganador</a>@endif
 						<input type="submit" value="Actualizar" class="btn btn-primary right waves-effect waves-light btn-large">
 					</div>
-				</form>
+				
 			</div>
 		</div>
 		
@@ -38,7 +38,20 @@
 				@endif
 			</div>
 		</div>
-		
+		<?php 
+
+			$ventas=App\Item::where('producto',$producto->nombre)->where('fecha',$producto->fecha_limite)->count();
+			$venta=App\Item::where('producto',$producto->nombre)->where('fecha',$producto->fecha_limite)->first();
+			if ($venta) {
+				$orden= $venta->orden;
+				$status=$orden->status;
+			}
+			else{
+				$status="none";
+			}
+
+			
+		?>
 		<div class="row">
 			<div class="col-md-8">
 				<div class="card">
@@ -48,7 +61,12 @@
 				    	<div class="col s12">
 					      <div class="row">
 					        <div class="input-field col col-md-8">
-					          <input id="nombre" name="nombre" type="text" class="validate" value="{{$producto->nombre or old('nombre')}}" required>
+								@if($ventas>0&&$status!="Terminada")
+								<input  name="nombre" type="hidden" value="{{$producto->nombre or old('nombre')}}" required>
+					          	<input id="nombre" type="text" class="validate" value="{{$producto->nombre or old('nombre')}}" disabled required>
+								@else
+								<input id="nombre" name="nombre" type="text" class="validate" value="{{$producto->nombre or old('nombre')}}" required>
+					          	@endif
 					          <label for="nombre">Nombre</label>
 					        </div>
 					        <div class="input-field col col-md-4">
@@ -111,7 +129,8 @@
 				    	<div class="col s12">
 				    		<div class="row">
 						        <div class="input-field col s12">
-						        	<select id="loteria" name="loteria" required>
+						        	<input type="hidden" name="loteria" id="loteriareal" value="{!! $producto->loteria !!}">
+						        	<select id="loteria"  required>
 								      <option value="" disabled selected>Elejir tipo</option>
 								      	@if($loterias)
 				    					@foreach($loterias as $loteria)
@@ -122,6 +141,9 @@
 						          <label for="loteria">Tipo de lotería</label>
 						          	<script type="text/javascript">
 									 	if (document.getElementById('loteria') != null) document.getElementById('loteria').value = '{!! $producto->loteria !!}';
+									 	$('#loteria').change(function(){
+									 		document.getElementById('loteriareal').value = $('#loteria').val();
+									 	});
 								   	</script>
 						        </div>
 					      	</div>	
@@ -141,11 +163,21 @@
 									$datetime = explode(' ', $producto->fecha_limite);  
 									$hora = explode(':', $datetime[1]);  
 					        	?>
-					          <input id="fecha_limite" name="fecha_limite" type="text" class="datepicker" value="{{$datetime[0] or old('fecha_limite')}}" required>
+					        	@if($ventas>0&&$status!="Terminada")
+					        	<input name="fecha_limite" type="hidden" value="{{$datetime[0] or old('fecha_limite')}}" required>
+					          	<input id="fecha_limite" type="text" class="datepicker" value="{{$datetime[0] or old('fecha_limite')}}" disabled required>
+					          @else
+								<input id="fecha_limite" name="fecha_limite" type="text" class="datepicker" value="{{$datetime[0] or old('fecha_limite')}}" required>
+					          @endif
 					          <label for="fecha_limite">Fecha limite</label>
 					        </div>
 					        <div class="input-field col s6">
-					          <input id="hora" name="hora" type="text" class="timepicker" value="{{$hora[0].':'.$hora[1]}}" required>
+								@if($ventas>0&&$status!="Terminada")
+								<input  name="hora" type="hidden"  value="{{$hora[0].':'.$hora[1]}}" required>
+					          <input id="hora" type="text" class="timepicker" value="{{$hora[0].':'.$hora[1]}}" disabled required>
+								@else
+								<input id="hora" name="hora" type="text" class="timepicker" value="{{$hora[0].':'.$hora[1]}}" required>
+					          @endif
 					          <label for="hora">Hora</label>
 					        </div>
 					      </div>

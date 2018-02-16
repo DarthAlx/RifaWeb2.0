@@ -49,4 +49,8 @@ class User extends Authenticatable
     public function tarjetas(){
         return $this->hasMany('App\Tarjeta');
     }
+
+    public function ganadores(){
+        return $this->hasMany('App\Ganador');
+    }
 }

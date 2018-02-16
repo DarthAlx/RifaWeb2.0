@@ -8,6 +8,7 @@ use App\Categoria;
 use App\Poplets;
 use App\Fuente;
 use App\Item;
+use App\Ganador;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
@@ -162,14 +163,20 @@ class ProductoController extends Controller
 
               $ordenganadora=$itemganador->orden;
               $ganador=$ordenganadora->user;
+
 //guardar ganador
+                $guardarganador= new Ganador();
+                $guardarganador->user_id=$ganador->id;
+                $guardarganador->producto=$producto->nombre;
+                $guardarganador->boleto=$producto->ganador;
+                $guardarganador->fecha=date_create($producto->fecha_limite);
+                $guardarganador->save();
+
 
               foreach ($producto->items as $item) {
                 $orden=$item->orden;
                 $orden->status="Terminada";
                 $orden->save();
-                $item->producto_id=0;
-                $item->save();
               }
 
               Session::flash('mensaje', 'Ganador asignado.');
@@ -184,6 +191,7 @@ class ProductoController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $producto = Producto::find($id);
         $producto->nombre=$request->nombre;
         $producto->slug = str_slug($request->nombre, '-');
@@ -195,6 +203,23 @@ class ProductoController extends Controller
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
         $producto->fundacion=$request->fundacion;
+
+        if ($producto->fecha_limite!=$request->fecha_limite. " ". $request->hora) {
+            if ($producto->ganador!=null) {
+                $producto->vendidos=0;
+            }
+            $producto->ganador=null;
+        }
+
+        if (!$request->fecha_limite && !$request->hora&& $producto->fecha_limite!="") {
+            $producto->fecha_limite=$producto->fecha_limite;
+        }
+
+        if (!$request->nombre&&$producto->nombre!="") {
+            $producto->nombre=$producto->nombre;
+        }
+
+
         $producto->fecha_limite=date_create($request->fecha_limite. " ". $request->hora);
         
         //categoria
