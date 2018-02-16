@@ -20,10 +20,14 @@ Route::get('/1', function () {
 
 
 Route::get('/', function () {
+	$itemganador= App\Item::where('boletos', 'like', '%t001t%')->first();
+dd($itemganador->orden->user);
 	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
 	$slides=App\Slider::orderBy('orden','asc')->get();
 	return view('inicio2', ['productos'=>$productos,'slides'=>$slides]);
     return view('inicio');
+
+     
 });
 
 

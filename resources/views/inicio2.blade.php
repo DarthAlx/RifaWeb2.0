@@ -5,6 +5,7 @@
 @section('pagecontent')
 
 @if($slides->count()>0)
+
 <section class="">
           <div class="slider">
             @foreach($slides as $slide)
@@ -215,6 +216,7 @@
             <div class="col-md-12">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
+                  @if(strtotime($producto->fecha_limite) >= strtotime(date("Y-m-d H:i:s")))
                   
                   <div class="product-type grid col-md-12" style="padding: 0;">
                     <form action="{{url('carrito')}}" method="post">
@@ -336,7 +338,7 @@
                     </form>
                   </div>
                 
-                  
+                  @endif
                     @endforeach
                     
                 </div>

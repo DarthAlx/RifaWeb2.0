@@ -134,6 +134,7 @@
               <div class="col-md-9">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
+                  @if(strtotime($producto->fecha_limite) >= strtotime(date("Y-m-d H:i:s")))
                   
                   <div class="product-type list col-md-12" style="padding: 0;">
                     <form action="{{url('carrito')}}" method="post">
@@ -254,7 +255,7 @@
                     </div>
                     </form>
                   </div>
-                
+                @endif
                   
                     @endforeach
                     <p>&nbsp;</p>

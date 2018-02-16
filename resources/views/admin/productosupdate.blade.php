@@ -18,7 +18,7 @@
 				 	{{ csrf_field() }}
 					<div class="text-right" style="margin-left: auto;">
 						<a class="waves-effect waves-light btn btn-large modal-trigger red" href="#delete{{$producto->id}}">Eliminar</a>
-						@if(!$producto&&$producto!="")<a class="waves-effect waves-light btn btn-large modal-trigger " href="#ganador" style="margin-left: 15px;">Ganador</a>@endif
+						@if(!$producto->ganador||$producto->ganador=="")<a class="waves-effect waves-light btn btn-large modal-trigger " href="#ganador" style="margin-left: 15px;">Ganador</a>@endif
 						<input type="submit" value="Actualizar" class="btn btn-primary right waves-effect waves-light btn-large">
 					</div>
 				</form>

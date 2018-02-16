@@ -49,7 +49,7 @@
                         <input type="hidden" name="avatar" value="@if($userinfo){{$userinfo->getAvatar()}}@endif">
                         <input type="hidden" name="service_id" value="@if($userinfo){{$userinfo->getId()}}@endif">
                         <div class="md-form input-field">
-                            <input type="text" name="name" id="nombre" class="form-control" value="@if($userinfo){{$userinfo->getName()}}@endif" required>
+                            <input type="text" name="name" id="nombre" class="form-control" value="@if($userinfo){{$userinfo->user['first_name']}} {{$userinfo->user['last_name']}}@endif" required>
                             <label for="nombre"><i class="fa fa-user-o grey-text fa-lg"></i> Nombre completo</label>
                         </div>
                         <div class="md-form input-field">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="md-form input-field">
                             
-                            <input type="text" name="dob" id="dob" class="form-control datepicker" required>
+                            <input type="text" name="dob" id="dob" class="form-control datepicker" value="@if($userinfo){{date('Y-m-d', strtotime($userinfo->user['birthday']))}}@endif" required>
                             <label for="dob"><i class="fa fa-calendar grey-text fa-lg"></i> Fecha de nacimiento</label>
                         </div>
                         <div class="md-form input-field">
@@ -72,6 +72,13 @@
                             
                         <p><input name="genero" id="masculino" type="radio" value="Masculino"  required/><label for="masculino">Masculino</label>  &nbsp;   &nbsp;   &nbsp; 
                             <input name="genero" id="femenino" type="radio" value="Femenino"  required/><label for="femenino">Femenino</label></p>
+                            @if($userinfo)
+                            <script>
+                                if ("{{$userinfo->user['gender']}}"=="male") {
+                                    $('#masculino').attr('checked', true);
+                                }
+                            </script>
+                            @endif
                            
                             
                         </div>

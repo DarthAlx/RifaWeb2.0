@@ -54,7 +54,11 @@ class LoginController extends Controller
    
     public function redirectToProvider()
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver('facebook')->fields([
+            'first_name', 'last_name', 'email', 'gender', 'birthday'
+        ])->scopes([
+            'email', 'user_birthday'
+        ])->redirect();
     }
 
     /**
@@ -65,7 +69,9 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         try{
-            $userinfo = Socialite::driver('facebook')->user();
+            $userinfo = Socialite::driver('facebook')->fields([
+            'first_name', 'last_name', 'email', 'gender', 'birthday'
+        ])->user();
         }catch(\Exception $e){
             return redirect('/entrar');
         }
@@ -83,12 +89,13 @@ class LoginController extends Controller
                 'provider' => 'facebook'
             ]);
             return redirect('/registro');*/
-
+         
             return view('auth.register', ['userinfo'=>$userinfo]);
            
         }
         else{
             $user = $socialProvider->user;
+
             auth()->login($user);
 
             if (Cart::content()->count()>0){

@@ -85,6 +85,10 @@
     						</tbody>
     					</table>
     				</div>
+
+                    <div class="text-right" style="margin-left: auto;">
+                        <a class="waves-effect waves-light btn btn-large" href="{{url('/perfil')}}">Ver mis rifas</a>
+                    </div>
     			</div>
     		</div>
     	</div>

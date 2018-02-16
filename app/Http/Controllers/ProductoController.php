@@ -7,6 +7,7 @@ use App\Producto;
 use App\Categoria;
 use App\Poplets;
 use App\Fuente;
+use App\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
@@ -152,7 +153,24 @@ class ProductoController extends Controller
         else{
               $producto = Producto::find($request->producto);
               $producto->ganador=$request->ganador;
+              $producto->habilitado=0;
               $producto->save();
+
+              
+              
+              $itemganador= Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->where('boletos', 'like', '%t' . $producto->ganador . 't%')->first();
+
+              $ordenganadora=$itemganador->orden;
+              $ganador=$ordenganadora->user;
+//guardar ganador
+
+              foreach ($producto->items as $item) {
+                $orden=$item->orden;
+                $orden->status="Terminada";
+                $orden->save();
+                $item->producto_id=0;
+                $item->save();
+              }
 
               Session::flash('mensaje', 'Ganador asignado.');
               Session::flash('class', 'success');
