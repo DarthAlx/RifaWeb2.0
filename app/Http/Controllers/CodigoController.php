@@ -37,7 +37,7 @@ class CodigoController extends Controller
 			  </div>
 
 			  <script type='text/javascript'>
-				$('#regalo').modal('open');
+				$('#modalregalo').modal('open');
 			  </script>
     	";
     }
