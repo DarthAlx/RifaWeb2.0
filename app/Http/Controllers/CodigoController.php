@@ -17,8 +17,10 @@ class CodigoController extends Controller
     	$regalo = new Operacion();
     	$regalo->user_id=Auth::user()->id;
     	$regalo->rt= 100;
+    	$regalo->pesos= 0;
     	$regalo->tipo= 'Share';
     	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+    	$regalo->orden_id= 0;
     	$regalo->save();
 
     	echo "
