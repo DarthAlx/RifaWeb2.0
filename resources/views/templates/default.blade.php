@@ -175,7 +175,7 @@
           </div>
           
         </footer>
-        <div id="regalo"></div>
+
         <a href="#" id="back-to-top" title="Regresar arriba">&uarr;</a>
         <script type="text/javascript" src="{{ url('js/materialize.js') }}"></script>
         <script type="text/javascript" src="{{ url('js/bxslider/js/jquery.bxslider.js') }}"></script>
@@ -226,5 +226,7 @@
 
           });
         </script>
+
+        <div id="regalo"></div>
     </body>
 </html>
