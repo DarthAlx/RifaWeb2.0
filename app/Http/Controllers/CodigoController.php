@@ -53,7 +53,7 @@ class CodigoController extends Controller
 					  <script type='text/javascript'>
 					  $('#modalregalo').modal();
 						$('#modalregalo').modal('open');
-						console.log({{$interval}});
+						console.log('mas15dias');
 					  </script>
 		    	";
 			}
@@ -61,7 +61,7 @@ class CodigoController extends Controller
 			else{
 				echo "
 					  <script type='text/javascript'>
-						console.log({{$interval}});
+						console.log('menos15dias');
 					  </script>
 		    	";
 			}

@@ -53,7 +53,14 @@ Route::get('/1', function () {
 					  <script type='text/javascript'>
 					  $('#modalregalo').modal();
 						$('#modalregalo').modal('open');
-						console.log({{$interval}});
+						console.log(".$intervalo.");
+					  </script>
+		    	";
+			}
+			else{
+				echo "
+					  <script type='text/javascript'>
+						console.log(".$intervalo.");
 					  </script>
 		    	";
 			}
