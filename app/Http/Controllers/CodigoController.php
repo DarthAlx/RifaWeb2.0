@@ -16,7 +16,7 @@ class CodigoController extends Controller
     {
 
 		$usuario=User::find(Auth::user()->id);
-		$share=Operacion::where('user_id',$usuario->id)->where('tipo','Share')->latest()->first();
+		$share=Operacion::where('user_id',$usuario->id)->where('tipo','Share')->orderBy('fecha','desc')->first();
 
 		if ($share) {
 			$fecha=date_create($share->fecha);

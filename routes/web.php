@@ -14,11 +14,51 @@
 Auth::routes();
 
 
-Route::get('/invoice', function () {
-    $orden=App\Orden::find(3);
-     $user=$orden->user;
-	
-	return view('emails.receiptmail', ['orden'=>$orden,'user'=>$user]);
+Route::get('/1', function () {
+    	$usuario=App\User::find(Auth::user()->id);
+		$share=App\Operacion::where('user_id',$usuario->id)->where('tipo','Share')->orderBy('fecha','desc')->first();
+
+		if ($share) {
+			$fecha=date_create($share->fecha);
+			$hoy=date_create(date("Y-m-d H:i:s"));
+			$interval = date_diff($fecha, $hoy);
+			$intervalo = intval($interval->format('%R%a'));
+			if ($intervalo>15) {
+				$regalo = new Operacion();
+		    	$regalo->user_id=Auth::user()->id;
+		    	$regalo->rt= 100;
+		    	$regalo->pesos= 0;
+		    	$regalo->tipo= 'Share';
+		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+		    	$regalo->orden_id= 0;
+		    	$regalo->save();
+
+		    	
+		    	$usuario->rt=$usuario->rt+$regalo->rt;
+		    	$usuario->save();
+
+		    	echo "
+					<div id='modalregalo' class='modal'>
+					    <div class='modal-content'>
+					      <h4>¡Gracias por compartir!</h4>
+					      <p>Recibiste 100 RifaTokens</p>
+					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+
+					    </div>
+					    <div class='modal-footer'>
+					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+					    </div>
+					  </div>
+
+					  <script type='text/javascript'>
+					  $('#modalregalo').modal();
+						$('#modalregalo').modal('open');
+						console.log({{$interval}});
+					  </script>
+		    	";
+			}
+
+		}
 });
 
 
