@@ -58,6 +58,14 @@ class CodigoController extends Controller
 		    	";
 			}
 
+			else{
+				echo "
+					  <script type='text/javascript'>
+						console.log({{$interval}});
+					  </script>
+		    	";
+			}
+
 		}
 		else{
 			$regalo = new Operacion();
