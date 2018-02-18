@@ -273,7 +273,13 @@
                               display: 'popup',
                               href: '{{url()->current()}}',
                             }, function(response){
-                              alert(response.post_id);
+                              if (response.post_id) {
+                                $.post("{{url('/regalo')}}", {
+                                    _token : _token
+                                    }, function(data) {
+                                      $("#regalo").append(data);
+                                    });
+                              }
                             });
                           }
                         </script>

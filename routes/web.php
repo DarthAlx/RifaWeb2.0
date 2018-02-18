@@ -110,6 +110,8 @@ Route::delete('eliminar-tarjeta', 'TarjetaController@destroy')->middleware('auth
 
 Route::post('traertarjeta', 'TarjetaController@traertarjeta')->middleware('auth');
 
+Route::post('regalo', 'CodigoController@regalo')->middleware('auth');
+
 
 
 // Authentication routes...
