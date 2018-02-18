@@ -27,7 +27,7 @@
 
 
 			<ul class="collapsible" data-collapsible="accordion">
-			    @if($usuario->rt>=Cart::total(2,'.',','))
+			    @if(($usuario->rt/10)>=Cart::total(2,'.',','))
 
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-circle-o-notch" style="line-height: 1.5;"></i> <span> &nbsp; RifaTokens</span> </div>
@@ -141,11 +141,11 @@
 			<ul class="collection with-header">
 		        <li class="collection-header"><h4>Tus boletos</h4></li>
 		        @foreach ($items as $product)
-		        <li class="collection-item"><div>{{ $product->name }} <i class="fa fa-ticket" aria-hidden="true"></i> {{ $product->qty }}  <a class="secondary-content">${{ $product->price*$product->qty }} - <i class="fa fa-circle-o-notch"></i>{{ $product->price*$product->qty }}</a></div></li>
+		        <li class="collection-item"><div>{{ $product->name }} <i class="fa fa-ticket" aria-hidden="true"></i> {{ $product->qty }}  <a class="secondary-content">${{ $product->price*$product->qty }}</a></div></li>
 		        @endforeach
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Tus RifaTokens</strong><a class="secondary-content"><i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</a></div></li>
-		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if($usuario->rt>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}} @else ${{Cart::total(2,'.',',')-$usuario->rt}} @endif</a></div></li>
+		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt/10)>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</a></div></li>
 		        
 		      </ul>
 

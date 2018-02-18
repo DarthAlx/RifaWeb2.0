@@ -138,8 +138,8 @@
                   
                   <div class="product-type list col-md-12" style="padding: 0;">
                     <form action="{{url('carrito')}}" method="post">
-                  {!! csrf_field() !!}
-                  <input type="hidden" name="productoid" value="{{$producto->id}}">
+                  <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                  <input type="hidden" name="productoid" id="productoid{{$producto->id}}" value="{{$producto->id}}">
                     <div class="product-inner">
                     <div class="p1 col m4" >
                       <div class="img-container valign-wrapper">
@@ -207,14 +207,24 @@
                               <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = ${{$producto->precio}}</span>mxn</span>
                             </div>
                             
-                            <div class="botoncantidad col-md-6" style="padding-left: 0">
+                            <div class="botoncantidad col-md-12" style="padding: 0">
                               <div class="input-group">
                               <span class="input-group-btn" style="width: 35px;">
                                   <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="cantidad{{$producto->id}}"  style="width: 35px; padding: 0">
                                       <i class="fa fa-minus" aria-hidden="true"></i>
                                   </button>
                               </span>
-                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="1" min="1" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
+                              
+                              <input type="text" name="cantidad" id="cantidad{{$producto->id}}" class="form-control input-number browser-default" value="0" min="0" max="{{$producto->boletos-$producto->vendidos}}" style="height: 36px;">
+                              <?php if (Cart::content()->count()>0){
+                                 foreach(Cart::content() as $row) {
+                                      if($row->id==$producto->id){ ?>
+                                      <script>
+                                        $('#cantidad{{$producto->id}}').val({{$row->qty}})
+                                      </script>
+                                        
+                                      <?php }
+                                    } } ?>
                               <span class="input-group-btn" style="width: 35px;">
                                   <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="cantidad{{$producto->id}}" style="width: 35px; padding: 0">
                                       <i class="fa fa-plus" aria-hidden="true"></i>
@@ -223,21 +233,116 @@
                               </div>
 
                               <script>
+
+                                    <?php if (Cart::content()->count()>0){  
+                                      foreach(Cart::content() as $row) {
+                                      if($row->id==$producto->id){
+                                        $agregado=1;
+                                        break;
+                                      }
+                                      else{
+                                        $agregado=0;
+                                      }
+                                    }  }
+                                    else{
+                                        $agregado=0;
+                                    }?>
+                                var agregado{{$producto->id}}= {{$agregado}};
+                                minValue =  parseInt($('#cantidad{{$producto->id}}').attr('min'));
+                                maxValue =  parseInt($('#cantidad{{$producto->id}}').attr('max'));
+
+                                if(parseInt($('#cantidad{{$producto->id}}').val()) >= minValue) {
+                                        $(".btn-number[data-type='minus'][data-field='cantidad{{$producto->id}}']").removeAttr('disabled');
+                                    }
+                                if(parseInt($('#cantidad{{$producto->id}}').val()) <= maxValue) {
+                                        $(".btn-number[data-type='plus'][data-field='cantidad{{$producto->id}}']").removeAttr('disabled');
+                                    }
                                 $('#cantidad{{$producto->id}}').change(function(){
+
+                                  auto=true;
+                                  if (agregado{{$producto->id}}==0&&$('#cantidad{{$producto->id}}').val()==1) {
+                                    
+
+                                    productoid = '{{$producto->id}}';
+                                    cantidad=$('#cantidad{{$producto->id}}').val();
+                                    _token = $('#token').val();
+                                
+                                    
+                                    $.post("{{url('/carritopost')}}", {
+                                        productoid : productoid,
+                                        cantidad : cantidad,
+                                        _token : _token
+                                        }, function(data) {
+                                          $("#actualizarcarro").append(data);
+                                        });
+
+
+                                  }
+                                  else if($('#cantidad{{$producto->id}}').val()==0&&agregado{{$producto->id}}==1){
+                                    
+                                    <?php if (Cart::content()->count()>0){
+                                     foreach(Cart::content() as $row) {
+                                      if($row->id==$producto->id){
+                                        $rowId=$row->rowId;
+                                        break;
+                                      }
+                                      else{
+                                        $rowId=0;
+                                      }
+                                    } ?>
+                                    rowId = '{{$rowId}}';
+                                    _token = $('#token').val();
+                                    $.post("{{url('/removefromcartpost')}}", {
+                                        rowId : rowId,
+                                        _token : _token
+                                        }, function(data) {
+                                          $("#actualizarcarro").html("");
+                                          $("#actualizarcarro").append(data);
+                                        });
+                                    <?php } ?>
+                                  }
+                                  else{
+                                    
+                                    <?php if (Cart::content()->count()>0){  
+                                      foreach(Cart::content() as $row) {
+                                      if($row->id==$producto->id){
+                                        $rowId=$row->rowId;
+                                        break;
+                                      }
+
+                                      else{
+                                        $rowId=0;
+                                      }
+
+                                    } ?>
+                                    qty=$('#cantidad{{$producto->id}}').val();
+                                    rowId = '{{$rowId}}';
+                                    _token = $('#token').val();
+                                    $.post("{{url('/updatecartpost')}}", {
+                                        qty : qty,
+                                        rowId : rowId,
+                                        _token : _token
+                                        }, function(data) {
+                                          $("#actualizarcarro").html("");
+                                          $("#actualizarcarro").append(data);
+                                        });
+                                    <?php } ?>
+                                  }
                                   probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
                                   Materialize.Toast.removeAll();
                                   Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
 
-                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0));
+                                  $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+'MXN');
+                                  
+
+
 
 
                                 });
                               </script>
                             </div>
-                            <div class="botoncomprar col-md-6" style="padding-right: 0">
-                              <button type="submit" class="btn" style="padding: 0 15px; width: 100%; color:#fff;"><i class="fa fa-cart-plus"></i></button>
-                            </div>
+                            
                           </div>
                           
 
@@ -369,6 +474,7 @@
 $('.btn-number').click(function(e){
     e.preventDefault();
     
+    
     fieldName = $(this).attr('data-field');
     type      = $(this).attr('data-type');
     var input = $("input[id='"+fieldName+"']");
@@ -442,7 +548,7 @@ $(".input-number").keydown(function (e) {
         </script>
 
 
-
+      <div id="actualizarcarro"></div>
 
 
         @endsection

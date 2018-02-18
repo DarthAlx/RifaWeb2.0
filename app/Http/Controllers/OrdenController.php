@@ -30,12 +30,27 @@ class OrdenController extends Controller
             
 	    return redirect()->intended(url()->previous());
     }
+    public function addtocartpost(Request $request)
+    {
+      $producto=Producto::find($request->productoid);
+        Cart::add($producto->id,$producto->nombre,$request->cantidad,$producto->precio, ['imagen'=>$producto->imagen, 'loteria'=>$producto->loteria, 'descripcion' => $producto->descripcion, 'slug' => $producto->slug]);
+
+
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');     location.reload();</script>";
+    }
 
     public function updatecart(Request $request)
     {
 
       Cart::update($request->rowId, $request->qty);
       return redirect()->intended(url('/carrito'));
+    }
+    public function updatecartpost(Request $request)
+    {
+
+      Cart::update($request->rowId, $request->qty);
+
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');</script>";
     }
     public function destroy($rowId)
     {
@@ -45,7 +60,24 @@ class OrdenController extends Controller
       return redirect()->intended(url('/carrito'));
     }
 
+    public function destroypost(Request $request)
+    {
+      Cart::remove($request->rowId);
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');    location.reload();</script>";
 
+    }
+
+
+
+    public function sendinvoice($id)
+    {
+      $orden=Orden::find($id);
+      $user=$orden->user;
+        Mail::send('emails.receiptmail', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
+            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $m->to($user->email, $user->name)->subject('¡Tu compra!');
+        });
+    }
 
 
 
@@ -65,7 +97,7 @@ class OrdenController extends Controller
       \Conekta\Conekta::setApiKey("key_ty3oYz86wwJVi8yCdqMwtw");
       $items=Cart::content();
       $usuario=User::find(Auth::user()->id);
-      $rt=$usuario->rt;
+      $rt=$usuario->rt/10;
       if ($rt>=Cart::total(2,'.',',')) {
 
         foreach ($items as $product) {
@@ -92,7 +124,7 @@ class OrdenController extends Controller
              $operacion = new Operacion();
              $operacion->user_id=Auth::user()->id;
              $operacion->orden_id = $guardar->id;
-             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP);
+             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10;
              $operacion->pesos = 0;
              $operacion->tipo ="Compra";
              $operacion->fecha = date_create(date("Y-m-d"));
@@ -133,7 +165,7 @@ class OrdenController extends Controller
           $folio->folio++;
           $folio->save();
 
-          $usuario->rt = $usuario->rt-round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP);
+          $usuario->rt = $usuario->rt-(round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10);
           $usuario->save();
           Cart::destroy();
           //$this->sendinvoice($order->id);
@@ -214,7 +246,7 @@ class OrdenController extends Controller
              $operacion = new Operacion();
              $operacion->user_id=Auth::user()->id;
              $operacion->orden_id = $guardar->id;
-             $operacion->rt = $rt;
+             $operacion->rt = $rt*10;
              $operacion->pesos = Cart::total(2,'.',',')-$rt;
              $operacion->tipo ="Compra";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));
@@ -259,7 +291,7 @@ class OrdenController extends Controller
           $usuario->save();
 
           Cart::destroy();
-          //$this->sendinvoice($order->id);
+          $this->sendinvoice($guardar->id);
           //$this->sendclassrequest($order->id);
           Session::flash('total', $order->amount);
        

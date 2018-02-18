@@ -14,12 +14,19 @@
 Auth::routes();
 
 
-Route::get('/1', function () {
-    return view('inicio');
+Route::get('/invoice', function () {
+    $orden=App\Orden::find(3);
+     $user=$orden->user;
+	
+	return view('emails.receiptmail', ['orden'=>$orden,'user'=>$user]);
 });
 
 
+
+
+
 Route::get('/', function () {
+	
 	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
 	$slides=App\Slider::orderBy('orden','asc')->get();
 	return view('inicio2', ['productos'=>$productos,'slides'=>$slides]);
@@ -77,8 +84,11 @@ Route::get('/checkout', function () {
 Route::post('checkout', 'OrdenController@cargo');
 
  Route::get('removefromcart/{id}', 'OrdenController@destroy');
+ Route::post('removefromcartpost', 'OrdenController@destroypost');
 
   Route::post('updatecart', 'OrdenController@updatecart');
+  Route::post('updatecartpost', 'OrdenController@updatecartpost');
+  Route::post('carritopost', 'OrdenController@addtocartpost');
 
 
 Route::get('/perfil', function () {

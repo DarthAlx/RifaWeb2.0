@@ -9,6 +9,7 @@ use App\Poplets;
 use App\Fuente;
 use App\Item;
 use App\Ganador;
+use Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
@@ -179,10 +180,22 @@ class ProductoController extends Controller
                 $orden->save();
               }
 
+              $this->sendwinner($guardarganador->id);
+
               Session::flash('mensaje', 'Ganador asignado.');
               Session::flash('class', 'success');
               return redirect()->intended(url()->previous());
         }
+    }
+
+    public function sendwinner($id)
+    {
+      $ganador=Ganador::find($id);
+      $user=$ganador->user;
+        Mail::send('emails.winner', ['ganador'=>$ganador,'user'=>$user], function ($m) use ($user) {
+            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $m->to($user->email, $user->name)->subject('¡Felicidades!');
+        });
     }
 
 

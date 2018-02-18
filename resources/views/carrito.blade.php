@@ -75,8 +75,8 @@
 							</td>
 							<td data-th="Subtotal" class="text-center">${{ $product->price*$product->qty }}</td>
 							<td class="actions" data-th="">
-								<button type="submit" class="btn btn-primary btn-sm"  data-toggle="tooltip" data-placement="top" title="Actualizar"><i class="fa fa-refresh"></i></button>
-								<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-danger btn-sm"  data-toggle="tooltip" data-placement="top" title="Remover"><i class="fa fa-trash-o"></i></a>								
+								<button type="submit" class="btn btn-primary btn-sm tooltipped" data-position="bottom" data-delay="50" data-tooltip="Actualizar"><i class="fa fa-refresh"></i></button>
+								<a href="{{url('removefromcart')}}/{{$product->rowId}}" class="btn btn-danger btn-sm tooltipped" data-position="bottom" data-delay="50" data-tooltip="Remover"><i class="fa fa-trash-o"></i></a>								
 							</td>
 							</form>
 						</tr>
@@ -97,7 +97,7 @@
 
 						<tr>	
 							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
-							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong>@if($usuario->rt>=Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}} @else ${{Cart::total(2,'.',',')-$usuario->rt}} @endif</td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong>@if(($usuario->rt)/10>=Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</td>
 						</tr>
 						<tr>
 							<td><a href="{{url('/rifas')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar comprando</a></td>

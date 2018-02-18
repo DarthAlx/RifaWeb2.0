@@ -24,7 +24,7 @@
 								<i class="fa fa-flag" aria-hidden="true"></i> {{$usuario->ordenes->count()}} <span class="hiddenmov">participaciones</span>
 							</div>
 							<div class="chip light-green lighten-3">
-								<i class="fa fa-trophy" aria-hidden="true"></i> 0 <span class="hiddenmov">ganadas</span>
+								<i class="fa fa-trophy" aria-hidden="true"></i> {{$usuario->ganadas->count()}} <span class="hiddenmov">ganadas</span>
 							</div>
 						</div>
 						
@@ -53,7 +53,7 @@
             </div>
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
-              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Completa')->orderBy('created_at','desc')->paginate(10); $li=0;?>
+              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Terminada')->orderBy('created_at','desc')->paginate(10); $li=0;?>
               @foreach($ordenes as $orden)
                 @foreach($orden->items as $item)
 

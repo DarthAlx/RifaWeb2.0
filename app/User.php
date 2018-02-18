@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Tarjeta');
     }
 
-    public function ganadores(){
+    public function ganadas(){
         return $this->hasMany('App\Ganador');
     }
 }
