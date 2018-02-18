@@ -14,32 +14,84 @@ class CodigoController extends Controller
 {
     public function regalo()
     {
-    	$regalo = new Operacion();
-    	$regalo->user_id=Auth::user()->id;
-    	$regalo->rt= 100;
-    	$regalo->pesos= 0;
-    	$regalo->tipo= 'Share';
-    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-    	$regalo->orden_id= 0;
-    	$regalo->save();
 
-    	echo "
-			<div id='modalregalo' class='modal'>
-			    <div class='modal-content'>
-			      <h4>¡Gracias por compartir!</h4>
-			      <p>Recibiste 100 RifaTokens</p>
-			      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+		$usuario=User::find(Auth::user()->id);
+		$share=Operacion::where('user_id',$usuario->id)->where('tipo','Share')->latest()->first();
 
-			    </div>
-			    <div class='modal-footer'>
-			    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
-			    </div>
-			  </div>
+		if ($share) {
+			$fecha=date_create($share->fecha);
+			$hoy=date_create(date("Y-m-d H:i:s"));
+			$interval = date_diff($hoy, $fecha);
+			if ($interval>15) {
+				$regalo = new Operacion();
+		    	$regalo->user_id=Auth::user()->id;
+		    	$regalo->rt= 100;
+		    	$regalo->pesos= 0;
+		    	$regalo->tipo= 'Share';
+		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+		    	$regalo->orden_id= 0;
+		    	$regalo->save();
 
-			  <script type='text/javascript'>
-			  $('#modalregalo').modal();
-				$('#modalregalo').modal('open');
-			  </script>
-    	";
+		    	
+		    	$usuario->rt=$usuario->rt+$regalo->rt;
+		    	$usuario->save();
+
+		    	echo "
+					<div id='modalregalo' class='modal'>
+					    <div class='modal-content'>
+					      <h4>¡Gracias por compartir!</h4>
+					      <p>Recibiste 100 RifaTokens</p>
+					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+
+					    </div>
+					    <div class='modal-footer'>
+					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+					    </div>
+					  </div>
+
+					  <script type='text/javascript'>
+					  $('#modalregalo').modal();
+						$('#modalregalo').modal('open');
+						console.log({{$interval}});
+					  </script>
+		    	";
+			}
+
+		}
+		else{
+			$regalo = new Operacion();
+		    	$regalo->user_id=Auth::user()->id;
+		    	$regalo->rt= 100;
+		    	$regalo->pesos= 0;
+		    	$regalo->tipo= 'Share';
+		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+		    	$regalo->orden_id= 0;
+		    	$regalo->save();
+
+		    	
+		    	$usuario->rt=$usuario->rt+$regalo->rt;
+		    	$usuario->save();
+
+		    	echo "
+					<div id='modalregalo' class='modal'>
+					    <div class='modal-content'>
+					      <h4>¡Gracias por compartir!</h4>
+					      <p>Recibiste 100 RifaTokens</p>
+					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+
+					    </div>
+					    <div class='modal-footer'>
+					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+					    </div>
+					  </div>
+
+					  <script type='text/javascript'>
+					  $('#modalregalo').modal();
+						$('#modalregalo').modal('open');
+						console.log('primer share');
+					  </script>
+		    	";
+		}
+
     }
 }
