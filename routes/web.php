@@ -24,7 +24,7 @@ Route::get('/1', function () {
 			$interval = date_diff($fecha, $hoy);
 			$intervalo = intval($interval->format('%R%a'));
 			if ($intervalo>15) {
-				$regalo = new Operacion();
+				$regalo = new App\Operacion();
 		    	$regalo->user_id=Auth::user()->id;
 		    	$regalo->rt= 100;
 		    	$regalo->pesos= 0;

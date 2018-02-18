@@ -22,7 +22,8 @@ class CodigoController extends Controller
 			$fecha=date_create($share->fecha);
 			$hoy=date_create(date("Y-m-d H:i:s"));
 			$interval = date_diff($hoy, $fecha);
-			if ($interval>15) {
+			$intervalo = intval($interval->format('%R%a'));
+			if ($intervalo>15) {
 				$regalo = new Operacion();
 		    	$regalo->user_id=Auth::user()->id;
 		    	$regalo->rt= 100;
