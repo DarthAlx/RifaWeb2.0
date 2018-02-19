@@ -52,7 +52,7 @@
 							<td>@if($producto->vendidos){{$producto->boletos-$producto->vendidos}}@else{{$producto->boletos}}@endif</td>
 							<td>${{$producto->precio}}</td>
 							<td><?php $categorias=explode(',', $producto->categoria) ?> @foreach($categorias as $categoria) <?php $cate=App\Categoria::find($categoria); ?>{{$cate->nombre}}&nbsp;&nbsp;@endforeach</td>
-							<td>@if($producto->destacado)<i class="fa fa-star"></i>@else<i class="fa fa-star-o"></i>@endif</td>	
+							<td>@if($producto->destacado)<i class="fa fa-star"></i><span style="display: none;">destacado</span>@else<i class="fa fa-star-o"></i>@endif</td>	
 						</tr>
 					@endforeach
 				@else

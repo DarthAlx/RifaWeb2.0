@@ -59,7 +59,7 @@
                         </div>
                         <div class="md-form input-field">
                             
-                            <input type="text" name="dob" id="dob" class="form-control datepicker" value="@if($userinfo){{date('Y-m-d', strtotime($userinfo->user['birthday']))}}@endif" required>
+                            <input type="text" name="dob" id="dob" class="form-control datepicker" value="@if($userinfo) @if($userinfo->user['birthday']!=""){{date('Y-m-d', strtotime($userinfo->user['birthday']))}}@endif @endif" required>
                             <label for="dob"><i class="fa fa-calendar grey-text fa-lg"></i> Fecha de nacimiento</label>
                         </div>
                         <div class="md-form input-field">
@@ -73,11 +73,16 @@
                         <p><input name="genero" id="masculino" type="radio" value="Masculino"  required/><label for="masculino">Masculino</label>  &nbsp;   &nbsp;   &nbsp; 
                             <input name="genero" id="femenino" type="radio" value="Femenino"  required/><label for="femenino">Femenino</label></p>
                             @if($userinfo)
+                             @if($userinfo->user['gender']!="")
                             <script>
                                 if ("{{$userinfo->user['gender']}}"=="male") {
                                     $('#masculino').attr('checked', true);
                                 }
+                                if ("{{$userinfo->user['gender']}}"=="female") {
+                                    $('#femenino').attr('checked', true);
+                                }
                             </script>
+                            @endif
                             @endif
                            
                             
