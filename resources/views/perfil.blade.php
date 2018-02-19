@@ -66,7 +66,9 @@
 
 
 
-                      <span># @foreach($boletos as $boleto) @if($contador==0){{$boleto}} <?php $contador++;?> @else , {{$boleto}} @endif @endforeach</span>
+                      @foreach($boletos as $boleto) @if($contador==0)<span class="ticket"><span class="circle"></span><span class="no">{{$boleto}}</span></span> <?php $contador++;?> @else <span class="ticket"><span class="circle"></span><span class="no">{{$boleto}}</span></span> @endif @endforeach
+
+                      @if(strtotime($item->fecha) >= strtotime(date("Y-m-d H:i:s")))
 
                     <div id="contador{{$item->id}}" >
                             
@@ -92,7 +94,10 @@
                               });
 
                             </script>
-                          </div></div>
+                          </div>
+                          @endif
+
+                        </div>
                   </li>
                 @endforeach
               @endforeach
@@ -104,9 +109,37 @@
         	<div class="card z-depth-3 amber accent-2">
             <div class="card-content">
             	<h3 class="card-title">Rifas ganadas <i class="fa fa-trophy" aria-hidden="true"></i></h3>
-            	<p class="flow-text">
-            		Aun no has ganado ninguna rifa <i class="fa fa-frown-o" aria-hidden="true"></i>. ¡Sigue participando!
-            	</p>
+
+              <?php
+                       
+                       
+                        if ($usuario->ganadas) {
+                          $nuevas=App\Ganador::where('user_id',$usuario->id)->count();
+                          $ganadas=App\Ganador::where('user_id',$usuario->id)->orderBy('created_at','desc')->paginate(10);
+                        }
+                      ?>
+
+                @if($nuevas>0)
+              <div class="collection">
+                @foreach($ganadas as $ganada)
+                    <a href="#ganada{{$ganada->id}}" class="collection-item modal-trigger">Ganaste {{$ganada->producto}} <span  class="secondary-content">
+                      <i class="fa fa-search-plus" aria-hidden="true"></i></span>
+
+                    </a>
+                @endforeach
+
+                {{ $ganadas->links() }}
+              </div>
+              @else
+
+
+              <p class="flow-text">
+                Aun no has ganado ninguna rifa <i class="fa fa-frown-o" aria-hidden="true"></i>. ¡Sigue participando!
+              </p>
+              @endif
+
+
+            	
             </div>
           </div>
 
@@ -127,7 +160,7 @@
               <div class="collection">
                 @foreach($mensajes as $mensaje)
                     <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{{str_limit($mensaje->msg, $limit = 20, $end = '...')}} <span  class="secondary-content">
-                      @if($mensaje->leido)<i id="msj{{$mensaje->id}}" class="fa fa-envelope-open"></i>@else<i id="msj{{$mensaje->id}}" class="fa fa-envelope"></i>@endif
+                      @if($mensaje->leido)<i id="msj{{$mensaje->id}}" class="fa fa-envelope-open"></i>@else<i id="msj{{$mensaje->id}}" class="fa fa-envelope"></i>@endif</span>
 
                     </a>
                 @endforeach
@@ -160,6 +193,32 @@
 
     </ul>
   </div>
+
+
+  @if($usuario->ganadas)
+@foreach($usuario->ganadas as $ganada)
+<!-- Modal Structure -->
+  <div id="ganada{{$ganada->id}}" class="modal modal-fixed-footer" style="display: none;">
+    <div class="modal-content" style="height: 100%;">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>{{$ganada->producto}}</h4>
+      <p>Texto ganador</p>
+      <div class="text-right">
+        
+      </div>
+      
+        </div>
+      </div>
+       
+    </div>
+ <div class="modal-footer">
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp;
+    </div>
+  </div>
+  @endforeach
+@endif
+
 
 
 

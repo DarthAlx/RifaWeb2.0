@@ -32,6 +32,7 @@ class CreateProductosTable extends Migration
             $table->string('ganador')->nullable(true);
             $table->string('categoria');
             $table->string('fundacion')->nullable(true);
+            $table->integer('multiplicador')->default(1);
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';
         });

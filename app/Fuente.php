@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Fuente extends Model
 {
     protected $table = 'fuentes';
-	protected $fillable = ['nombre'];
+	protected $fillable = ['nombre', 'slug'];
 }

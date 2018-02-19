@@ -141,7 +141,7 @@ class OrdenController extends Controller
             $vendidos = $product->vendidos;
             $tickets = array();
 
-            for ($i=$product->vendidos+1; $i <= $product->vendidos+$producto['quantity']; $i++) { 
+            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$producto['quantity'])*$product->multiplicador; $i++) { 
               $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
               $tickets[]="t".$numero."t";
             }
@@ -263,7 +263,7 @@ class OrdenController extends Controller
             $vendidos = $product->vendidos;
             $tickets = array();
 
-            for ($i=$product->vendidos+1; $i <= $product->vendidos+$producto['quantity']; $i++) { 
+            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$producto['quantity'])*$product->multiplicador; $i++) { 
               $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
               $tickets[]="t".$numero."t";
             }

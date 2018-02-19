@@ -13,6 +13,7 @@ class CatalogoController extends Controller
     {
     	$catalogo = new Categoria($request->all());
     	$catalogo->nombre=ucfirst($request->nombre);
+        $catalogo->slug = str_slug($request->nombre, '-');
 
 		//guardar
         if ($catalogo->save()) {
@@ -43,6 +44,8 @@ class CatalogoController extends Controller
     public function update(Request $request){
     	 $catalogo = Categoria::find($request->id);
         $catalogo->nombre=ucfirst($request->nombre);
+        $catalogo->slug = str_slug($request->nombre, '-');
+
 //guardar
         if ($catalogo->save()) {
             Session::flash('mensaje', 'Catálogo actualizado con exito.');

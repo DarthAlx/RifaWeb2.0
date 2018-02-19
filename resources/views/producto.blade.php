@@ -264,7 +264,7 @@
                           </div>
                           <p>&nbsp;</p>
 
-                          <div id="shareBtn" class="btn btn-success clearfix">Share</div>
+                          <div id="shareBtn" class="btn btn-success clearfix" style="background-color: #3B5999;"><i class="fa fa-facebook" aria-hidden="true"></i> Compartir</div>
                           
                        <script>
                           document.getElementById('shareBtn').onclick = function() {

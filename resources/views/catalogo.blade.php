@@ -106,7 +106,7 @@
                 <p class="titleshop">Categorías</p>
                 <ul class="listacategorias">
                   @foreach($categorias as $categoria)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($categoria->nombre)!!}">{{$categoria->nombre}}</a></li>
+                  <li><a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$categoria->nombre}}</a></li>
                   @endforeach
                 </ul>
 
@@ -117,7 +117,7 @@
                 <p class="titleshop">Fuentes</p>
                 <ul class="listacategorias">
                   @foreach($fuentes as $fuente)
-                  <li><a href="{{url('/rifas')}}/{!!strtolower($fuente->nombre)!!}">{{$fuente->nombre}}</a></li>
+                  <li><a href="{{url('/rifas')}}/{{$fuente->slug}}">{{$fuente->nombre}}</a></li>
                   @endforeach
                 </ul>
                 @endif

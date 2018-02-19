@@ -85,8 +85,8 @@ Route::get('/', function () {
 
 
 Route::get('/rifas/{catalogo}', function ($catalogo) {
-	$categoria=App\Categoria::where('nombre',$catalogo)->first();
-	$fuente=App\Fuente::where('nombre',$catalogo)->first();
+	$categoria=App\Categoria::where('slug',$catalogo)->first();
+	$fuente=App\Fuente::where('slug',$catalogo)->first();
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
 	$fuentes=App\Fuente::orderBy('nombre','asc')->get();
 	if ($categoria) {
@@ -189,7 +189,10 @@ Route::group(['middleware' => 'admin'], function(){
 
 
 	Route::get('/admin', function () {
-    return view('admin');
+		$ventas=App\Operacion::sum('pesos');
+		$rt=App\Operacion::sum('rt');
+		$boletos=App\Item::sum('cantidad');
+    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt]);
 	});
 
 	Route::get('/productos', function () {
@@ -309,6 +312,11 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::get('/ordenes', function () {
 		$ordenes=App\Orden::all();
 	    return view('admin.ordenes', ['ordenes'=>$ordenes]);
+	});
+
+	Route::get('/ganadores', function () {
+		$ganadores=App\Ganador::all();
+	    return view('admin.ganadores', ['ganadores'=>$ganadores]);
 	});
 
 

@@ -16,6 +16,7 @@ class CreateFuentesTable extends Migration
         Schema::create('fuentes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
+            $table->string('slug');
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';
         });

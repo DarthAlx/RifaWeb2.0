@@ -136,9 +136,13 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="input-field col col-md-12">
+					        <div class="input-field col col-md-6">
 					          <input id="precio" name="precio" type="text" class="validate" value="{{old('precio')}}" required>
 					          <label for="precio">Precio normal</label>
+					        </div>
+					        <div class="input-field col col-md-6">
+					          <input id="multiplicador" name="multiplicador" type="text" class="validate" value="{{old('multiplicador')}}" required>
+					          <label for="multiplicador">Multiplicador</label>
 					        </div>
 					        <!--div class="input-field col col-md-6">
 					          <input id="precio_especial" namee="precio_especial" type="text" value="{{old('precio_especial')}}" class="validate">

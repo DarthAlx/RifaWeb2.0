@@ -13,6 +13,7 @@ class LoteriaController extends Controller
     {
     	$loteria = new Fuente($request->all());
     	$loteria->nombre=ucfirst($request->nombre);
+        $loteria->slug = str_slug($request->nombre, '-');
 
 		//guardar
         if ($loteria->save()) {
@@ -43,6 +44,7 @@ class LoteriaController extends Controller
     public function update(Request $request){
     	 $loteria = Fuente::find($request->id);
         $loteria->nombre=ucfirst($request->nombre);
+        $loteria->slug = str_slug($request->nombre, '-');
 //guardar
         if ($loteria->save()) {
             Session::flash('mensaje', 'Lotería actualizada con exito.');

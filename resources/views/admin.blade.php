@@ -4,17 +4,44 @@
 <div class=" main">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12">
-				<div class="card">
-				  <div class="card-body">
-				    <h5 class="card-title">Escritorio</h5>
-				    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam quas dolore nam animi deleniti autem nulla atque! Repellat nisi, eius neque cupiditate optio doloremque vero maiores obcaecati sit velit omnis!</p>
-				    <a href="#" class="card-link">Card link</a>
-				    <a href="#" class="card-link">Another link</a>
-				  </div>
-				</div>
+			<div class="col-md-6">
+				<h3 class="">Escritorio</h3>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">Ventas totales</span>
+
+		              <h5 style="font-weight: 700">${{$ventas}}MXN</h5>
+		            </div>
+		            
+		        </div>
+			</div>
+			<div class="col-md-4">
+				<div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">RifaTokens Gastados</span>
+
+		              <h5 style="font-weight: 700"><i class="fa fa-circle-o-notch" aria-hidden="true"></i>{{$rt}}</h5>
+		            </div>
+		            
+		        </div>
+			</div>
+			<div class="col-md-4">
+				<div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">Boletos vendidos</span>
+
+		              <h5 style="font-weight: 700">{{$boletos}} Boletos</h5>
+		            </div>
+		            
+		        </div>
+			</div>
+		</div>
+
 	</div>
 </div>
 @endsection
