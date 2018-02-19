@@ -189,11 +189,38 @@ Route::group(['middleware' => 'admin'], function(){
 
 
 	Route::get('/admin', function () {
-		$ventas=App\Operacion::sum('pesos');
-		$rt=App\Operacion::sum('rt');
-		$boletos=App\Item::sum('cantidad');
-    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt]);
+		$month = date('m');
+	      $year = date('Y');
+	      $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+	      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+	      $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+
+		$ventas=App\Operacion::whereBetween('fecha', array($from, $to))->sum('pesos');
+		$rt=App\Operacion::whereBetween('fecha', array($from, $to))->sum('rt');
+		$boletos=App\Item::whereBetween('created_at', array($from, $to))->sum('cantidad');
+		$usuarios=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->count();
+		$mujeres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Femenino')->count();
+		$hombres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Masculino')->count();
+		$productos=App\Producto::all();
+		$boletos1=array();
+		$labels="";
+		$data=array();
+		foreach ($productos as $producto) {
+			$items=App\Item::whereBetween('created_at', array($from, $to))->where('producto_id',$producto->id)->sum('cantidad');
+			$boletos1[]=array('nombre' => $producto->nombre, 'boletos' => $items);
+			
+		}
+		foreach ($boletos1 as $boleto) {
+			$labels.="'".$boleto['nombre']."',";
+			$data[]=intval($boleto['boletos']);
+		}
+
+			
+	
+    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
 	});
+
+	Route::post('admin', 'HomeController@admin');
 
 	Route::get('/productos', function () {
 		$productos=App\Producto::orderBy('nombre','asc')->get();
