@@ -142,6 +142,12 @@ Route::get('/perfil', function () {
     return view('perfil');
 })->middleware('auth');
 
+Route::get('/canjear', function () {
+    return view('canjear');
+})->middleware('auth');
+
+Route::post('canjear', 'OperacionController@canjear')->middleware('auth');
+
 Route::post('cambiar-contrasena-user', 'UserController@changepassuser')->middleware('auth');
 
 Route::get('/rifa/{slug}', function ($slug) {
@@ -198,9 +204,9 @@ Route::group(['middleware' => 'admin'], function(){
 		$ventas=App\Operacion::whereBetween('fecha', array($from, $to))->sum('pesos');
 		$rt=App\Operacion::whereBetween('fecha', array($from, $to))->sum('rt');
 		$boletos=App\Item::whereBetween('created_at', array($from, $to))->sum('cantidad');
-		$usuarios=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->count();
-		$mujeres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Femenino')->count();
-		$hombres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Masculino')->count();
+		$usuarios=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->count();
+		$mujeres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Femenino')->count();
+		$hombres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Masculino')->count();
 		$productos=App\Producto::all();
 		$boletos1=array();
 		$labels="";
@@ -353,6 +359,31 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::delete('eliminar-usuario', 'UserController@destroy');
 
 	Route::post('asignar-ganador', 'ProductoController@ganador');
+
+
+
+
+	Route::post('agregar-codigo', 'CodigoController@store');
+
+	Route::get('/codigos', function () {
+		$codigos=App\Codigo::orderBy('created_at','desc')->get();
+
+		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
+		if ($usuarios) {
+			$string = "{";
+			foreach ($usuarios as $usuario) {
+				$string .="'".$usuario->email."'".":"."'".$usuario->avatar."',";
+	        }
+	        $string.="}";
+	        $usuariosjson=json_encode($string);
+		}
+
+	    return view('admin.codigos', ['codigos'=>$codigos,'usuarios'=>$usuariosjson]);
+	});
+
+	Route::delete('eliminar-codigo', 'CodigoController@destroy');
+
+	Route::post('actualizar-codigo', 'CodigoController@update');
 
 });
 

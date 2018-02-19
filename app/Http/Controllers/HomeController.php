@@ -41,9 +41,9 @@ class HomeController extends Controller
         $ventas=Operacion::whereBetween('fecha', array($from, $to))->sum('pesos');
         $rt=Operacion::whereBetween('fecha', array($from, $to))->sum('rt');
         $boletos=Item::whereBetween('created_at', array($from, $to))->sum('cantidad');
-        $usuarios=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->count();
-        $mujeres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Femenino')->count();
-        $hombres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('genero','Masculino')->count();
+        $usuarios=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->count();
+        $mujeres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Femenino')->count();
+        $hombres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Masculino')->count();
         $productos=Producto::all();
         $boletos1=array();
         $labels="";

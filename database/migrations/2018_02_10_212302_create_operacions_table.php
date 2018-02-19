@@ -16,7 +16,8 @@ class CreateOperacionsTable extends Migration
         Schema::create('operaciones', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('orden_id');
+            $table->integer('orden_id')->nullable(true);;
+            $table->integer('codigo_id')->nullable(true);
             $table->bigInteger('rt');
             $table->bigInteger('pesos');
             $table->string('tipo');

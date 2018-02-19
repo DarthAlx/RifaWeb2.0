@@ -35,7 +35,7 @@ class CatalogoController extends Controller
         {
           $catalogo = Categoria::find($request->eliminar);
           $catalogo->delete();
-          Session::flash('mensaje', 'Catalogo eliminado con éxito.');
+          Session::flash('mensaje', 'Catálogo eliminado con éxito.');
             Session::flash('class', 'success');
             return redirect()->intended(url('/catalogos/'))->withInput();
         }

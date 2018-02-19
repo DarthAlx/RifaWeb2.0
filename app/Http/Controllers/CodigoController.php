@@ -12,6 +12,76 @@ use App\Codigo;
 
 class CodigoController extends Controller
 {
+
+
+	public function store(Request $request)
+    {
+    	$codigo = new Codigo($request->all());
+    	$codigo->codigo=strtoupper($request->codigo);
+    	$codigo->inicio=date_create($request->inicio);
+    	$codigo->fin=date_create($request->fin);
+    	if (!$request->user_id) {
+    		$codigo->user_id=null;
+    	}
+    	else{
+    		$usuario= User::where('email', $request->user_id)->first();
+    		$codigo->user_id=$usuario->id;
+    	}
+
+
+
+		//guardar
+        if ($codigo->save()) {
+            Session::flash('mensaje', 'Código publicado con exito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/codigos'))->withInput();
+            
+        }
+        else{
+            Session::flash('mensaje', 'Hubó un error, por favor, verifica la información.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/codigos'))->withInput();
+        }
+    }
+
+    public function destroy(Request $request)
+        {
+          $codigo = Codigo::find($request->eliminar);
+          $codigo->delete();
+          Session::flash('mensaje', 'Código eliminado con éxito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/codigos/'))->withInput();
+        }
+
+
+    public function update(Request $request){
+    	$codigo = Codigo::find($request->id);
+        $codigo->codigo=strtoupper($request->codigo);
+		$codigo->rt=$request->rt;
+		$codigo->inicio=date_create($request->inicio);
+    	$codigo->fin=date_create($request->fin);
+    	if (!$request->user_id) {
+    		$codigo->user_id=null;
+    	}else{
+    		$usuario= User::where('email', $request->user_id)->first();
+    		$codigo->user_id=$usuario->id;
+    	}
+		$codigo->usos=$request->usos;
+
+		//guardar
+        if ($codigo->save()) {
+            Session::flash('mensaje', 'Código actualizado con exito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/codigos/'))->withInput();
+        }
+        else{
+            Session::flash('mensaje', 'Hubo un error, por favor, verifica la información.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/codigos/'))->withInput();
+        }
+    }
+
+
     public function regalo()
     {
 
