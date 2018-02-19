@@ -59,7 +59,7 @@
                         </div>
                         <div class="md-form input-field">
                             
-                            <input type="text" name="dob" id="dob" class="form-control datepicker" value="@if($userinfo)@if($userinfo->user['birthday']!=''){{date('Y-m-d', strtotime($userinfo->user['birthday']))}}@endif@endif" required>
+                            <input type="text" name="dob" id="dob" class="form-control datepicker" value="@if($userinfo){{date('Y-m-d', strtotime($userinfo->user['birthday']))}}@endif" required>
                             <label for="dob"><i class="fa fa-calendar grey-text fa-lg"></i> Fecha de nacimiento</label>
                         </div>
                         <div class="md-form input-field">
