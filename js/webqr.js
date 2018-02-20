@@ -107,14 +107,6 @@ function read(a)
     if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
         html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
     html+="<b>"+htmlEntities(a)+"</b><br><br>";
-    if(a.indexOf("/RifaWeb")!= -1){
-        window.location = a;
-    }
-    else{
-        window.location = "/RifaWeb/canjear";
-    }
-
-
     document.getElementById("result").innerHTML=html;
 }	
 
@@ -148,13 +140,15 @@ function load()
 	{
 		initCanvas(800, 600);
 		qrcode.callback = read;
-		
+		document.getElementById("mainbody").style.display="inline";
         setwebcam();
 	}
 	else
 	{
-		
-		document.getElementById("mainbody").innerHTML='<p id="mp1">Lo sentimos, tu navegador no soporta este lector, prueba con una aplicación externa.</p><br><br>';
+		document.getElementById("mainbody").style.display="inline";
+		document.getElementById("mainbody").innerHTML='<p id="mp1">QR code scanner for HTML5 capable browsers</p><br>'+
+        '<br><p id="mp2">sorry your browser is not supported</p><br><br>'+
+        '<p id="mp1">try <a href="http://www.mozilla.com/firefox"><img src="firefox.png"/></a> or <a href="http://chrome.google.com"><img src="chrome_logo.gif"/></a> or <a href="http://www.opera.com"><img src="Opera-logo.png"/></a></p>';
 	}
 }
 
@@ -221,7 +215,8 @@ function setwebcam2(options)
         n.mozGetUserMedia({video: options, audio: false}, success, error);
     }
 
-
+    document.getElementById("qrimg").style.opacity=0.2;
+    document.getElementById("webcamimg").style.opacity=1.0;
 
     stype=1;
     setTimeout(captureToCanvas, 500);
