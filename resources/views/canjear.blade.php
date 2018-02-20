@@ -3,6 +3,7 @@
 @section('header')
 <script type="text/javascript" src="{{ url('js/llqrcode.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/webqr.js') }}"></script>
+
 @endsection
 
 
@@ -33,9 +34,9 @@
 					</div>
 					<canvas id="qr-canvas" width="800" height="600" style="display: none;"></canvas>
 					<script type="text/javascript">
-						
+						if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
 						    load();
-						
+						}
 						
 					</script>
 					<div class="titlescan d-block d-sm-none"><h6>ó</h6></div>
@@ -48,7 +49,7 @@
 	        		</div>
 
 	        		<div>
-                            <button class="btn btn-default waves-effect waves-light" style="width:100%">Canjear</button>
+                            <button class="btn btn-default waves-effect waves-light" id="canjearbtn" style="width:100%">Canjear</button>
                         </div>
                     </form>
 				</div>
@@ -65,6 +66,11 @@
 
 
 @section('scripts')
-
+@if($codigo!="")
+	<script>
+		$('#codigo').val("{{$codigo}}");
+		$('#canjearbtn').click();
+	</script>
+@endif
 
 @endsection

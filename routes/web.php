@@ -93,10 +93,22 @@ Route::get('/perfil', function () {
 })->middleware('auth');
 
 Route::get('/canjear', function () {
-    return view('canjear');
+	$codigo="";
+    return view('canjear', ['codigo'=>$codigo]);
 })->middleware('auth');
 
 Route::post('canjear', 'OperacionController@canjear')->middleware('auth');
+
+
+Route::get('/canjear/{id}', function ($id) {
+		$codigo=$id;
+
+		return view('canjear', ['codigo'=>$codigo]);
+
+	    
+	});
+
+
 
 Route::post('cambiar-contrasena-user', 'UserController@changepassuser')->middleware('auth');
 

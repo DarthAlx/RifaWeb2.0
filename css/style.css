@@ -670,9 +670,14 @@ margin: 1em 0;
     .perfiltext h2{
     font-size: 2rem;
 }
+
+
 }
 
 @media screen and (min-width:768px){
+    #outdiv video{
+    display: none;
+}
     .hiddenmov{
         display: inline-block;
         

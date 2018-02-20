@@ -111,7 +111,7 @@ function read(a)
         window.location = a;
     }
     else{
-        window.location = "/RifaWeb/canjear";
+        window.location = "http://localhost/RifaWeb2.0/canjear";
     }
 
 
