@@ -114,9 +114,8 @@ function read(a)
         window.location = "/RifaWeb/canjear";
     }
 
-    
+
     document.getElementById("result").innerHTML=html;
-    }
 }	
 
 function isCanvasSupported(){
