@@ -33,9 +33,9 @@
 					</div>
 					<canvas id="qr-canvas" width="800" height="600" style="display: none;"></canvas>
 					<script type="text/javascript">
-						if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
+						
 						    load();
-						}
+						
 						
 					</script>
 					<div class="titlescan d-block d-sm-none"><h6>ó</h6></div>
