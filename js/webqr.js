@@ -107,11 +107,11 @@ function read(a)
     if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
         html+="<a target='_blank' href='"+a+"'>"+a+"</a><br>";
     html+="<b>"+htmlEntities(a)+"</b><br><br>";
-    if(a.indexOf("/RifaWeb2.0")!= -1){
+    if(a.indexOf("/RifaWeb")!= -1){
         window.location = a;
     }
     else{
-        window.location = "/RifaWeb2.0/canjear";
+        window.location = "/RifaWeb/canjear";
     }
 
     
