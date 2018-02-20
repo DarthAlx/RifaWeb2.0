@@ -36,6 +36,7 @@
                       </li>
                     </ul>
                   </li>
+                <li><a href="{{url('/codigos')}}" class="waves-effect"><i class="fa fa-qrcode" aria-hidden="true"></i> Códigos</a></li>
                 <li><a href="{{url('/mensajes')}}" class="waves-effect"><i class="fa fa-envelope" aria-hidden="true"></i> Mensajes</a></li>
                 <li><a href="{{url('/slider')}}" class="waves-effect"><i class="fa fa-film" aria-hidden="true"></i> Slider</a></li>
                 <li><a href="{{url('/crm')}}" class="waves-effect"><i class="fa fa-user" aria-hidden="true"></i> CRM</a></li>

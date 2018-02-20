@@ -15,57 +15,7 @@ Auth::routes();
 
 
 Route::get('/1', function () {
-    	$usuario=App\User::find(Auth::user()->id);
-		$share=App\Operacion::where('user_id',$usuario->id)->where('tipo','Share')->orderBy('fecha','desc')->first();
-
-		if ($share) {
-			$fecha=date_create($share->fecha);
-			$hoy=date_create(date("Y-m-d H:i:s"));
-			$interval = date_diff($fecha, $hoy);
-			$intervalo = intval($interval->format('%R%a'));
-			if ($intervalo>15) {
-				$regalo = new App\Operacion();
-		    	$regalo->user_id=Auth::user()->id;
-		    	$regalo->rt= 100;
-		    	$regalo->pesos= 0;
-		    	$regalo->tipo= 'Share';
-		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-		    	$regalo->orden_id= 0;
-		    	$regalo->save();
-
-		    	
-		    	$usuario->rt=$usuario->rt+$regalo->rt;
-		    	$usuario->save();
-
-		    	echo "
-					<div id='modalregalo' class='modal'>
-					    <div class='modal-content'>
-					      <h4>¡Gracias por compartir!</h4>
-					      <p>Recibiste 100 RifaTokens</p>
-					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
-
-					    </div>
-					    <div class='modal-footer'>
-					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
-					    </div>
-					  </div>
-
-					  <script type='text/javascript'>
-					  $('#modalregalo').modal();
-						$('#modalregalo').modal('open');
-						console.log(".$intervalo.");
-					  </script>
-		    	";
-			}
-			else{
-				echo "
-					  <script type='text/javascript'>
-						console.log(".$intervalo.");
-					  </script>
-		    	";
-			}
-
-		}
+    	return view('qr');
 });
 
 
@@ -369,16 +319,50 @@ Route::group(['middleware' => 'admin'], function(){
 		$codigos=App\Codigo::orderBy('created_at','desc')->get();
 
 		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
-		if ($usuarios) {
+		/*if ($usuarios) {
 			$string = "{";
 			foreach ($usuarios as $usuario) {
 				$string .="'".$usuario->email."'".":"."'".$usuario->avatar."',";
 	        }
 	        $string.="}";
 	        $usuariosjson=json_encode($string);
-		}
+		}*/
 
-	    return view('admin.codigos', ['codigos'=>$codigos,'usuarios'=>$usuariosjson]);
+	    return view('admin.codigos', ['codigos'=>$codigos,'usuarios'=>$usuarios]);
+	});
+
+
+	Route::get('/agregar-codigo', function () {
+		$codigos=App\Codigo::orderBy('created_at','desc')->get();
+
+		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
+		/*if ($usuarios) {
+			$string = "{";
+			foreach ($usuarios as $usuario) {
+				$string .="'".$usuario->email."'".":"."'".$usuario->avatar."',";
+	        }
+	        $string.="}";
+	        $usuariosjson=json_encode($string);
+		}*/
+
+	    return view('admin.codigonuevo', ['codigos'=>$codigos,'usuarios'=>$usuarios]);
+	});
+
+
+	Route::get('/actualizar-codigo/{id}', function ($id) {
+		$codigo=App\Codigo::find($id);
+
+		$usuarios=App\User::where('is_admin',0)->where('status','Activo')->orderBy('name','asc')->get();
+		/*if ($usuarios) {
+			$string = "{";
+			foreach ($usuarios as $usuario) {
+				$string .="'".$usuario->email."'".":"."'".$usuario->avatar."',";
+	        }
+	        $string.="}";
+	        $usuariosjson=json_encode($string);
+		}*/
+
+	    return view('admin.codigoupdate', ['codigo'=>$codigo,'usuarios'=>$usuarios]);
 	});
 
 	Route::delete('eliminar-codigo', 'CodigoController@destroy');

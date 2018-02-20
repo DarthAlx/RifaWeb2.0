@@ -20,12 +20,11 @@ class CodigoController extends Controller
     	$codigo->codigo=strtoupper($request->codigo);
     	$codigo->inicio=date_create($request->inicio);
     	$codigo->fin=date_create($request->fin);
-    	if (!$request->user_id) {
-    		$codigo->user_id=null;
+    	if (!isset($request->users)) {
+    		$codigo->users=null;
     	}
     	else{
-    		$usuario= User::where('email', $request->user_id)->first();
-    		$codigo->user_id=$usuario->id;
+    		$codigo->users=implode(",",$request->users);
     	}
 
 
@@ -60,11 +59,11 @@ class CodigoController extends Controller
 		$codigo->rt=$request->rt;
 		$codigo->inicio=date_create($request->inicio);
     	$codigo->fin=date_create($request->fin);
-    	if (!$request->user_id) {
-    		$codigo->user_id=null;
-    	}else{
-    		$usuario= User::where('email', $request->user_id)->first();
-    		$codigo->user_id=$usuario->id;
+    	if (!isset($request->users)) {
+    		$codigo->users=null;
+    	}
+    	else{
+    		$codigo->users=implode(",",$request->users);
     	}
 		$codigo->usos=$request->usos;
 

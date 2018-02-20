@@ -895,3 +895,14 @@ margin: 1em 0;
     min-height: 400px;
     margin: 50px 0;
 }
+#outdiv video{
+    width: 100%;
+}
+
+.titlescan h6{
+        background: #1AA5B9;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+}

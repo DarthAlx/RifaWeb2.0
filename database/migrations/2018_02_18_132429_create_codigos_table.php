@@ -17,7 +17,7 @@ class CreateCodigosTable extends Migration
             $table->increments('id');
             $table->string('codigo');
             $table->integer('rt');
-            $table->integer('user_id')->nullable(true);
+            $table->string('users')->nullable(true);
             $table->date('inicio');
             $table->date('fin');
             $table->integer('usos')->default(1);

@@ -12,7 +12,7 @@
 			</div>
 			<div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
 				<div class="text-center" style="margin-left: auto;">
-					<a  href="#nuevo" class="btn btn-primary right waves-effect waves-light btn-large modal-trigger">Añadir nuevo</a>
+					<a  href="{{url('/agregar-codigo')}}" class="btn btn-primary right waves-effect waves-light btn-large">Añadir nuevo</a>
 				</div>
 				
 			</div>
@@ -49,13 +49,23 @@
 						<tr style="cursor: pointer;">
 							<td>{{$codigo->codigo}}</td>
 							<td>{{$codigo->rt}}</td>
-							<td>@if($codigo->user){{$codigo->user->name}}@endif</td>
+							<td>
+								@if($codigo->users)
+								<?php $usuarios1=explode(",",$codigo->users); ?>
+								@foreach($usuarios1 as $usuario1)
+									<?php $user1=App\User::find($usuario1); ?>
+									{{$user1->email}}, 
+									@endforeach
+								@else
+									Todos
+								@endif
+							</td>
 							<td>{{$codigo->inicio}}</td>
 							<td>{{$codigo->fin}}</td>
 							<td>{{$codigo->usos}}</td>
 							<td>{{$codigo->aplicaciones->count()}}</td>
 							<td align="right" style="text-align: right;">
-								<a class="waves-effect waves-light btn  modal-trigger " href="#update{{$codigo->id}}"><i class="fa fa-pencil"></i></a>
+								<a class="waves-effect waves-light btn" href="{{url('/actualizar-codigo')}}/{{$codigo->id}}"><i class="fa fa-pencil"></i></a>
 								<a class="waves-effect waves-light btn  modal-trigger red" href="#delete{{$codigo->id}}"><i class="fa fa-trash"></i></a>
 							</td>
 						</tr>
@@ -141,10 +151,51 @@
 	          <p id="usercontainer"></p>
 	        </div-->
 
-	        <div class="input-field col m12">
-	          <input type="text" name="user_id" id="user_id" class="autocomplete" value="{{$codigo->user->email or old('user_id')}}" placeholder="Buscar por email"  autocomplete="off">
+	        <div class="col m12">
 	          
-	          <label for="user_id">Usuario</label>
+	          
+	          <label for="user_id">Usuarios</label>
+
+	          <div class="todosusers" style="max-height: 800px; overflow: scroll;">
+
+
+	          	<div class="adv-table table-responsive">
+			  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+			  <thead>
+			  	<tr>
+					<th class="sorting_desc">Usuario</th>
+			  	</tr>
+			  </thead>
+			  <tbody>
+			  	@if($usuarios)
+			  		@foreach($usuarios as $user)
+
+						<tr style="cursor: pointer;">
+							<td>
+								<p>
+		                          <input type="checkbox" name="users[]" id="users" required/>
+		                          <label for="users">{{$user->email}} - {{$user->name}}</label>
+	                        	</p>
+	                        </td>
+						</tr>
+					@endforeach
+				@else
+					<tr style="cursor: pointer;">
+						<td></td>
+									
+					</tr>
+				@endif
+			  </tbody>
+			  <tfoot>
+			  	<tr>
+					<th class="sorting_desc">Usuario</th>
+			  	</tr>
+			  </tfoot>
+			  </table>
+
+			  </div>
+	          	
+	          </div>
 
 
 	        </div>
@@ -255,24 +306,5 @@
 <script type="text/javascript" src="{{ url('js/data-tables/DT_bootstrap.js') }}"></script>
 <!--dynamic table initialization -->
 <script src="{{ url('js/dynamic_table_init.js') }}"></script>
-@if ($usuarios!= '')
-<script>
-	
-	$(document).ready(function(){
-	$('input.autocomplete').autocomplete({
-    data: {!!json_decode($usuarios)!!},
-    limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
-    onAutocomplete: function(val) {
-    	$('#user_id').val(val);
-     /* $('#user_id').val("");
-      var actual=$('#multipleuser').val();
-      $('#multipleuser').val(actual+val+",");
-      $('#usercontainer').append('<p>'+val+'</p>');*/
-    },
-    minLength: 1, // The minimum length of the input for the autocomplete to start. Default: 1.
-  });
-	});
 
-</script>
-@endif
 @endsection
