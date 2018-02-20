@@ -10,7 +10,23 @@ class OperacionController extends Controller
     {
     	$codigo = Codigo::where('codigo', $request->codigo)->first();
     	if ($codigo->exists()) {
-    		# code...
+            $inicio=strtotime($codigo->inicio);
+            $fin=strtotime($codigo->fin);
+            $ahora=strtotime(date("Y-m-d"));
+
+            if($ahora>=$inicio&&$ahora<=$fin){
+                $fechavalida=true;
+            }
+            else{
+                $fechavalida=false;
+            }
+
+            if ($codigo->user_id!=null) {
+                # code...
+            }
+
+
+
     	}
     	$operacion = new Operacion();
     	$operaciones->nombre=ucfirst($request->nombre);
