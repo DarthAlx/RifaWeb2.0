@@ -180,11 +180,11 @@ class CodigoController extends Controller
 		}
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
-			if ($product->vendidos+$gift->boletos>$product->boletos) {
--				$hayboletos=false;
+			if (($product->vendidos+$gift->boletos)>$product->boletos) {
+-				$hayboletos = 0;
 -			}
 -			else{
--				$hayboletos=true;
+-				$hayboletos = 1;
 -			}
 
 
