@@ -186,7 +186,7 @@ class CodigoController extends Controller
 
 
 
-			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
+			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
 
 			if ($ticket&&$hayboletos) {
 				$fecha=date_create($ticket->fecha);
