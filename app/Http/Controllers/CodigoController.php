@@ -181,8 +181,7 @@ class CodigoController extends Controller
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
 			if ($product->vendidos+$gift->boletos>$product->boletos) {
-				Session::flash('mensaje', 'Lo sentimos no hay boletos disponibles para esta rifa.');
-            	Session::flash('class', 'success');
+
 				echo "
 						  <script type='text/javascript'>
 						  window.location='".url('/rifas')"';
