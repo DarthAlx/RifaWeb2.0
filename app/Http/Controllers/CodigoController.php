@@ -9,6 +9,10 @@ use App\User;
 use App\Operacion;
 use App\Codigo;
 use App\Regalo;
+use App\Orden;
+use App\Producto;
+use App\Item;
+
 
 class CodigoController extends Controller
 {
