@@ -188,7 +188,7 @@ class CodigoController extends Controller
 
 			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
 
-			if ($ticket>0&&$hayboletos) {
+			if ($ticket&&$hayboletos) {
 				$fecha=date_create($ticket->fecha);
 				$hoy=date_create(date("Y-m-d H:i:s"));
 				$interval = date_diff($fecha, $hoy);
