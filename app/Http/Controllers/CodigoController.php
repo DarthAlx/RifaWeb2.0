@@ -181,19 +181,16 @@ class CodigoController extends Controller
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
 			if ($product->vendidos+$gift->boletos>$product->boletos) {
-
-				echo "
-						  <script type='text/javascript'>
-						  window.location='".url('/rifas')"';
-						  </script>
-			    	";
+				$hayboletos=false;
 			}
 			else{
+				$hayboletos=true;
+			}
 
 
 			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
 
-			if ($ticket) {
+			if ($ticket&&$hayboletos) {
 				$fecha=date_create($ticket->fecha);
 				$hoy=date_create(date("Y-m-d H:i:s"));
 				$interval = date_diff($fecha, $hoy);
@@ -276,7 +273,7 @@ class CodigoController extends Controller
 				}
 
 			}
-			else{
+			elseif($hayboletos){
 				$guardar = new Orden();
 		            $guardar->order_id="Regalo";
 		            $guardar->folio=0;
@@ -341,8 +338,6 @@ class CodigoController extends Controller
 						  </script>
 			    	";
 			}
-
-		}
 
 
 
