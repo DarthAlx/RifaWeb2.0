@@ -183,7 +183,11 @@ class CodigoController extends Controller
 			if ($product->vendidos+$gift->boletos>$product->boletos) {
 				Session::flash('mensaje', 'Lo sentimos no hay boletos disponibles para esta rifa.');
             	Session::flash('class', 'success');
-				return redirect()->intended(url('/rifas'));
+				echo "
+						  <script type='text/javascript'>
+						  window.location='".url('/rifas')"';
+						  </script>
+			    	";
 			}
 
 
@@ -258,7 +262,7 @@ class CodigoController extends Controller
 						  <script type='text/javascript'>
 						  $('#modalregalo').modal();
 							$('#modalregalo').modal('open');
-							console.log('mas15dias');
+							console.log('masdias');
 						  </script>
 			    	";
 				}
@@ -266,7 +270,7 @@ class CodigoController extends Controller
 				else{
 					echo "
 						  <script type='text/javascript'>
-							console.log('menos15dias');
+							console.log('menosdias');
 						  </script>
 			    	";
 				}
