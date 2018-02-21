@@ -179,9 +179,13 @@ class CodigoController extends Controller
 
 		}
 		elseif ($gift->tipo=="Ticket"){
+			$product = Producto::find($gift->producto_id);
+			if ($product->vendidos+$gift->boletos>$product->boletos) {
+				return redirect()->intended(url()->previous();)->withInput();
+			}
 
 
-			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
+			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
 
 			if ($ticket) {
 				$fecha=date_create($ticket->fecha);
@@ -205,12 +209,12 @@ class CodigoController extends Controller
 			    	$regalo->pesos= 0;
 			    	$regalo->tipo= 'TicketGift';
 			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-			    	$regalo->orden_id= 0;
+			    	$regalo->orden_id= $guardar->id;
 			    	$regalo->save();
 
 
 		             
-		            $product = Producto::find($gift->producto_id);
+		            
 		            $boletos = $product->boletos;
 		            $digitos = strlen(intval($boletos));
 
@@ -281,12 +285,11 @@ class CodigoController extends Controller
 			    	$regalo->pesos= 0;
 			    	$regalo->tipo= 'TicketGift';
 			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-			    	$regalo->orden_id= 0;
+			    	$regalo->orden_id= $guardar->id;
 			    	$regalo->save();
 
 
 		             
-		            $product = Producto::find($gift->producto_id);
 		            $boletos = $product->boletos;
 		            $digitos = strlen(intval($boletos));
 

@@ -305,7 +305,7 @@ Route::group(['middleware' => 'admin'], function(){
 	});
 
 	Route::get('/ordenes', function () {
-		$ordenes=App\Orden::all();
+		$ordenes=App\Orden::where('tipo','Compra')->get();
 	    return view('admin.ordenes', ['ordenes'=>$ordenes]);
 	});
 
