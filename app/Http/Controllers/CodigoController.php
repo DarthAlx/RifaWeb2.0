@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 use App\User;
 use App\Operacion;
 use App\Codigo;
-
+use App\Regalo;
 
 class CodigoController extends Controller
 {
