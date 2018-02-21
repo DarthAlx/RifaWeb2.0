@@ -179,11 +179,9 @@ class CodigoController extends Controller
 
 		}
 		elseif ($gift->tipo=="Ticket"){
-			$product = Producto::find($gift->producto_id);
-			
 
 
-			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
+			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
 
 			if ($ticket) {
 				$fecha=date_create($ticket->fecha);
@@ -212,7 +210,7 @@ class CodigoController extends Controller
 
 
 		             
-		            
+		            $product = Producto::find($gift->producto_id);
 		            $boletos = $product->boletos;
 		            $digitos = strlen(intval($boletos));
 
@@ -254,7 +252,7 @@ class CodigoController extends Controller
 						  <script type='text/javascript'>
 						  $('#modalregalo').modal();
 							$('#modalregalo').modal('open');
-							console.log('masdias');
+							console.log('mas15dias');
 						  </script>
 			    	";
 				}
@@ -262,7 +260,7 @@ class CodigoController extends Controller
 				else{
 					echo "
 						  <script type='text/javascript'>
-							console.log('menosdias');
+							console.log('menos15dias');
 						  </script>
 			    	";
 				}
@@ -288,6 +286,7 @@ class CodigoController extends Controller
 
 
 		             
+		            $product = Producto::find($gift->producto_id);
 		            $boletos = $product->boletos;
 		            $digitos = strlen(intval($boletos));
 
