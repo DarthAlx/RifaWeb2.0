@@ -111,7 +111,7 @@ function read(a)
         window.location = a;
     }
     else{
-        window.location = "http://localhost/RifaWeb2.0/canjear";
+        window.location = "http://test.hadoukendev.com/RifaWeb2.0/canjear";
     }
 
 
