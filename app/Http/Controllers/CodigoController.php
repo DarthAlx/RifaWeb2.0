@@ -180,18 +180,15 @@ class CodigoController extends Controller
 		}
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
-			if (($product->vendidos+$gift->boletos)>$product->boletos) {
--				$hayboletos = 0;
--			}
--			else{
--				$hayboletos = 1;
--			}
+			$hayboletos=(intval($product->vendidos)+intval($gift->boletos))<=intval($product->boletos);
+
+	
 
 
 
 			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
 
-			if ($ticket->count()>0&&$hayboletos) {
+			if ($ticket>0&&$hayboletos) {
 				$fecha=date_create($ticket->fecha);
 				$hoy=date_create(date("Y-m-d H:i:s"));
 				$interval = date_diff($fecha, $hoy);

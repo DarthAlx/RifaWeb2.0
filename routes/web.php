@@ -17,6 +17,7 @@ Auth::routes();
 Route::get('/1', function () {
     	return view('qr');
 });
+Route::get('regalo', 'CodigoController@regalo');
 
 
 
