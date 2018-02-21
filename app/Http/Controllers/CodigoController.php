@@ -183,7 +183,7 @@ class CodigoController extends Controller
 			if ($product->vendidos+$gift->boletos>$product->boletos) {
 				Session::flash('mensaje', 'Lo sentimos no hay boletos disponibles para esta rifa.');
             	Session::flash('class', 'success');
-				return redirect()->intended(url('/rifas'))->withInput();
+				return redirect()->intended(url('/rifas'));
 			}
 
 
