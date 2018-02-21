@@ -181,7 +181,7 @@ class CodigoController extends Controller
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
 			if ($product->vendidos+$gift->boletos>$product->boletos) {
-				return redirect()->intended(url()->previous();)->withInput();
+				return redirect()->intended(url()->previous())->withInput();
 			}
 
 
