@@ -197,14 +197,7 @@ class CodigoController extends Controller
 		            $guardar->status='Regalo';
 		            $guardar->save();
 
-		             $operacion = new Operacion();
-		             $operacion->user_id=Auth::user()->id;
-		             $operacion->orden_id = $guardar->id;
-		             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10;
-		             $operacion->pesos = 0;
-		             $operacion->tipo ="Compra";
-		             $operacion->fecha = date_create(date("Y-m-d"));
-		             $operacion->save();
+	
 
 		            $regalo = new Operacion();
 			    	$regalo->user_id=Auth::user()->id;
@@ -281,14 +274,6 @@ class CodigoController extends Controller
 		            $guardar->status='Regalo';
 		            $guardar->save();
 
-		             $operacion = new Operacion();
-		             $operacion->user_id=Auth::user()->id;
-		             $operacion->orden_id = $guardar->id;
-		             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10;
-		             $operacion->pesos = 0;
-		             $operacion->tipo ="Compra";
-		             $operacion->fecha = date_create(date("Y-m-d"));
-		             $operacion->save();
 
 		            $regalo = new Operacion();
 			    	$regalo->user_id=Auth::user()->id;
