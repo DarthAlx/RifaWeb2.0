@@ -230,7 +230,7 @@
       <div class="row">
         <div class="col-md-12">
           <small>Mensaje enviado el {{$mensaje->fecha}}</small>
-      <p>{{$mensaje->msg}}</p>
+      <p>{!!$mensaje->msg!!}</p>
       <div class="text-right">
         
       </div>

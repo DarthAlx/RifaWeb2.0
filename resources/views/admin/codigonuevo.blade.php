@@ -74,8 +74,8 @@
 										<tr style="cursor: pointer;">
 											<td>
 												<p>
-						                          <input type="checkbox" name="users[]" id="users" value="{{$user->id}}" required/>
-						                          <label for="users">{{$user->emial}} - {{$user->name}}</label>
+						                          <input type="checkbox" name="users[]" id="users{{$user->id}}" value="{{$user->id}}"/>
+						                          <label for="users{{$user->id}}">{{$user->emial}} - {{$user->name}}</label>
 					                        	</p>
 					                        </td>
 										</tr>
