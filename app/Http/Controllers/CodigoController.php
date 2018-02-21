@@ -179,14 +179,6 @@ class CodigoController extends Controller
 
 		}
 		elseif ($gift->tipo=="Ticket"){
-			$product = Producto::find($gift->producto_id);
-			if ($product->vendidos+$gift->boletos>$product->boletos) {
--				$hayboletos=false;
--			}
--			else{
--				$hayboletos=true;
--			}
-
 
 
 			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
@@ -218,7 +210,7 @@ class CodigoController extends Controller
 
 
 		             
-		            
+		            $product = Producto::find($gift->producto_id);
 		            $boletos = $product->boletos;
 		            $digitos = strlen(intval($boletos));
 
