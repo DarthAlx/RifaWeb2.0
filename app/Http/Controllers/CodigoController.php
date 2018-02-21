@@ -189,6 +189,7 @@ class CodigoController extends Controller
 						  </script>
 			    	";
 			}
+			else{
 
 
 			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
@@ -341,6 +342,8 @@ class CodigoController extends Controller
 						  </script>
 			    	";
 			}
+
+		}
 
 
 
