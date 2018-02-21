@@ -21,4 +21,8 @@ class Producto extends Model
 	public function items(){
 	    return $this->hasMany('App\Item');
 	}
+
+	public function regalo(){
+	    return $this->hasOne('App\Regalo');
+	}
 }

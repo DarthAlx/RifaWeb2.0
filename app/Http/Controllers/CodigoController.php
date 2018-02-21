@@ -85,91 +85,268 @@ class CodigoController extends Controller
     {
 
 		$usuario=User::find(Auth::user()->id);
-		$share=Operacion::where('user_id',$usuario->id)->where('tipo','Share')->orderBy('fecha','desc')->first();
+		$gift=Regalo::first();
+		if ($gift->tipo=="Share") {
+			$share=Operacion::where('user_id',$usuario->id)->where('tipo','Share')->orderBy('fecha','desc')->first();
 
-		if ($share) {
-			$fecha=date_create($share->fecha);
-			$hoy=date_create(date("Y-m-d H:i:s"));
-			$interval = date_diff($fecha, $hoy);
-			$intervalo = intval($interval->format('%R%a'));
-			if ($intervalo>15) {
-				$regalo = new Operacion();
-		    	$regalo->user_id=Auth::user()->id;
-		    	$regalo->rt= 100;
-		    	$regalo->pesos= 0;
-		    	$regalo->tipo= 'Share';
-		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-		    	$regalo->orden_id= 0;
-		    	$regalo->save();
+			if ($share) {
+				$fecha=date_create($share->fecha);
+				$hoy=date_create(date("Y-m-d H:i:s"));
+				$interval = date_diff($fecha, $hoy);
+				$intervalo = intval($interval->format('%R%a'));
+				if ($intervalo>$gift->dias) {
+					$regalo = new Operacion();
+			    	$regalo->user_id=Auth::user()->id;
+			    	$regalo->rt= $gift->rt;
+			    	$regalo->pesos= 0;
+			    	$regalo->tipo= 'Share';
+			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+			    	$regalo->orden_id= 0;
+			    	$regalo->save();
 
-		    	
-		    	$usuario->rt=$usuario->rt+$regalo->rt;
-		    	$usuario->save();
+			    	
+			    	$usuario->rt=$usuario->rt+$regalo->rt;
+			    	$usuario->save();
 
-		    	echo "
-					<div id='modalregalo' class='modal'>
-					    <div class='modal-content'>
-					      <h4>¡Gracias por compartir!</h4>
-					      <p>Recibiste 100 RifaTokens</p>
-					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+			    	echo "
+						<div id='modalregalo' class='modal'>
+						    <div class='modal-content'>
+						      <h4>¡Gracias por compartir!</h4>
+						      <p>Recibiste 100 RifaTokens</p>
+						      <p>Vuelve en ".$gift->dias. " días para obtener una nueva recompensa.</p>
 
-					    </div>
-					    <div class='modal-footer'>
-					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
-					    </div>
-					  </div>
+						    </div>
+						    <div class='modal-footer'>
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    </div>
+						  </div>
 
-					  <script type='text/javascript'>
-					  $('#modalregalo').modal();
-						$('#modalregalo').modal('open');
-						console.log('mas15dias');
-					  </script>
-		    	";
+						  <script type='text/javascript'>
+						  $('#modalregalo').modal();
+							$('#modalregalo').modal('open');
+							console.log('mas15dias');
+						  </script>
+			    	";
+				}
+
+				else{
+					echo "
+						  <script type='text/javascript'>
+							console.log('menos15dias');
+						  </script>
+			    	";
+				}
+
 			}
-
 			else{
-				echo "
-					  <script type='text/javascript'>
-						console.log('menos15dias');
-					  </script>
-		    	";
+				$regalo = new Operacion();
+			    	$regalo->user_id=Auth::user()->id;
+			    	$regalo->rt= $gift->rt;
+			    	$regalo->pesos= 0;
+			    	$regalo->tipo= 'Share';
+			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+			    	$regalo->orden_id= 0;
+			    	$regalo->save();
+
+			    	
+			    	$usuario->rt=$usuario->rt+$regalo->rt;
+			    	$usuario->save();
+
+			    	echo "
+						<div id='modalregalo' class='modal'>
+						    <div class='modal-content'>
+						      <h4>¡Gracias por compartir!</h4>
+						      <p>Recibiste 100 RifaTokens</p>
+						      <p>Vuelve en ".$gift->dias. " días para obtener una nueva recompensa.</p>
+
+						    </div>
+						    <div class='modal-footer'>
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    </div>
+						  </div>
+
+						  <script type='text/javascript'>
+						  $('#modalregalo').modal();
+							$('#modalregalo').modal('open');
+							console.log('primer share');
+						  </script>
+			    	";
 			}
 
 		}
-		else{
-			$regalo = new Operacion();
-		    	$regalo->user_id=Auth::user()->id;
-		    	$regalo->rt= 100;
-		    	$regalo->pesos= 0;
-		    	$regalo->tipo= 'Share';
-		    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-		    	$regalo->orden_id= 0;
-		    	$regalo->save();
+		elseif ($gift->tipo=="Ticket"){
 
-		    	
-		    	$usuario->rt=$usuario->rt+$regalo->rt;
-		    	$usuario->save();
 
-		    	echo "
-					<div id='modalregalo' class='modal'>
-					    <div class='modal-content'>
-					      <h4>¡Gracias por compartir!</h4>
-					      <p>Recibiste 100 RifaTokens</p>
-					      <p>Vuelve en 2 semanas para obtener una nueva recompensa.</p>
+			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','Ticket')->orderBy('fecha','desc')->first();
 
-					    </div>
-					    <div class='modal-footer'>
-					    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
-					    </div>
-					  </div>
+			if ($ticket) {
+				$fecha=date_create($ticket->fecha);
+				$hoy=date_create(date("Y-m-d H:i:s"));
+				$interval = date_diff($fecha, $hoy);
+				$intervalo = intval($interval->format('%R%a'));
+				if ($intervalo>$gift->dias) {
 
-					  <script type='text/javascript'>
-					  $('#modalregalo').modal();
-						$('#modalregalo').modal('open');
-						console.log('primer share');
-					  </script>
-		    	";
+		            $guardar = new Orden();
+		            $guardar->order_id="Regalo";
+		            $guardar->folio=0;
+		            $guardar->user_id=Auth::user()->id;
+		            $guardar->status='Regalo';
+		            $guardar->save();
+
+		             $operacion = new Operacion();
+		             $operacion->user_id=Auth::user()->id;
+		             $operacion->orden_id = $guardar->id;
+		             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10;
+		             $operacion->pesos = 0;
+		             $operacion->tipo ="Compra";
+		             $operacion->fecha = date_create(date("Y-m-d"));
+		             $operacion->save();
+
+		            $regalo = new Operacion();
+			    	$regalo->user_id=Auth::user()->id;
+			    	$regalo->rt= 0;
+			    	$regalo->pesos= 0;
+			    	$regalo->tipo= 'TicketGift';
+			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+			    	$regalo->orden_id= 0;
+			    	$regalo->save();
+
+
+		             
+		            $product = Producto::find($gift->producto_id);
+		            $boletos = $product->boletos;
+		            $digitos = strlen(intval($boletos));
+
+		            
+		            $vendidos = $product->vendidos;
+		            $tickets = array();
+
+		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
+		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+		              $tickets[]="t".$numero."t";
+		            }
+
+		            $product->vendidos=$vendidos+$gift->boletos;
+		            $product->save();
+		            
+		            $item = new Item();
+		            $item->orden_id = $guardar->id;
+		            $item->producto = $product->nombre;
+		            $item->producto_id = $product->id;
+		            $item->boletos = implode(",", $tickets);
+		            $item->cantidad = $gift->boletos;
+		            $item->precio = 0;
+		            $item->fecha = date_create($product->fecha_limite);
+		            $item->save();
+
+			    	echo "
+						<div id='modalregalo' class='modal'>
+						    <div class='modal-content'>
+						      <h4>¡Gracias por compartir!</h4>
+						      <p>Recibiste ".$gift->boletos. " boletos para la rifa de ".$product->nombre.".</p>
+						      <p>Vuelve en ".$gift->dias. " días para obtener una nueva recompensa.</p>
+
+						    </div>
+						    <div class='modal-footer'>
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    </div>
+						  </div>
+
+						  <script type='text/javascript'>
+						  $('#modalregalo').modal();
+							$('#modalregalo').modal('open');
+							console.log('mas15dias');
+						  </script>
+			    	";
+				}
+
+				else{
+					echo "
+						  <script type='text/javascript'>
+							console.log('menos15dias');
+						  </script>
+			    	";
+				}
+
+			}
+			else{
+				$guardar = new Orden();
+		            $guardar->order_id="Regalo";
+		            $guardar->folio=0;
+		            $guardar->user_id=Auth::user()->id;
+		            $guardar->status='Regalo';
+		            $guardar->save();
+
+		             $operacion = new Operacion();
+		             $operacion->user_id=Auth::user()->id;
+		             $operacion->orden_id = $guardar->id;
+		             $operacion->rt = round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10;
+		             $operacion->pesos = 0;
+		             $operacion->tipo ="Compra";
+		             $operacion->fecha = date_create(date("Y-m-d"));
+		             $operacion->save();
+
+		            $regalo = new Operacion();
+			    	$regalo->user_id=Auth::user()->id;
+			    	$regalo->rt= 0;
+			    	$regalo->pesos= 0;
+			    	$regalo->tipo= 'TicketGift';
+			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
+			    	$regalo->orden_id= 0;
+			    	$regalo->save();
+
+
+		             
+		            $product = Producto::find($gift->producto_id);
+		            $boletos = $product->boletos;
+		            $digitos = strlen(intval($boletos));
+
+		            
+		            $vendidos = $product->vendidos;
+		            $tickets = array();
+
+		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
+		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+		              $tickets[]="t".$numero."t";
+		            }
+
+		            $product->vendidos=$vendidos+$gift->boletos;
+		            $product->save();
+		            
+		            $item = new Item();
+		            $item->orden_id = $guardar->id;
+		            $item->producto = $product->nombre;
+		            $item->producto_id = $product->id;
+		            $item->boletos = implode(",", $tickets);
+		            $item->cantidad = $gift->boletos;
+		            $item->precio = 0;
+		            $item->fecha = date_create($product->fecha_limite);
+		            $item->save();
+
+			    	echo "
+						<div id='modalregalo' class='modal'>
+						    <div class='modal-content'>
+						      <h4>¡Gracias por compartir!</h4>
+						      <p>Recibiste ".$gift->boletos. " boletos para la rifa de ".$product->nombre.".</p>
+						      <p>Vuelve en ".$gift->dias. " días para obtener una nueva recompensa.</p>
+
+						    </div>
+						    <div class='modal-footer'>
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    </div>
+						  </div>
+
+						  <script type='text/javascript'>
+						  $('#modalregalo').modal();
+							$('#modalregalo').modal('open');
+							console.log('mas15dias');
+						  </script>
+			    	";
+			}
+
+
+
 		}
-
+		
     }
 }

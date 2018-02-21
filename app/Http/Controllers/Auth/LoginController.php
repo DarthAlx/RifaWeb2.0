@@ -55,9 +55,9 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         return Socialite::driver('facebook')->fields([
-            'first_name', 'last_name', 'email', 'gender', 'birthday'
+            'first_name', 'last_name', 'email', 
         ])->scopes([
-            'email', 'user_birthday', 'publish_actions'
+            'email', 'publish_actions'
         ])->redirect();
     }
 
@@ -70,7 +70,7 @@ class LoginController extends Controller
     {
         try{
             $userinfo = Socialite::driver('facebook')->fields([
-            'first_name', 'last_name', 'email', 'gender', 'birthday',
+            'first_name', 'last_name', 'email'
         ])->user();
         }catch(\Exception $e){
             return redirect('/entrar');

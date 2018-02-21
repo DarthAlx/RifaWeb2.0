@@ -41,17 +41,17 @@ class User extends Authenticatable
         return $this->hasMany('App\Mensaje');
     }
     public function operaciones(){
-        return $this->hasMany('App\Operacion');
+        return $this->hasMany('App\Operacion')->orderBy('fecha','desc');
     }
     public function ordenes(){
-        return $this->hasMany('App\Orden');
+        return $this->hasMany('App\Orden')->orderBy('created_at','desc');
     }
     public function tarjetas(){
         return $this->hasMany('App\Tarjeta');
     }
 
     public function ganadas(){
-        return $this->hasMany('App\Ganador');
+        return $this->hasMany('App\Ganador')->orderBy('fecha','desc');
     }
     public function codigos(){
         return $this->hasMany('App\Codigo');

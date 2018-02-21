@@ -162,7 +162,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="adv-table table-responsive">
-									  <table class="display table table-bordered table-striped table-hover" id="dynamic-table">
+									  <table class="display table table-bordered table-striped table-hover" id="dynamic-table2">
 									  <thead>
 									  	<tr>
 											<th class="sorting_desc">Tipo</th>

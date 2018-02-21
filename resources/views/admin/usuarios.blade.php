@@ -71,6 +71,17 @@
 								<a class="waves-effect waves-light btn" href="{{url('/usuario')}}/{{$usuario->id}}"><i class="fa fa-search-plus"></i></a>
 								<a class="waves-effect waves-light btn  modal-trigger " href="#mensaje{{$usuario->id}}"><i class="fa fa-envelope"></i></a>
 								<a class="waves-effect waves-light btn  modal-trigger red" href="#delete{{$usuario->id}}"><i class="fa fa-times-circle"></i></a>
+									
+									
+								@if($usuario->ordenes)
+								<div class="compras" style="display: none;">
+									@foreach($usuario->ordenes as $compra)
+										@foreach($compra->items as $producto)
+											{{$producto->producto}}&nbsp;
+										@endforeach
+									@endforeach
+								</div>
+								@endif
 							</td>	
 						</tr>
 					@endforeach

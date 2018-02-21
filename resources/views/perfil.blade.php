@@ -159,7 +159,7 @@
                 @if($nuevos>0)
               <div class="collection">
                 @foreach($mensajes as $mensaje)
-                    <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{{str_limit($mensaje->msg, $limit = 20, $end = '...')}} <span  class="secondary-content">
+                    <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{!!str_limit($mensaje->msg, $limit = 20, $end = '...')!!} <span  class="secondary-content">
                       @if($mensaje->leido)<i id="msj{{$mensaje->id}}" class="fa fa-envelope-open"></i>@else<i id="msj{{$mensaje->id}}" class="fa fa-envelope"></i>@endif</span>
 
                     </a>
