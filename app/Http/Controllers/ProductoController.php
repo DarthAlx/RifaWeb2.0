@@ -161,26 +161,47 @@ class ProductoController extends Controller
               
               
               $itemganador= Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->where('boletos', 'like', '%t' . $producto->ganador . 't%')->first();
+              $comprados=where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->get();
 
-              $ordenganadora=$itemganador->orden;
-              $ganador=$ordenganadora->user;
+              if ($itemganador) {
+                    $ordenganadora=$itemganador->orden;
+                    $ganador=$ordenganadora->user;
 
-//guardar ganador
-                $guardarganador= new Ganador();
-                $guardarganador->user_id=$ganador->id;
-                $guardarganador->producto=$producto->nombre;
-                $guardarganador->boleto=$producto->ganador;
-                $guardarganador->fecha=date_create($producto->fecha_limite);
-                $guardarganador->save();
+                    //guardar ganador
+                    $guardarganador= new Ganador();
+                    $guardarganador->user_id=$ganador->id;
+                    $guardarganador->producto=$producto->nombre;
+                    $guardarganador->boleto=$producto->ganador;
+                    $guardarganador->fecha=date_create($producto->fecha_limite);
+                    $guardarganador->save();
 
 
-              foreach ($producto->items as $item) {
-                $orden=$item->orden;
-                $orden->status="Terminada";
-                $orden->save();
+                  foreach ($comprados as $item) {
+                    $orden=$item->orden;
+                    $orden->status="Terminada";
+                    $orden->save();
+                  }
+
+                  $this->sendwinner($guardarganador->id);
+              }
+              else{
+                    $guardarganador= new Ganador();
+                    $guardarganador->user_id=1;
+                    $guardarganador->producto=$producto->nombre;
+                    $guardarganador->boleto=$producto->ganador;
+                    $guardarganador->fecha=date_create($producto->fecha_limite);
+                    $guardarganador->save();
+
+
+                  foreach ($comprados as $item) {
+                    $orden=$item->orden;
+                    $orden->status="Terminada";
+                    $orden->save();
+                  }
+
               }
 
-              $this->sendwinner($guardarganador->id);
+              
 
               Session::flash('mensaje', 'Ganador asignado.');
               Session::flash('class', 'success');
@@ -192,10 +213,13 @@ class ProductoController extends Controller
     {
       $ganador=Ganador::find($id);
       $user=$ganador->user;
-        Mail::send('emails.winner', ['ganador'=>$ganador,'user'=>$user], function ($m) use ($user) {
+      if ($user->id!=1) {
+          Mail::send('emails.winner', ['ganador'=>$ganador,'user'=>$user], function ($m) use ($user) {
             $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
             $m->to($user->email, $user->name)->subject('¡Felicidades!');
         });
+      }
+        
     }
 
 
@@ -206,6 +230,47 @@ class ProductoController extends Controller
     {
 
         $producto = Producto::find($id);
+
+            if ($producto->fecha_limite!=$request->fecha_limite. " ". $request->hora) {
+                if ($producto->ganador!=null) {
+                    $producto->vendidos=0;
+                    $producto->ganador=null;
+                }
+                else{
+                    $ventas=Item::where('producto',$producto->nombre)->where('fecha',$producto->fecha_limite)->count();
+                    $venta=Item::where('producto',$producto->nombre)->where('fecha',$producto->fecha_limite)->first();
+                    if ($venta) {
+                        $orden= $venta->orden;
+                        $status=$orden->status;
+                    }
+                    else{
+                        $status="none";
+                    }
+
+
+
+                    if($ventas>0&&$status!="Terminada"){
+                        $comprados=Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->get();
+                        foreach($comprados as $comprado){
+                            $comprado->producto=$request->nombre;
+                            $comprado->fecha=date_create($request->fecha_limite. " ". $request->hora);
+                            $comprado->save();
+                        }
+
+                    }
+                }
+
+
+            }
+        
+        
+
+
+        
+
+
+
+        
         $producto->nombre=$request->nombre;
         $producto->slug = str_slug($request->nombre, '-');
         $producto->descripcion=$request->descripcion;
@@ -216,24 +281,11 @@ class ProductoController extends Controller
         $producto->boletos=$request->boletos;
         $producto->minimo=$request->minimo;
         $producto->fundacion=$request->fundacion;
-
-        if ($producto->fecha_limite!=$request->fecha_limite. " ". $request->hora) {
-            if ($producto->ganador!=null) {
-                $producto->vendidos=0;
-            }
-            $producto->ganador=null;
-        }
-
-        if (!$request->fecha_limite && !$request->hora&& $producto->fecha_limite!="") {
-            $producto->fecha_limite=$producto->fecha_limite;
-        }
-
-        if (!$request->nombre&&$producto->nombre!="") {
-            $producto->nombre=$producto->nombre;
-        }
-
-
         $producto->fecha_limite=date_create($request->fecha_limite. " ". $request->hora);
+
+
+
+        
         
         //categoria
         if (isset($request->categoria)) {
@@ -279,6 +331,8 @@ class ProductoController extends Controller
           }
 
         }
+
+
 
         //guardar
         if ($producto->save()) {
