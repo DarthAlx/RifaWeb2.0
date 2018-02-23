@@ -400,7 +400,7 @@ class ProductoController extends Controller
     $fuentes=Fuente::orderBy('nombre','asc')->get();
 
     if ($request->busqueda) {
-         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->paginate(20);
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
     }
 
     if ($request->orden) {
@@ -422,13 +422,13 @@ class ProductoController extends Controller
 
     if ($request->minimo||$request->maximo) {
         if ($request->minimo&&$request->maximo) {
-            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         if ($request->minimo&&!$request->maximo) {
-            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         if (!$request->minimo&&$request->maximo) {
-            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         
         
@@ -449,21 +449,21 @@ class ProductoController extends Controller
     if ($categoria) {
 
         if ($request->busqueda) {
-         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->paginate(20);
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
         }
 
         if ($request->orden) {
             if ($request->orden=="A - Z") {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Z - A") {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','desc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('nombre','desc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Menor precio") {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Mayor precio") {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','desc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->orderBy('precio','desc')->where('habilitado',1)->paginate(20);
             }
             
         }
@@ -471,13 +471,13 @@ class ProductoController extends Controller
 
         if ($request->minimo||$request->maximo) {
             if ($request->minimo&&$request->maximo) {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->minimo&&!$request->maximo) {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if (!$request->minimo&&$request->maximo) {
-                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('categoria', 'like', '%'.$categoria->id.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             
             
@@ -488,21 +488,21 @@ class ProductoController extends Controller
     elseif ($fuente) {
 
         if ($request->busqueda) {
-         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->paginate(20);
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
         }
 
         if ($request->orden) {
             if ($request->orden=="A - Z") {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Z - A") {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','desc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('nombre','desc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Menor precio") {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->orden=="Mayor precio") {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','desc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->orderBy('precio','desc')->where('habilitado',1)->paginate(20);
             }
             
         }
@@ -510,13 +510,13 @@ class ProductoController extends Controller
 
         if ($request->minimo||$request->maximo) {
             if ($request->minimo&&$request->maximo) {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if ($request->minimo&&!$request->maximo) {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             if (!$request->minimo&&$request->maximo) {
-                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+                $productos=Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
             }
             
             
@@ -531,7 +531,7 @@ class ProductoController extends Controller
 
 
     if ($request->busqueda) {
-         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->paginate(20);
+         $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
     }
 
     if ($request->orden) {
@@ -553,13 +553,13 @@ class ProductoController extends Controller
 
     if ($request->minimo||$request->maximo) {
         if ($request->minimo&&$request->maximo) {
-            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         if ($request->minimo&&!$request->maximo) {
-            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [$request->minimo, 999999999999999])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         if (!$request->minimo&&$request->maximo) {
-            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->paginate(20);
+            $productos=Producto::whereBetween('precio', [999999999999999, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
         
         

@@ -196,7 +196,7 @@
             $('.modal').modal();
             $('.slider').bxSlider({
               auto: true,
-
+              useCSS: false,
               stopAutoOnClick: true,
               adaptiveHeight: true,
               infiniteLoop: true,

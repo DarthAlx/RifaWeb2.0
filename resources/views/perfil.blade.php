@@ -333,6 +333,27 @@
 
 
   <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
+
+<?php 
+  $hoy1= date("Y-m-d"); 
+  $dob1=$usuario->dob;
+  $hoy = explode('-', $hoy1);  
+  $dob = explode('-', $dob1);  
+
+  $dob[0]=$hoy[0];
+
+
+  if (strtotime(date("Y-m-d")) >= strtotime(implode("-", $dob))) {
+    echo "true";
+  }
+  else{
+    echo "false";
+  }
+  
+
+?>
+
 @endsection
 
 @section("scripts")

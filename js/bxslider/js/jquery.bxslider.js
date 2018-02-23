@@ -663,8 +663,8 @@
      * Appends prev / next controls to the controls element
      */
     var appendControls = function() {
-      slider.controls.next = $('<a class="bx-next" href="">' + slider.settings.nextText + '</a>');
-      slider.controls.prev = $('<a class="bx-prev" href="">' + slider.settings.prevText + '</a>');
+      slider.controls.next = $('<a class="bx-next" href="#">' + slider.settings.nextText + '</a>');
+      slider.controls.prev = $('<a class="bx-prev" href="#">' + slider.settings.prevText + '</a>');
       // bind click actions to the controls
       slider.controls.next.bind('click touchend', clickNextBind);
       slider.controls.prev.bind('click touchend', clickPrevBind);
@@ -691,8 +691,8 @@
      * Appends start / stop auto controls to the controls element
      */
     var appendControlsAuto = function() {
-      slider.controls.start = $('<div class="bx-controls-auto-item"><a class="bx-start" href="">' + slider.settings.startText + '</a></div>');
-      slider.controls.stop = $('<div class="bx-controls-auto-item"><a class="bx-stop" href="">' + slider.settings.stopText + '</a></div>');
+      slider.controls.start = $('<div class="bx-controls-auto-item"><a class="bx-start" href="#">' + slider.settings.startText + '</a></div>');
+      slider.controls.stop = $('<div class="bx-controls-auto-item"><a class="bx-stop" href="#">' + slider.settings.stopText + '</a></div>');
       // add the controls to the DOM
       slider.controls.autoEl = $('<div class="bx-controls-auto" />');
       // bind click actions to the controls
@@ -844,8 +844,8 @@
           position = slider.children.eq(slider.children.length - 1).position();
         }
         if (position) {
-          if (slider.settings.mode === 'horizontal') { setPositionProperty(-position.left, 'reset', 0); }
-          else if (slider.settings.mode === 'vertical') { setPositionProperty(-position.top, 'reset', 0); }
+          if (slider.settings.mode === 'horizontal' && position.left) { setPositionProperty(-position.left, 'reset', 0); }
+          else if (slider.settings.mode === 'vertical' && position.top) { setPositionProperty(-position.top, 'reset', 0); }
         }
       }
       // declare that the transition is complete

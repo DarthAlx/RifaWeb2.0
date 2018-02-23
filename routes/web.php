@@ -25,7 +25,7 @@ Route::get('regalo', 'CodigoController@regalo');
 
 Route::get('/', function () {
 	
-	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->get();
+	$productos=App\Producto::where('destacado',1)->orderBy('nombre','asc')->where('habilitado',1)->get();
 	$slides=App\Slider::orderBy('orden','asc')->get();
 	return view('inicio2', ['productos'=>$productos,'slides'=>$slides]);
     return view('inicio');
@@ -41,11 +41,11 @@ Route::get('/rifas/{catalogo}', function ($catalogo) {
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
 	$fuentes=App\Fuente::orderBy('nombre','asc')->get();
 	if ($categoria) {
-		$productos=App\Producto::where('categoria', 'like', '%'.$categoria->id.'%')->paginate(20);
+		$productos=App\Producto::where('categoria', 'like', '%'.$categoria->id.'%')->where('habilitado',1)->paginate(20);
 		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
 	}
 	elseif ($fuente) {
-		$productos=App\Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->paginate(20);
+		$productos=App\Producto::where('loteria', 'like', '%'.$fuente->nombre.'%')->where('habilitado',1)->paginate(20);
 		return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
 	}
 	else{
@@ -60,7 +60,7 @@ Route::get('/rifas', function () {
 	$catalogo="Todos";
 	$categorias=App\Categoria::orderBy('nombre','asc')->get();
 	$fuentes=App\Fuente::orderBy('nombre','asc')->get();
-	$productos=App\Producto::orderBy('nombre','asc')->paginate(20);
+	$productos=App\Producto::orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
 	return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'catalogo'=>$catalogo,'fuentes'=>$fuentes]);
 });
 
@@ -114,7 +114,7 @@ Route::get('/canjear/{id}', function ($id) {
 Route::post('cambiar-contrasena-user', 'UserController@changepassuser')->middleware('auth');
 
 Route::get('/rifa/{slug}', function ($slug) {
-	$producto=App\Producto::where('slug',$slug)->first();
+	$producto=App\Producto::where('slug',$slug)->where('habilitado',1)->first();
     return view('producto',['producto'=>$producto]);
 });
 
