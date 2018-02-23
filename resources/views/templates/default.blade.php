@@ -182,7 +182,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         
 
-        @yield('scripts')
+        
 
         <script type="text/javascript" src="{{ url('js/script.js') }}"></script>
         <script>
@@ -226,6 +226,8 @@
 
           });
         </script>
+
+        @yield('scripts')
 
         <div id="regalo"></div>
     </body>

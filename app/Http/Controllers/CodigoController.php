@@ -121,7 +121,7 @@ class CodigoController extends Controller
 
 						    </div>
 						    <div class='modal-footer'>
-						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cerrar</a> 
 						    </div>
 						  </div>
 
@@ -165,7 +165,7 @@ class CodigoController extends Controller
 
 						    </div>
 						    <div class='modal-footer'>
-						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cerrar</a> 
 						    </div>
 						  </div>
 
@@ -250,7 +250,7 @@ class CodigoController extends Controller
 
 						    </div>
 						    <div class='modal-footer'>
-						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cerrar</a> 
 						    </div>
 						  </div>
 
@@ -326,7 +326,7 @@ class CodigoController extends Controller
 
 						    </div>
 						    <div class='modal-footer'>
-						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cancelar</a> 
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cerrar</a> 
 						    </div>
 						  </div>
 

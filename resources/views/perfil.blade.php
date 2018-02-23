@@ -327,32 +327,24 @@
 
 @endif
 
+<div id="cumpleanos" class="modal">
+              <div class="modal-content">
+                <h4>¡Feliz cumpleaños!</h4>
+
+                <p>Te regalamos 100 RifaTokens.</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp; 
+              </div>
+            </div>
 
 
-
-
+  
 
   <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 
-<?php 
-  $hoy1= date("Y-m-d"); 
-  $dob1=$usuario->dob;
-  $hoy = explode('-', $hoy1);  
-  $dob = explode('-', $dob1);  
 
-  $dob[0]=$hoy[0];
-
-
-  if (strtotime(date("Y-m-d")) >= strtotime(implode("-", $dob))) {
-    echo "true";
-  }
-  else{
-    echo "false";
-  }
-  
-
-?>
 
 @endsection
 
@@ -375,4 +367,75 @@
   }
   
 </script>
+
+
+<?php 
+  $hoy1= date("Y-m-d"); 
+  $dob1=$usuario->dob;
+  $hoy = explode('-', $hoy1);  
+  $dob = explode('-', $dob1);  
+
+  $dob[0]=$hoy[0];
+
+
+  if (strtotime(date("Y-m-d")) >= strtotime(implode("-", $dob))) {
+    $regalado=App\Operacion::where('user_id',$usuario->id)->where('tipo','Cumpleaños')->orderBy('fecha','desc')->first();
+    if ($regalado) {
+      $cumple=explode('-', $regalado->fecha);
+      if ($hoy[0]>$cumple[0]) {
+          $operacion = new App\Operacion();
+          $operacion->user_id=Auth::user()->id;
+          $operacion->rt=100;
+          $operacion->pesos=0;
+          $operacion->tipo="Cumpleaños";
+          $operacion->fecha=date_create(date("Y-m-d H:i:s"));
+          $operacion->save();
+          $usuario->rt=$usuario->rt+100;
+          $usuario->save();
+          ?>
+          
+            <script type='text/javascript'>
+              $('#cumpleanos').modal();
+              $( document ).ready(function() {
+              $('#cumpleanos').modal('open');
+              });
+              </script>
+          <?php
+      }
+
+
+    }
+    else{
+        $operacion = new App\Operacion();
+          $operacion->user_id=Auth::user()->id;
+          $operacion->rt=100;
+          $operacion->pesos=0;
+          $operacion->tipo="Cumpleaños";
+          $operacion->fecha=date_create(date("Y-m-d H:i:s"));
+          $operacion->save();
+          $usuario->rt=$usuario->rt+100;
+          $usuario->save();
+          ?>
+
+            
+            <script type='text/javascript'>
+              $('#cumpleanos').modal();
+              $( document ).ready(function() {
+              $('#cumpleanos').modal('open');
+              });
+              </script>
+          <?php
+      }
+    
+
+  }
+  else{
+    echo "false";
+  }
+  
+
+?>
+
+
+
 @endsection
