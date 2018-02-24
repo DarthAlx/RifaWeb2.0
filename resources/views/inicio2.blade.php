@@ -19,7 +19,7 @@
                 <div class="row">
 
 
-                @if(rand(0, 1))
+               
                 <div class="col-md-6 col-sm-12">
                   <div class="slider-img" style="margin: 0 auto;">
                     <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
@@ -28,9 +28,10 @@
                 <div class="col-md-6  text-right">
                   <h2>Sorteo de {{$slide->producto->nombre}}</h2>
 
-                  <h5>¡Quedan pocos boletos!</h5>
+                  <h5>{{$slide->subtitulo}}</h5>
                   <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
-                  <div id="contador{{$slide->producto->id}}" style="float: right;">
+                  <div class="contadorslider">
+                    <div id="contador{{$slide->producto->id}}" style="float: right;">
                             
 
                             <?php 
@@ -55,50 +56,15 @@
 
                             </script>
                           </div>
+                  </div>
+                  
                           <p>&nbsp;</p><p>&nbsp;</p>
-                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
-                </div>
-                @else
-                  <div class="col-md-6">
-                    <h2>Sorteo de {{$slide->producto->nombre}}</h2>
-
-                    <h5>¡Quedan pocos boletos!</h5>
-                    <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
-                    <div id="contador{{$slide->producto->id}}">
-                              
-
-                              <?php 
-                            $datetime = explode(' ', $slide->producto->fecha_limite); 
-                            $fecha = explode('-', $datetime[0]); 
-
-                            $hora = explode(':', $datetime[1]); 
-
-
-                            ?>
-                            <script>
-                              var Countdown{{$slide->producto->id}} = new Countdown({
-                              year: {{$fecha[0]}},
-                              month : {{$fecha[1]}}, 
-                              day   : {{$fecha[2]}},
-                              hour   : {{$hora[0]}},
-                              minutes   : {{$hora[1]}},
-                              width : 200, 
-                              height  : 50,
-                              rangeHi:"day"
-                              });
-
-                            </script>
-                            </div>
-                            <p>&nbsp;</p>
+                          <div class="botonslide">
                             <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
-                  </div>
-                  <div class="col-md-6 col-sm-12">
-                    <div class="slider-img" style="margin: 0 auto;">
-                      <img class="img-responsive" src="{{url('uploads/productos')}}/{{$slide->producto->imagen}}" >
-                    </div>
-                  </div>
-
-                @endif
+                          </div>
+                          
+                </div>
+                
 
 
 

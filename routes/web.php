@@ -17,7 +17,7 @@ Auth::routes();
 Route::get('/1', function () {
     	return view('qr');
 });
-Route::get('regalo', 'CodigoController@regalo');
+//Route::get('regalo', 'CodigoController@regalo');
 
 
 
@@ -381,6 +381,23 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::delete('eliminar-codigo', 'CodigoController@destroy');
 
 	Route::post('actualizar-codigo', 'CodigoController@update');
+
+
+	Route::get('/regalo-update', function () {
+		$regalo=App\Regalo::first();
+		$productos=App\Producto::where('habilitado',1)->orderBy('nombre','asc')->get();
+		if (!$productos->isEmpty()) {
+			$string = "{";
+			foreach ($productos as $producto) {
+				$string .="'".$producto->nombre."'".":"."'".url('uploads/productos')."/".$producto->imagen."',";
+	        }
+	        $string.="}";
+	        $productojson=json_encode($string);
+		}
+	    return view('admin.regalo', ['regalo'=>$regalo,'productos'=>$productojson]);
+	});
+
+	Route::post('regalo-update', 'CodigoController@regalo_update');
 
 });
 

@@ -248,5 +248,5 @@ right: 0;
 
 .product-type.grid {
     max-width: 301.5px;
-    margin-left: initial;
+    margin-left: initial !important;
 }

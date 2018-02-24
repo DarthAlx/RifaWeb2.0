@@ -27,19 +27,19 @@
 			<div class="col-md-4 offset-md-4">
 				<div class="canjear">
 					<h3 class="title">Canjear código.</h3>
-					<div class="titlescan d-block d-sm-none"><h6>Escanea</h6></div>
-					<div id="mainbody d-block d-sm-none">
+					<div class="titlescan d-blockd-sm-none"><h6>Escanea</h6></div>
+					<div id="mainbody d-blockd-sm-none">
 					<div id="outdiv"></div>
 					<div id="result" style="display: none;"></div>
 					</div>
 					<canvas id="qr-canvas" width="800" height="600" style="display: none;"></canvas>
 					<script type="text/javascript">
-						if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
+						//if( /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent) ) {
 						    load();
-						}
+						//}
 						
 					</script>
-					<div class="titlescan d-block d-sm-none"><h6>ó</h6></div>
+					<div class="titlescan d-blockd-sm-none"><h6>ó</h6></div>
 					<form role="form" action="{{ url('/canjear') }}" method="post">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					

@@ -107,7 +107,7 @@
 						                <div class="col-md-6  text-right">
 						                  <h2>Sorteo de {{$slide->producto->nombre}}</h2>
 
-						                  <h5>¡Quedan pocos boletos!</h5>
+						                  <h5>{{$slide->subtitulo}}</h5>
 						                  <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
 						                  <div id="contador{{$slide->producto->id}}" style="float: right;">
 						                            <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
@@ -196,7 +196,7 @@
 		          <label for="titulo">Título</label>
 		        </div>
 			</div>	
-			<div class="row tipotexto tipoall" style="display: none">
+			<div class="row tipotexto tipoall subtitulo" style="display: none">
 		        <div class="input-field col col-md-12">
 		          <input id="subtitulo" name="subtitulo" type="text" class="validate" value="{{old('subtitulo')}}" required>
 		          <label for="subtitulo">Subtítulo</label>
@@ -256,6 +256,8 @@
   			$(".tipoall input").attr("required", false);
   			$('.tipoproducto').fadeIn();
   			$(".tipoproducto input").attr("required", true);
+  			$('.subtitulo').fadeIn();
+			$(".subtitulo input").attr("required", true);
   		}
   		if (tipo=="Texto") {
   			$('.tipoall').fadeOut();
@@ -338,7 +340,7 @@
 		          <label for="titulo">Título</label>
 		        </div>
 			</div>	
-			<div class="row tipotexto tipoall" style="display: none">
+			<div class="row tipotexto tipoall subtitulo" style="display: none">
 		        <div class="input-field col col-md-12">
 		          <input id="subtitulo{{$slide->id}}" name="subtitulo" type="text" class="validate" value="{{$slide->subtitulo or old('subtitulo')}}" required>
 		          <label for="subtitulo">Subtítulo</label>
@@ -399,6 +401,9 @@
   			$("#update{{$slide->id}} .tipoall input").attr("required", false);
   			$('#update{{$slide->id}} .tipoproducto').fadeIn();
   			$("#update{{$slide->id}} .tipoproducto input").attr("required", true);
+
+  			$('#update{{$slide->id}} .subtitulo').fadeIn();
+			$("#update{{$slide->id}} .subtitulo input").attr("required", true);
   		}
   		if (tipo=="Texto") {
   			$('#update{{$slide->id}} .tipoall').fadeOut();

@@ -77,6 +77,7 @@
                     <ul class="right hide-on-med-and-down valign-wrapper" style="height: -webkit-fill-available;">
                       @if (Auth::guest())
                         <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
+                        <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
                       @else
                       
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
@@ -87,13 +88,33 @@
                     
                     <ul class="side-nav" id="mobile-demo">
                       @if (Auth::guest())
-                        <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
-                      @else
-                      <li><a class="dropdown-button" href="#!" data-activates="dropdown0">MI CUENTA</a></li>
-                      <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
-                      <li><a href="{{url('/carrito')}}">CARRITO <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+                        <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i>
+                        <li><a href="{{url('/perfil')}}">Perfil <i class="fa fa-user right" aria-hidden="true"></i>
+                        <li><a href="{{url('/rifas-ganadas')}}">Rifas ganadas <i class="fa fa-trophy right" aria-hidden="true"></i>
+                        <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i>
+                        <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i>
 
-                      <li><a href="{{url('/canjear')}}">CANJEAR <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
+                          <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+
+                          @if (Auth::guest())
+                        <li><a href="{{url('/entrar')}}"><i class="fa fa-qrcode right" aria-hidden="true"></i> Canjear</a></li>
+                      @else
+                      
+                      <li><a href="{{url('/canjear')}}"><i class="fa fa-qrcode right" aria-hidden="true"></i> Canjear</a></li>
+                      @endif
+                        <li><a href="{{url('/entrar')}}">Entrar</a></li>
+                      @else
+                      <li><a class="dropdown-button" href="#!" data-activates="dropdown0">Mi cuenta</a></li>
+                      <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i>
+                        <li><a href="{{url('/perfil')}}">Perfil <i class="fa fa-user right" aria-hidden="true"></i>
+                        <li><a href="{{url('/rifas-ganadas')}}">Rifas ganadas <i class="fa fa-trophy right" aria-hidden="true"></i>
+                        <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i>
+                        <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i>
+                      <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
+                      <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+
+
+                      <li><a href="{{url('/canjear')}}">Canjear <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
                       @endif
                     </ul>
                   </div>

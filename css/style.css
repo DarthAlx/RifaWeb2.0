@@ -634,7 +634,7 @@ span.badge {
 /* Media Queries!*/
 @media screen and (max-width:767px){
     html{
-        font-size: 8px;    }
+        font-size: 14px;    }
     .hiddenmov{
         display: none;
     }
@@ -670,14 +670,41 @@ margin: 1em 0;
     .perfiltext h2{
     font-size: 2rem;
 }
-
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    max-height: 80px;
+}
+nav img {
+    max-width: 150px;
+}
+.buttonsbar{
+    display: none;
+}
+.slider h2, .slider h5, .slider p, .slider .botonslide, .slide .contadorslider{
+    text-align: center;
+}
+.contadorslider div{
+        position: absolute;
+    left: 25%;
+}
+.product-type{
+    margin: 0px 0px 15px 0 !important;
+    max-width: 100% !important;
+}
+.slider-img{
+        min-width: 70%;
+    min-height: 70%;
+}
+.slider-img img{
+        max-width: 70%;
+    margin: 0 auto;
+}
 
 }
 
 @media screen and (min-width:768px){
-    #outdiv video{
+  /*  #outdiv video{
     display: none;
-}
+}*/
     .hiddenmov{
         display: inline-block;
         
@@ -685,6 +712,9 @@ margin: 1em 0;
     .visiblemov{
         display: none;
     }
+    .buttonsbar{
+    display: block;
+}
     .container{
         width: 100%;
     }

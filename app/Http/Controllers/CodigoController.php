@@ -84,6 +84,48 @@ class CodigoController extends Controller
         }
     }
 
+    public function regalo_update(Request $request)
+    {
+    	$regalo=Regalo::find(1);
+
+    	if ($regalo) {
+    		$regalo->tipo=$request->tipo;
+    		$regalo->dias=$request->dias;
+    		if ($request->tipo=="Share") {
+    			$regalo->rt=$request->rt;
+    			$regalo->producto_id=null;
+    			$regalo->boletos=null;
+    		}
+    		else{
+    			$producto=Producto::where('nombre',$request->producto)->first();
+				$regalo->rt=null;
+    			$regalo->producto_id=$producto->id;;
+    			$regalo->boletos=$request->boletos;
+    		}
+    		# code...
+    	}
+    	else{
+    		$regalo=new Regalo($request->all());
+
+    	}
+
+    	
+    	//guardar
+        if ($regalo->save()) {
+            Session::flash('mensaje', 'Regalo actualizado con exito.');
+            Session::flash('class', 'success');
+            return redirect()->intended(url('/regalo-update/'))->withInput();
+        }
+        else{
+            Session::flash('mensaje', 'Hubo un error, por favor, verifica la información.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/regalo-update/'))->withInput();
+        }
+
+
+
+    }
+
 
     public function regalo()
     {
