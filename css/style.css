@@ -941,3 +941,42 @@ nav img {
     color: #fff;
     font-weight: 700;
 }
+.testimonial-card .card-up {
+    overflow: hidden;
+    height: 120px;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.info-color {
+    background-color: #1AA5B9!important;
+}
+.testimonial-card .avatar {
+    border-radius: 50%;
+    width: 120px;
+    margin-top: -65px;
+    overflow: hidden;
+    border: 5px solid #fff;
+}
+.avatar {
+    max-width: 150px;
+}
+.ml-auto, .mx-auto {
+    margin-left: auto!important;
+}
+.mr-auto, .mx-auto {
+    margin-right: auto!important;
+}
+.carousel-thumbnails .carousel-indicators .active, .picker__box .picker__header .picker__select--month.browser-default, .picker__box .picker__header .picker__select--year.browser-default, .picker__list-item, .white {
+    background-color: #fff!important;
+}
+.testimonial-card .avatar img {
+    width: 100%;
+}
+.rounded-circle {
+    border-radius: 50%!important;
+}
+
+.blue-gradient {
+    background: -webkit-linear-gradient(50deg,#45cafc,#303f9f)!important;
+    background: linear-gradient(40deg,#45cafc,#303f9f)!important;
+}

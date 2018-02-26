@@ -148,7 +148,7 @@
                 
                   <div class="bouton_google text-center">
                     <div class="google_volet" style="background-color:#FFCD50;"><i class="fa fa-trophy fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Rifas ganadas</span> </div>
-                    <a href="#123" style="text-decoration:none; color:#FFCD50;">
+                    <a href="{{url('/rifas-ganadas')}}" style="text-decoration:none; color:#FFCD50;">
                       <div class="txt_google"><span class="hiddenmov">Ganadores de las rifas anteriores</span><span class="visiblemov">Ganadores</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
@@ -188,11 +188,17 @@
         
         <footer>
           <div class="container">
-            <div class="col l12">
-              <p>Creado por PYM Digital</p>
+            <div class="row">
+              <div class="col-md-6">
+                <p>Creado por PYM Digital</p>
 
-              <p>Copyright 2017 © RifaWeb</p>
+                <p>Copyright 2017 © RifaWeb</p>
+              </div>
+              <div class="col-md-6 text-right">
+                <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i>
+              </div>
             </div>
+            
           </div>
           
         </footer>

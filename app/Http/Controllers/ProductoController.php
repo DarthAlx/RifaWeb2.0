@@ -161,7 +161,7 @@ class ProductoController extends Controller
               
               
               $itemganador= Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->where('boletos', 'like', '%t' . $producto->ganador . 't%')->first();
-              $comprados=where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->get();
+              $comprados=Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->get();
 
               if ($itemganador) {
                     $ordenganadora=$itemganador->orden;

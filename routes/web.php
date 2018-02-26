@@ -15,7 +15,8 @@ Auth::routes();
 
 
 Route::get('/1', function () {
-    	return view('qr');
+	$ganadores=App\Ganador::orderBy('created_at','desc')->get();
+    	return view('ganadores', ['ganadores'=>$ganadores]);
 });
 //Route::get('regalo', 'CodigoController@regalo');
 
@@ -67,6 +68,13 @@ Route::get('/rifas', function () {
 
 
 Route::post('rifas', 'ProductoController@search');
+
+
+Route::get('/rifas-ganadas', function () {
+	$ganadores=App\Ganador::orderBy('created_at','desc')->get();
+    	return view('ganadores', ['ganadores'=>$ganadores]);
+});
+
 
 Route::post('carrito', 'OrdenController@addtocart');
 Route::get('/carrito', function () {
