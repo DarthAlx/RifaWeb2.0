@@ -60,6 +60,30 @@
 		        </div>
 			</div>
 		</div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Rifas totales</span>
+
+                      <h5 style="font-weight: 700"></h5>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Rifas activas</span>
+
+                      <h5 style="font-weight: 700">{{$rifasactivas}}</h5>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="card  darken-1">

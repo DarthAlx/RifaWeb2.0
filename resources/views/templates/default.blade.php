@@ -103,6 +103,8 @@
                       <li><a href="{{url('/canjear')}}"><i class="fa fa-qrcode right" aria-hidden="true"></i> Canjear</a></li>
                       @endif
                         <li><a href="{{url('/entrar')}}">Entrar</a></li>
+                        <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
+                        <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>
                       @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown0">Mi cuenta</a></li>
                       <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i>
@@ -115,6 +117,8 @@
 
 
                       <li><a href="{{url('/canjear')}}">Canjear <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
+                      <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
+                      <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>
                       @endif
                     </ul>
                   </div>
@@ -190,12 +194,12 @@
           <div class="container">
             <div class="row">
               <div class="col-md-6">
-                <p>Creado por PYM Digital</p>
+                <p>Aviso de privacidad</p>
 
-                <p>Copyright 2017 © RifaWeb</p>
+                <p>Términos y condiciones</p>
               </div>
               <div class="col-md-6 text-right">
-                <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i> &nbsp; <img src="{{ url('img/oxxo.png') }}" style="max-width: 64px;float: right;">
               </div>
             </div>
             

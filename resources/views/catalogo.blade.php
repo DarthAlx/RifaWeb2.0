@@ -27,7 +27,151 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3">
+
+
+
+
+
+              <ul class="collapsible visiblemov" data-collapsible="accordion" style="border: none; box-shadow: none;">
+                <li>
+                  <div class="collapsible-header dropdown-toggle" style="background: transparent; box-shadow: none; border: 0;">Filtro</div>
+                  <div class="collapsible-body">
+                    <div class="col-md-3">
+                      <form action="{{url()->current()}}" method="post">
+                        {{ csrf_field() }}
+                        <div class="input-group mb-3 browser-default">
+                        <input type="text" class="form-control browser-default" name="busqueda" placeholder="Buscar" aria-describedby="basic-addon2">
+                        <div class="input-group-append browser-default">
+                          <button class="btn btn-outline-secondary browser-default" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                      </div>
+                      </form>
+                      
+                       <form action="{{url()->current()}}" method="post" id="ordenform">
+                          {!! csrf_field() !!}
+
+                      <div class="row">
+                        <p class="titleshop col-sm-12">Ordenar publicaciones</p>
+                      <div class="input-field col s8" style="margin: 0;">
+                            <select id="orden" name="orden" class="select" required>
+                              <option value="A - Z">A - Z</option>
+                              <option value="Z - A">Z - A</option>
+                              <option value="Menor precio">Menor precio</option>
+                              <option value="Mayor precio">Mayor precio</option>
+                            </select>
+                            
+                      </div>
+                      <div class="sorting col s4 valign-wrapper">
+                        <a onclick="list();" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Lista"><i class="fa fa-list fa-2x"></i></a> &nbsp;
+                        <a onclick="grid();" class="tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Grilla"><i class="fa fa-th-large fa-2x"></i></a>
+                      </div>
+                      </div>
+                      </form>
+                        <script>
+                          $('#orden').change(function(){
+                            $('#ordenform').submit();
+
+                          });
+                        </script>
+
+                        <hr>
+                      <p class="titleshop">Precio</p>
+
+                      <form action="{{url()->current()}}" method="post" id="precioform">
+                          {!! csrf_field() !!}
+
+
+                        <div class="input-group-append browser-default">
+                          <div class="row">
+                            <div class="col-4" style="padding-right: 0">
+                              <input type="text" class="form-control browser-default" name="minimo" placeholder="Minimo" aria-describedby="basic-addon2">
+                            </div>
+                            <div class="col-1 text-center valign-wrapper" style="max-width: inherit">
+                              <span class="guion"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            </div>
+                            <div class="col-4" style="padding-left: 0">
+                              <input type="text" class="form-control browser-default" name="maximo" placeholder="Maximo" aria-describedby="basic-addon2">
+                            </div>
+                            <div class="col-xs-3 valign-wrapper">
+                              <a href="#" id="searchprice"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                              
+                            </div>
+                          </div>
+                          
+                        </div>
+
+                        </form>
+                        <script>
+                          $('#searchprice').click(function(){
+                            $('#precioform').submit();
+
+                          });
+                        </script>
+
+
+
+                      @if($categorias)
+                      <hr>
+                      <p class="titleshop">Categorías</p>
+                      <ul class="listacategorias">
+                        @foreach($categorias as $categoria)
+                        <li><a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$categoria->nombre}}</a></li>
+                        @endforeach
+                      </ul>
+
+                      @endif
+
+                      @if($fuentes)
+                      <hr>
+                      <p class="titleshop">Fuentes</p>
+                      <ul class="listacategorias">
+                        @foreach($fuentes as $fuente)
+                        <li><a href="{{url('/rifas')}}/{{$fuente->slug}}">{{$fuente->nombre}}</a></li>
+                        @endforeach
+                      </ul>
+                      @endif
+                      
+                    </div>
+
+                  </div>
+                </li>
+              </ul>
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <div class="col-md-3 hiddenmov">
                 <form action="{{url()->current()}}" method="post">
                   {{ csrf_field() }}
                   <div class="input-group mb-3 browser-default">
@@ -131,6 +275,7 @@
 
                 
               </div>
+              
               <div class="col-md-9">
                 <div class="row row-eq-height">
                   @foreach($productos as $producto)
@@ -159,7 +304,8 @@
                         <h1>{{$producto->nombre}}</h1>
                         <p>Fuente: {{$producto->loteria}}</p>
                         <ul>
-                          <li>{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
+                          <li class="descorta" style="display: none;">{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
+                          <li class="desclarga">{{str_limit($producto->descripcion, $limit = 100, $end = '...')}}</li>
                         </ul>
                         </a>
                           
@@ -330,7 +476,14 @@
                                   }
                                   probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
                                   Materialize.Toast.removeAll();
-                                  Materialize.toast(probabilidad.toFixed(2)+"% chance de ganar", 4000);
+
+                                  var url="{{url('/carrito')}}"
+                                  var $toastContent = $('<span>'+probabilidad.toFixed(2)+'% chance de ganar</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
+                                  Materialize.toast($toastContent, 4000);
+
+
+    
+                                
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
 
                                   $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+'MXN');

@@ -542,7 +542,7 @@ right: 0;
 }
 .profilecard{
     margin: 0 auto;
-    width: max-content;
+    /*width: max-content;*/
 }
 .perfiltext {
     margin-left: 20px;
@@ -698,7 +698,9 @@ nav img {
         max-width: 70%;
     margin: 0 auto;
 }
-
+.perfilimg, .perfiltext{
+    float: none !important;
+}
 }
 
 @media screen and (min-width:768px){
@@ -979,4 +981,13 @@ nav img {
 .blue-gradient {
     background: -webkit-linear-gradient(50deg,#45cafc,#303f9f)!important;
     background: linear-gradient(40deg,#45cafc,#303f9f)!important;
+}
+
+.side-nav li > a {
+    font-size: 18px;
+
+    border-bottom: 1px solid #ccc;
+}
+.dropdown-toggle::after {
+    margin-top: 10px;
 }

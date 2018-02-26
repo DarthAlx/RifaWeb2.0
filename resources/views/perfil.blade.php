@@ -8,29 +8,33 @@
 	<div class="perfilheader z-depth-3" style="background: url('{{url('/img/bg')}}/{{rand(1, 30)}}.jpg'); background-size: cover;">
 		<div class="container">
 			<div class="row">
-				<div class="col-12">
-					<div class="profilecard">
-						<div class="perfilimg left">
-							<img class="circle" src="{{Auth::user()->avatar}}" alt="">
-						</div>
-						<div class="perfiltext right">
-							<h2>
-								{{Auth::user()->name}}
-							</h2>
-							<div class="chip amber accent-3">
-								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{$usuario->rt}} <span class="hiddenmov">rifatokens</span>
-							</div>
-							<div class="chip light-blue lighten-3">
-								<i class="fa fa-flag" aria-hidden="true"></i> {{$usuario->ordenes->count()}} <span class="hiddenmov">participaciones</span>
-							</div>
-							<div class="chip light-green lighten-3">
-								<i class="fa fa-trophy" aria-hidden="true"></i> {{$usuario->ganadas->count()}} <span class="hiddenmov">ganadas</span>
-							</div>
-						</div>
-						
-					</div>
+				
 					
-				</div>
+            <div class="col-md-1 offset-md-3 col-12 text-center">
+  						<div class="perfilimg left">
+  							<img class="circle" src="{{Auth::user()->avatar}}" alt="">
+  						</div>
+            </div>
+            <div class="col-md-6 col-12 text-center">
+  						<div class="perfiltext right">
+  							<h2>
+  								{{Auth::user()->name}}
+  							</h2>
+  							<div class="chip amber accent-3">
+  								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{$usuario->rt}} <span class="hiddenmov">rifatokens</span>
+  							</div>
+  							<div class="chip light-blue lighten-3">
+  								<i class="fa fa-flag" aria-hidden="true"></i> {{$usuario->ordenes->count()}} <span class="hiddenmov">participaciones</span>
+  							</div>
+  							<div class="chip light-green lighten-3">
+  								<i class="fa fa-trophy" aria-hidden="true"></i> {{$usuario->ganadas->count()}} <span class="hiddenmov">ganadas</span>
+  							</div>
+  						</div>
+            </div>
+						
+					
+					
+				
 			</div>
 		</div>
 		

@@ -228,9 +228,7 @@ class ProductoController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $producto = Producto::find($id);
-
             if ($producto->fecha_limite!=$request->fecha_limite. " ". $request->hora) {
                 if ($producto->ganador!=null) {
                     $producto->vendidos=0;
@@ -246,9 +244,6 @@ class ProductoController extends Controller
                     else{
                         $status="none";
                     }
-
-
-
                     if($ventas>0&&$status!="Terminada"){
                         $comprados=Item::where('producto_id',$producto->id)->where('fecha',date_create($producto->fecha_limite))->get();
                         foreach($comprados as $comprado){
@@ -256,20 +251,12 @@ class ProductoController extends Controller
                             $comprado->fecha=date_create($request->fecha_limite. " ". $request->hora);
                             $comprado->save();
                         }
-
                     }
                 }
-
-
             }
         
         
-
-
         
-
-
-
         
         $producto->nombre=$request->nombre;
         $producto->slug = str_slug($request->nombre, '-');
@@ -282,9 +269,6 @@ class ProductoController extends Controller
         $producto->minimo=$request->minimo;
         $producto->fundacion=$request->fundacion;
         $producto->fecha_limite=date_create($request->fecha_limite. " ". $request->hora);
-
-
-
         
         
         //categoria
@@ -296,7 +280,6 @@ class ProductoController extends Controller
             Session::flash('class', 'danger');
             return redirect()->intended(url('/producto/'.$id))->withInput();
         }
-
         //habilitado
         if (isset($request->habilitado)) {
             $producto->habilitado=1;
@@ -311,7 +294,6 @@ class ProductoController extends Controller
         else{
             $producto->destacado=0;
         }
-
         //producto general
         if ($request->hasFile('imagen')) {
           $file = $request->file('imagen');
@@ -322,18 +304,12 @@ class ProductoController extends Controller
             $file-> move($path, $name);
             $producto->imagen = $name;
             }
-
-
           else{
             Session::flash('mensaje', 'El archivo no es una imagen valida.');
             Session::flash('class', 'danger');
             return redirect()->intended(url('/producto/'.$id))->withInput();
           }
-
         }
-
-
-
         //guardar
         if ($producto->save()) {
             Session::flash('mensaje', 'Producto actualizado con exito.');
@@ -345,7 +321,6 @@ class ProductoController extends Controller
             Session::flash('class', 'danger');
             return redirect()->intended(url('/producto/'.$id))->withInput();
         }
-
         //poplets
         if ($request->poplets) {
             $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
@@ -354,12 +329,10 @@ class ProductoController extends Controller
                 File::delete($path . $oldpoplet->imagen);
                 $oldpoplet->delete();
             }
-
             for ($i=1; $i <= intval($request->poplets); $i++) { 
                 $poplet = new Poplets();
                if ($request->hasFile('poplet'.$i)) {
                   $file = $request->file('poplet'.$i);
-
                   if ($file->getClientOriginalExtension()=="jpg" || $file->getClientOriginalExtension()=="png") {
                     $name = $request->sku . "-" . $i . "-" . time()."." . $file->getClientOriginalExtension();           
                     $file->move($path, $name);
@@ -367,26 +340,17 @@ class ProductoController extends Controller
                     $poplet->producto_id = $producto->id;
                     $poplet->save();
                     }
-
-
                   else{
                     Session::flash('mensaje', 'Hubo un error al guardar la galería.');
                     Session::flash('class', 'danger');
                     return redirect()->intended(url('/producto/'.$id))->withInput();
                   }
-
                 }
             }
             
         }
-
-
-
         return redirect()->intended(url('/producto/'.$id))->withInput();
         
-
-
-
     }
     
 

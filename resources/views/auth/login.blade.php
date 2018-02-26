@@ -12,10 +12,10 @@
                 <div class="card-body">
                     
                     <div class="row omb_row-sm-offset-3 social-login">
-                        <div class="col-md-4 offset-md-4">
-                            <a href="{{url('auth/facebook')}}" class="btn btn-lg btn-block omb_btn-facebook">
+                        <div class="col-md-8 offset-md-2">
+                            <a href="{{url('auth/facebook')}}" class="btn btn-lg omb_btn-facebook">
                                 <i class="fa fa-facebook visible-xs"></i>
-                                <span class="hidden-xs">Facebook</span>
+                                <span class="hidden-xs">Iniciar con Facebook</span>
                             </a>
                         </div>
                     </div>

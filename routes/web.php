@@ -168,9 +168,10 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::get('/admin', function () {
 		$month = date('m');
 	      $year = date('Y');
-	      $from= date('Y-m-d', mktime(0,0,0, $month, 1, $year));
-	      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
-	      $to = date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+	      $day = date('d');
+	      $from= date('Y-m-d', mktime(0,0,0, 1, 1, $year));
+	      $day = date("d", mktime(0,0,0, 12, 31, $year+1));
+	      $to = date('Y-m-d', mktime(0,0,0, 12, 31, $year));
 
 		$ventas=App\Operacion::whereBetween('fecha', array($from, $to))->sum('pesos');
 		$rt=App\Operacion::whereBetween('fecha', array($from, $to))->sum('rt');
@@ -179,6 +180,7 @@ Route::group(['middleware' => 'admin'], function(){
 		$mujeres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Femenino')->count();
 		$hombres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Masculino')->count();
 		$productos=App\Producto::all();
+		$rifasactivas=App\Producto::where('ganador',null)->whereBetween('fecha_limite', array($from, $to))->count();
 		$boletos1=array();
 		$labels="";
 		$data=array();
@@ -194,7 +196,7 @@ Route::group(['middleware' => 'admin'], function(){
 
 			
 	
-    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
+    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'rifasactivas'=>$rifasactivas,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
 	});
 
 	Route::post('admin', 'HomeController@admin');
