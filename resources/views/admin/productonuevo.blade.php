@@ -141,7 +141,7 @@
 					          <label for="precio">Precio normal</label>
 					        </div>
 					        <div class="input-field col col-md-6">
-					          <input id="multiplicador" name="multiplicador" type="text" class="validate" value="{{old('multiplicador')}}" required>
+					          <input id="multiplicador" name="multiplicador" type="number" class="validate" value="{{old('multiplicador')}}" min="1" value="1" required>
 					          <label for="multiplicador">Multiplicador</label>
 					        </div>
 					        <!--div class="input-field col col-md-6">

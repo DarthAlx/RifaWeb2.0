@@ -19,6 +19,7 @@ class CreateMensajesTable extends Migration
             $table->integer('sender_id');
             $table->string('asunto');
             $table->string('msg');
+            $table->string('imagen');
             $table->date('fecha');
             $table->boolean('leido')->default(false);
             $table->timestamps();

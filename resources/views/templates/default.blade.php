@@ -192,11 +192,11 @@
         
         <footer>
           <div class="container">
-            <div class="row">
+            <div class="row" style="margin: 0;">
               <div class="col-md-6">
-                <p>Aviso de privacidad</p>
+                <p>Aviso de privacidad &nbsp; &nbsp; Términos y condiciones</p>
 
-                <p>Términos y condiciones</p>
+                <p></p>
               </div>
               <div class="col-md-6 text-right">
                 <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i> &nbsp; <img src="{{ url('img/oxxo.png') }}" style="max-width: 64px;float: right;">

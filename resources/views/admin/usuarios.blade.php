@@ -135,11 +135,29 @@
 			      	<th></th>
 			  	</tr>
 			  	<tr>
-			  		<td colspan="10">
+			  		<td colspan="11">
 			  			<ul class="collapsible" data-collapsible="accordion">
 						    <li>
 						      <div class="collapsible-header">Enviar mensaje</div>
 						      <div class="collapsible-body">
+							        <div class="input-field">
+							          <input type="text" name="asunto" id="asunto">
+							          
+							          <label for="asunto">Asunto</label>
+							        </div>
+							  
+							  
+							  	<div class="file-field input-field">
+							      <div class="btn">
+							        <span>Subir</span>
+							        <input type="file" name="imagen">
+							      </div>
+							      <div class="file-path-wrapper">
+							        <input class="file-path validate" type="text">
+							      </div>
+							    </div>
+							  
+						      
 						      	<div class="input-field">
 						          <textarea id="msg" name="msg" class="materialize-textarea" required>{{old('msg')}}</textarea>
 						          <label for="msg">Mensaje</label>
@@ -223,6 +241,17 @@
 							          
 							          <label for="asunto">Asunto</label>
 							        </div>
+							  </div>
+							  <div class="row">
+							  	<div class="file-field input-field">
+							      <div class="btn">
+							        <span>Subir</span>
+							        <input type="file" name="imagen">
+							      </div>
+							      <div class="file-path-wrapper">
+							        <input class="file-path validate" type="text">
+							      </div>
+							    </div>
 							  </div>
 							  <div class="row">
 						        <div class="input-field col s12">

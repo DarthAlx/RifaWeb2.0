@@ -15,17 +15,17 @@
   							<img class="circle" src="{{Auth::user()->avatar}}" alt="">
   						</div>
             </div>
-            <div class="col-md-6 col-12 text-center">
-  						<div class="perfiltext right">
+            <div class="col-md-8 col-12 text-center">
+  						<div class="perfiltext left">
   							<h2>
   								{{Auth::user()->name}}
   							</h2>
   							<div class="chip amber accent-3">
   								 <i class="fa fa-circle-o-notch" aria-hidden="true"></i> {{$usuario->rt}} <span class="hiddenmov">rifatokens</span>
   							</div>
-  							<div class="chip light-blue lighten-3">
+  							<!--div class="chip light-blue lighten-3">
   								<i class="fa fa-flag" aria-hidden="true"></i> {{$usuario->ordenes->count()}} <span class="hiddenmov">participaciones</span>
-  							</div>
+  							</div-->
   							<div class="chip light-green lighten-3">
   								<i class="fa fa-trophy" aria-hidden="true"></i> {{$usuario->ganadas->count()}} <span class="hiddenmov">ganadas</span>
   							</div>
@@ -234,6 +234,11 @@
       <div class="row">
         <div class="col-md-12">
           <small>Mensaje enviado el {{$mensaje->fecha}}</small>
+          <h3>{{$mensaje->asunto}}</h3>
+          @if($mensaje->imagen)
+          <img src="{{url('/uploads/mensajes')}}/{{$mensaje->imagen}}" style="max-width: 100%;" alt="">
+          @endif
+          <p>&nbsp;</p>
       <p>{!!$mensaje->msg!!}</p>
       <div class="text-right">
         
@@ -433,9 +438,7 @@
     
 
   }
-  else{
-    echo "false";
-  }
+
   
 
 ?>

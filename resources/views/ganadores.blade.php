@@ -43,7 +43,12 @@
 				    
 
 				                <div class="avatar mx-auto white">
-				                    <img src="{{$ganador->user->avatar}}" class="rounded-circle img-fluid">
+				                	<?php $producto=App\Producto::where('nombre',$ganador->producto)->first() ?>
+				                	@if($producto)
+				                    <img src="{{url('/uploads/productos')}}/{{$producto->imagen}}" class="rounded-circle img-fluid">
+				                    @else
+									<img src="{{$ganador->user->avatar}}" class="rounded-circle img-fluid">
+				                    @endif
 				                </div>
 				    
 				                <div class="card-body">
@@ -52,15 +57,23 @@
 				                    	<?php
 				                    		$usuario=explode(' ', $ganador->user->name);
 				                    	 ?>
-				                        <strong><?php for($i=0;$i<2;$i++){
-				                        	if ($usuario[$i]!="") {
-				                        		echo $usuario[$i]." ";
-				                        	}
-				                        } ?></strong>
+				                    	 @if($producto)
+				                        <strong>{{$ganador->producto}}</strong>
+				                        @else
+				                        <strong>{{$usuario[0]}}</strong>
+				                        @endif
 				                    </h4>
+				                    <p class="text-center">{{$ganador->fecha}}</p>
 				                    <hr>
 
-				                    <p class="dark-grey-text">Ganador de {{$ganador->producto}}</p>
+
+				                    <p class="text-center">
+					                    @if($producto)
+					                    {{$producto->loteria}}
+					                    @endif
+				                	</p>
+
+				                    <p class="dark-grey-text">El ganador de {{$ganador->producto}} es <b>{{$usuario[0]}}</b> con el número de boleto: <b>{{$ganador->boleto}}</b> </p>
 				                </div>
 				    
 				            </div>

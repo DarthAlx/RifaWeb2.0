@@ -113,12 +113,23 @@
 							          <label for="autocomplete-input">Destinatario</label>
 							        </div>
 							  </div>
-							  <div class="row" style="display: none">
+							  <div class="row">
 							        <div class="input-field col s12">
 							          <input type="text" name="asunto" id="asunto">
 							          
 							          <label for="asunto">Asunto</label>
 							        </div>
+							  </div>
+							  <div class="row">
+							  	<div class="file-field input-field">
+							      <div class="btn">
+							        <span>Subir</span>
+							        <input type="file" name="imagen">
+							      </div>
+							      <div class="file-path-wrapper">
+							        <input class="file-path validate" type="text">
+							      </div>
+							    </div>
 							  </div>
 							  <div class="row">
 						        <div class="input-field col s12">

@@ -33,8 +33,11 @@
 
 
               <ul class="collapsible visiblemov" data-collapsible="accordion" style="border: none; box-shadow: none;">
+                @if($catalogo=="Todos")
+                <li><h4 style="font-weight: 700">Todas las rifas</h4></li>
+                @endif
                 <li>
-                  <div class="collapsible-header dropdown-toggle" style="background: transparent; box-shadow: none; border: 0;">Filtro</div>
+                  <div class="collapsible-header dropdown-toggle" ><h5>Filtro</h5></div>
                   <div class="collapsible-body">
                     <div class="col-md-3">
                       <form action="{{url()->current()}}" method="post">
@@ -478,7 +481,7 @@
                                   Materialize.Toast.removeAll();
 
                                   var url="{{url('/carrito')}}"
-                                  var $toastContent = $('<span>'+probabilidad.toFixed(2)+'% chance de ganar</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
+                                  var $toastContent = $('<span>'+probabilidad.toFixed(2)+'% probabilidad de ganar</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
                                   Materialize.toast($toastContent, 4000);
 
 
@@ -543,6 +546,9 @@
             $('.pbut').addClass('hidden');
             $('.pbut').removeClass('visible');
 
+            $('.descorta').hide();
+            $('.desclarga').show();
+
             $('.botonprecio').removeClass('col-md-12');
             $('.botonprecio').addClass('col-md-12');
 
@@ -567,6 +573,9 @@
 
             $('.pbut').removeClass('hidden');
             $('.pbut').addClass('visible');
+
+             $('.descorta').show();
+            $('.desclarga').hide();
 
             $('.botonprecio').removeClass('col-md-12');
             $('.botonprecio').addClass('col-md-12');

@@ -701,6 +701,18 @@ nav img {
 .perfilimg, .perfiltext{
     float: none !important;
 }
+.listacategorias a, .sorting a {
+    font-size: 1.5rem !important;
+
+}
+.titleshop {
+    font-size: 1.5rem !important;
+}
+.dropdown-toggle::after {
+    border-top: .8em solid;
+    border-right: .8em solid transparent;
+    border-left: .8em solid transparent;
+}
 }
 
 @media screen and (min-width:768px){
