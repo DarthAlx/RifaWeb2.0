@@ -181,6 +181,7 @@ Route::group(['middleware' => 'admin'], function(){
 		$hombres=App\User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Masculino')->count();
 		$productos=App\Producto::all();
 		$rifasactivas=App\Producto::where('ganador',null)->whereBetween('fecha_limite', array($from, $to))->count();
+		$rifastotales=App\Ganador::whereBetween('fecha', array($from, $to))->count();
 		$boletos1=array();
 		$labels="";
 		$data=array();
@@ -196,7 +197,7 @@ Route::group(['middleware' => 'admin'], function(){
 
 			
 	
-    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'rifasactivas'=>$rifasactivas,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
+    	return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'rifastotales'=>$rifastotales,'rifasactivas'=>$rifasactivas,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
 	});
 
 	Route::post('admin', 'HomeController@admin');

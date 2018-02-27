@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMensajesTable extends Migration
+class CreateVideosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateMensajesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mensajes', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('sender_id');
-            $table->string('asunto');
-            $table->string('msg');
-            $table->date('fecha');
-            $table->boolean('leido')->default(false);
+            $table->integer('producto_id');
+            $table->string('video');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateMensajesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mensajes');
+        Schema::dropIfExists('videos');
     }
 }

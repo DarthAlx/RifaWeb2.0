@@ -60,7 +60,7 @@
                   
                           <p>&nbsp;</p><p>&nbsp;</p>
                           <div class="botonslide">
-                            <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
+                            <a href="" class="btn btn-primary waves-effect waves-light">{{$slide->accion}}</a>
                           </div>
                           
                 </div>

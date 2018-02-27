@@ -11,7 +11,7 @@
 	    </ul>
 	  </div>
 	@endif
-    <img src="{{ url('/img') }}/404.png" alt="">
+    <img src="{{ url('/img') }}/404.png" style="width: 100%; max-width: 500px" alt="">
     <p>La página que buscaste no fué encontrada</p>
     <a href="{{ url('/') }}" class="homePage">Home</a>
   </div>

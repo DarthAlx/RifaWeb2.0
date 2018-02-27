@@ -45,6 +45,8 @@ class HomeController extends Controller
         $mujeres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Femenino')->count();
         $hombres=User::whereBetween('created_at', array($from, $to))->where('is_admin',0)->where('status','Activo')->where('genero','Masculino')->count();
         $productos=Producto::all();
+        $rifasactivas=App\Producto::where('ganador',null)->whereBetween('fecha_limite', array($from, $to))->count();
+        $rifastotales=App\Ganador::whereBetween('fecha', array($from, $to))->count();
         $boletos1=array();
         $labels="";
         $data=array();
@@ -60,6 +62,6 @@ class HomeController extends Controller
 
             
     
-        return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
+        return view('admin', ['ventas'=>$ventas,'boletos'=>$boletos,'rt'=>$rt,'rifastotales'=>$rifastotales,'rifasactivas'=>$rifasactivas,'usuarios'=>$usuarios,'mujeres'=>$mujeres,'hombres'=>$hombres,'labels'=>$labels,'data'=>$data,'from'=>$from,'to'=>$to]);
     }
 }

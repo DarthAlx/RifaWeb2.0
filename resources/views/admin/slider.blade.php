@@ -110,12 +110,20 @@
 						                  <h5>{{$slide->subtitulo}}</h5>
 						                  <h5>1 Boleto = ${{$slide->producto->precio}}</h5>
 						                  <div id="contador{{$slide->producto->id}}" style="float: right;">
-						                            <?php $fecha = explode('-', $slide->producto->fecha_limite); ?>
+						                            <?php 
+
+						                            $datetime = explode(' ', $slide->producto->fecha_limite); 
+								                            $fecha = explode('-', $datetime[0]); 
+
+								                            $hora = explode(':', $datetime[1]); 
+								                             ?>
 						                            <script>
 						                              var Countdown{{$slide->producto->id}} = new Countdown({
 						                              year: {{$fecha[0]}},
 						                              month : {{$fecha[1]}}, 
 						                              day   : {{$fecha[2]}},
+						                              hour   : {{$hora[0]}},
+								                      minutes   : {{$hora[1]}},
 						                              width : 200, 
 						                              height  : 50,
 						                              rangeHi:"day"
@@ -123,8 +131,11 @@
 
 						                            </script>
 						                          </div>
+
+						                          
+
 						                          <p>&nbsp;</p><p>&nbsp;</p>
-						                          <a href="" class="btn btn-primary waves-effect waves-light">¡Quiero un {{$slide->producto->nombre}}!</a>
+						                          <a href="" class="btn btn-primary waves-effect waves-light">{{$slide->accion}}</a>
 						                </div>
 						              </div>
 						              </div>
@@ -202,7 +213,7 @@
 		          <label for="subtitulo">Subtítulo</label>
 		        </div>
 			</div>	
-			<div class="row tipotexto tipoall" style="display: none">
+			<div class="row tipotexto tipoall accion" style="display: none">
 		        <div class="input-field col col-md-12">
 		          <input id="accion" name="accion" type="text" class="validate" value="{{old('accion')}}" required>
 		          <label for="accion">Accion</label>
@@ -258,6 +269,8 @@
   			$(".tipoproducto input").attr("required", true);
   			$('.subtitulo').fadeIn();
 			$(".subtitulo input").attr("required", true);
+			$('.accion').fadeIn();
+			$(".accion input").attr("required", true);
   		}
   		if (tipo=="Texto") {
   			$('.tipoall').fadeOut();
@@ -346,7 +359,7 @@
 		          <label for="subtitulo">Subtítulo</label>
 		        </div>
 			</div>	
-			<div class="row tipotexto tipoall" style="display: none">
+			<div class="row tipotexto tipoall accion" style="display: none">
 		        <div class="input-field col col-md-12">
 		          <input id="accion{{$slide->id}}" name="accion" type="text" class="validate" value="{{$slide->accion or old('accion')}}" required>
 		          <label for="accion">Accion</label>
@@ -404,6 +417,8 @@
 
   			$('#update{{$slide->id}} .subtitulo').fadeIn();
 			$("#update{{$slide->id}} .subtitulo input").attr("required", true);
+			$('#update{{$slide->id}} .accion').fadeIn();
+			$("#update{{$slide->id}} .accion input").attr("required", true);
   		}
   		if (tipo=="Texto") {
   			$('#update{{$slide->id}} .tipoall').fadeOut();
@@ -445,6 +460,8 @@
 
 @if ($productos!= '')
 <script>
+
+
 	
 	$(document).ready(function(){
 	$('input.autocomplete').autocomplete({

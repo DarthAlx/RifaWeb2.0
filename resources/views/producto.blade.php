@@ -38,12 +38,32 @@
           
             <div class="row">
               <div class="col-md-3">
-                @if($producto->poplets->count()>0)
-                  @foreach($producto->poplets as $poplet)
-                  <img src="{{url('/uploads/productos/poplets')}}/{{$producto->id}}/{{$poplet->imagen}}" alt="" class="responsive-img materialboxed">
-                  @endforeach
-                @endif
-                
+                <div class="row">
+                  @if($producto->video)
+                  <div class="col-3 col-md-12">
+                    <a  class="modal-trigger" href="#video"><img src="{{url('/img/play.png')}}" class="responsive-img"></a>
+
+                    <div id="video" class="modal">
+                      <div class="modal-content" style="height: 60vh;">
+                        <iframe width="100%" style="height: 50vh;" src="https://www.youtube-nocookie.com/embed/{{$producto->video->video}}?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="materialboxed"></iframe>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  @endif
+
+                  @if($producto->poplets->count()>0)
+                    @foreach($producto->poplets as $poplet)
+                    <div class="col-3 col-md-12">
+                    <img src="{{url('/uploads/productos/poplets')}}/{{$producto->id}}/{{$poplet->imagen}}" alt="" class="responsive-img materialboxed">
+                    </div>
+                    @endforeach
+                  @endif
+                </div>
               </div>
               <div class="col-md-9">
                 <div class="img-containerlarge">

@@ -227,10 +227,41 @@
 				    <h5 class="card-title">Galería</h5>
 				    <input name="poplets" type="hidden" class="popletsnum">
 				    <div class="card-text popletsinput">
-				      <div class="file-field input-field">
+				      <div class="file-field input-field poplet1">
 					      <div class="btn">
 					        <span>Subir</span>
 					        <input type="file" name="poplet1">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+
+					    <div class="file-field input-field poplet2" style="display: none;">
+					      <div class="btn">
+					        <span>Subir</span>
+					        <input type="file" name="poplet2">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+
+
+					    <div class="file-field input-field poplet3" style="display: none;">
+					      <div class="btn">
+					        <span>Subir</span>
+					        <input type="file" name="poplet3">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+
+					    <div class="file-field input-field poplet4" style="display: none;">
+					      <div class="btn">
+					        <span>Subir</span>
+					        <input type="file" name="poplet4">
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
@@ -246,19 +277,34 @@
 
 				  </div>
 				</div>
+
+				<div class="card">
+				  <div class="card-body">
+				    <h5 class="card-title">Video</h5>
+				    <input name="poplets" type="hidden" class="popletsnum">
+				    <div class="card-text popletsinput">
+				      <div class="file-field input-field">
+					      
+					        <label>Código</label>
+					        <input type="text" name="video" value="{{old('video')}}">      
+					    </div>
+				    </div>
+				  </div>
+				</div>
 				<script>
 					var poplet=1;
 					function popletappend(){
 						poplet++;
-						$( ".popletsinput" ).append("<div class='file-field input-field poplet"+poplet+"'><div class='btn'><span>Subir</span><input type='file' name='poplet"+poplet+"'></div><div class='file-path-wrapper'><input class='file-path validate' type='text'></div></div>");
+						$( ".poplet"+poplet ).fadeIn();
+						
 						$('.minus').fadeIn();
 						$('.popletsnum').val(poplet);
-						if(poplet>=5){
+						if(poplet>=4){
 							$('.plus').fadeOut();
 						}
 					}
 					function popletremove(){
-						$( ".poplet"+poplet ).remove();
+						$( ".poplet"+poplet ).fadeOut();
 						poplet--;
 						if(poplet<2){
 							$('.minus').fadeOut();

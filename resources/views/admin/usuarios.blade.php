@@ -43,7 +43,8 @@
 			      	<th>Fecha de nacimiento</th>
 			      	<th>Teléfono</th>
 					<th>Genero</th>
-			      	<th>Rifa Tokens</th>
+			      	<th>RifaTokens</th>
+			      	<th>Gastados</th>
 			      	<th>Participaciones</th>
 			      	<th></th>
 			  	</tr>
@@ -66,6 +67,18 @@
 							<td>{{$usuario->tel}}</td>
 							<td>{{$usuario->genero}}</td>
 							<td>{{$usuario->rt}}</td>
+
+							<td>
+								<?php $totalrt=0; ?>
+								@if($usuario->ordenes)
+									@foreach($usuario->ordenes as $compra)
+										<?php $totalrt=$totalrt+$compra->operacion->rt; ?>
+									@endforeach
+								@endif
+								{{$totalrt}}
+							</td>
+
+
 							<td>{{$usuario->ordenes->count()}}</td>
 							<td>
 								<a class="waves-effect waves-light btn" href="{{url('/usuario')}}/{{$usuario->id}}"><i class="fa fa-search-plus"></i></a>
@@ -95,7 +108,8 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>						
+						<td></td>			
+						<td></td>				
 					</tr>
 
 				@endif
@@ -115,7 +129,8 @@
 			      	<th>Fecha de nacimiento</th>
 			      	<th>Teléfono</th>
 					<th>Genero</th>
-			      	<th>Rifa Tokens</th>
+			      	<th>RifaTokens</th>
+			      	<th>Gastados</th>
 			      	<th>Participaciones</th>
 			      	<th></th>
 			  	</tr>
@@ -200,6 +215,13 @@
 							          
 							          <label for="autocomplete-input">Destinatario</label>
 							          <p>{{$usuario->name}} ({{$usuario->email}})</p>
+							        </div>
+							  </div>
+							  <div class="row">
+							        <div class="input-field col s12">
+							          <input type="text" id="asunto" name="asunto" id="asunto">
+							          
+							          <label for="asunto">Asunto</label>
 							        </div>
 							  </div>
 							  <div class="row">

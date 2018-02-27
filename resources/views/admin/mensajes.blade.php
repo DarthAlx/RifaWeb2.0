@@ -32,6 +32,7 @@
 			  	<tr>
 
 			      	<th>Destinatario</th>
+			      	<th>Asunto</th>
 			      	<th>Mensaje</th>
 			      	<th>Fecha</th>
 					<th>Lectura</th>
@@ -44,6 +45,7 @@
 
 						<tr style="cursor: pointer;">
 							<td>{{$mensaje->user->name}}</td>
+							<td>{{$mensaje->asunto}}</td>
 							<td>{{$mensaje->msg}}</td>
 							<td>{{$mensaje->fecha}}</td>
 							<td>@if($mensaje->leido)<i class="fa fa-check-circle" aria-hidden="true"></i>@else<i class="fa fa-check-circle-o" aria-hidden="true"></i>@endif</td>
@@ -66,6 +68,7 @@
 			  <tfoot>
 			  	<tr>
 			      	<th>Destinatario</th>
+			      	<th>Asunto</th>
 			      	<th>Mensaje</th>
 			      	<th>Fecha</th>
 					<th>Lectura</th>
@@ -108,6 +111,13 @@
 							          <input type="text" name="destinatario" id="autocomplete" class="autocomplete" value="">
 							          
 							          <label for="autocomplete-input">Destinatario</label>
+							        </div>
+							  </div>
+							  <div class="row" style="display: none">
+							        <div class="input-field col s12">
+							          <input type="text" name="asunto" id="asunto">
+							          
+							          <label for="asunto">Asunto</label>
 							        </div>
 							  </div>
 							  <div class="row">

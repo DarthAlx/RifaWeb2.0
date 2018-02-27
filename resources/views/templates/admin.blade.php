@@ -10,8 +10,10 @@
         <link rel="stylesheet" type="text/css" href="{{ url('css/font-awesome.min.css') }}" media="screen" />
         @yield('header')
         <link rel="stylesheet" type="text/css" href="{{ url('css/admin.css') }}?v={{rand()}}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ url('js/bxslider/css/jquery.bxslider.css') }}" />
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="{{ url('js/countdown.js') }}"></script>
     </head>
     <body>
         <nav>
@@ -99,6 +101,7 @@
 
           });
         </script>
+        
         @yield('scripts')
     </body>
 </html>

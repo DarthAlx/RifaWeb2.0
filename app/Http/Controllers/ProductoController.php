@@ -9,12 +9,14 @@ use App\Poplets;
 use App\Fuente;
 use App\Item;
 use App\Ganador;
+use App\Video;
 use Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+
 
 
 class ProductoController extends Controller
@@ -106,6 +108,9 @@ class ProductoController extends Controller
         }
 
         //poplets
+        if (!$request->poplets&&$request->hasFile('poplet1')) {
+            $request->poplets=1;
+        }
         if ($request->poplets) {
             for ($i=1; $i <= intval($request->poplets); $i++) { 
                 $poplet = new Poplets();
@@ -132,6 +137,15 @@ class ProductoController extends Controller
             }
             
         }
+
+        //video
+        if ($request->video) {
+            $video = new Video();
+            $video->producto_id = $producto->id;
+            $video->video = $request->video;
+            $video->save();
+        }
+
 
 
 
@@ -322,6 +336,10 @@ class ProductoController extends Controller
             return redirect()->intended(url('/producto/'.$id))->withInput();
         }
         //poplets
+
+        if (!$request->poplets&&$request->hasFile('poplet1')) {
+            $request->poplets=1;
+        }
         if ($request->poplets) {
             $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
             $oldpoplets=Poplets::where('producto_id', $producto->id)->get();
@@ -349,6 +367,27 @@ class ProductoController extends Controller
             }
             
         }
+
+        //video
+        if ($request->video) {
+            if ($producto->video) {
+                if ($request->video!=$producto->video->video) {
+                    $video = $producto->video;
+                    $video->video = $request->video;
+                    $video->save();
+                }
+            }
+            else{
+                $video = new Video();
+                $video->producto_id = $producto->id;
+                $video->video = $request->video;
+                $video->save();
+            }
+
+            
+        }
+        
+
         return redirect()->intended(url('/producto/'.$id))->withInput();
         
     }

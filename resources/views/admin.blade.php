@@ -65,9 +65,9 @@
             <div class="col-md-4">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                      <span class="card-title">Rifas totales</span>
+                      <span class="card-title">Rifas realizadas</span>
 
-                      <h5 style="font-weight: 700"></h5>
+                      <h5 style="font-weight: 700">{{$rifastotales}}</h5>
                     </div>
                     
                 </div>

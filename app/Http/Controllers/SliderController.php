@@ -22,6 +22,7 @@ class SliderController extends Controller
     		$producto=Producto::where('nombre',$request->producto_id)->first();
     		$slide->producto_id=$producto->id;
             $slide->subtitulo=$request->subtitulo;
+            $slide->accion=$request->accion;
     		$slide->orden=$request->orden;
 
     		$slide->save();
@@ -100,6 +101,7 @@ class SliderController extends Controller
             $producto=Producto::where('nombre',$request->producto_id)->first();
             $slide->producto_id=$producto->id;
             $slide->subtitulo=$request->subtitulo;
+            $slide->accion=$request->accion;
     		$slide->orden=$request->orden;
     		$slide->save();
     		Session::flash('mensaje', 'Slide publicado con exito.');
