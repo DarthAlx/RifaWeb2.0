@@ -15,7 +15,7 @@ use App\Item;
 use App\Operacion;
 use App\Folio;
 use App\Tarjeta;
-
+use App\Cancelada;
 class OrdenController extends Controller
 {
     public function addtocart(Request $request)
@@ -98,9 +98,20 @@ class OrdenController extends Controller
       $items=Cart::content();
       $usuario=User::find(Auth::user()->id);
       $rt=$usuario->rt/10;
+     
+
       if ($rt>=Cart::total(2,'.',',')) {
 
         foreach ($items as $product) {
+          $hayproduct = Producto::find($product->id);
+          $hayboletos=(intval($hayproduct->vendidos)+intval($product->qty))<=intval($hayproduct->boletos);
+          if (!$hayboletos) {
+            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/carrito'))->withInput();
+
+          }//hayboletos
+
           $precio = $product->price*100;
           $productos[]=array(
             'name' => $product->name,
@@ -168,7 +179,7 @@ class OrdenController extends Controller
           $usuario->rt = $usuario->rt-(round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10);
           $usuario->save();
           Cart::destroy();
-          //$this->sendinvoice($order->id);
+          $this->sendinvoice($guardar->id);
           //$this->sendclassrequest($order->id);
           Session::flash('total', $operacion->rt);
        
@@ -178,6 +189,15 @@ class OrdenController extends Controller
       else{
         
         foreach ($items as $product) {
+          $hayproduct = Producto::find($product->id);
+          $hayboletos=(intval($hayproduct->vendidos)+intval($product->qty))<=intval($hayproduct->boletos);
+          if (!$hayboletos) {
+            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/carrito'))->withInput();
+
+          }//hayboletos
+
           $precio = $product->price*100;
           $productos[]=array(
             'name' => $product->name,
@@ -316,7 +336,65 @@ class OrdenController extends Controller
 
       }
 
+    
+
 
 
       }
+
+
+      public static function cancelacion(){
+        $productos=Producto::where('habilitado',1)->orderBy('nombre','asc')->get();
+        foreach($productos as $producto){
+          if(strtotime($producto->fecha_limite) <= strtotime(date("Y-m-d H:i:s"))){
+            if ($producto->vendidos<$producto->minimo) {
+
+              $items=Item::where('producto',$producto->nombre)->where('fecha', $producto->fecha_limite)->get();
+
+              foreach ($items as $item) {
+                $totaldev=$item->cantidad*$item->precio;
+                $devolucion= new Operacion();
+                $devolucion->user_id=$item->orden->user_id;
+                $devolucion->orden_id=$item->orden->id;
+                $devolucion->rt=$totaldev*10;
+                $devolucion->pesos=0;
+                $devolucion->tipo="Cancelación";
+                $devolucion->fecha=date_create(date("Y-m-d H:i:s"));
+                $devolucion->save();
+                $orden=$item->orden;
+                $user=$orden->user;
+                $user->rt=$user->rt+$devolucion->rt+10;
+                $user->save();
+
+                $cancelacion= new Cancelada();
+                $cancelacion->producto=$producto->nombre;
+                $cancelacion->fecha=$producto->fecha_limite;
+                $cancelacion->rt=$devolucion->rt;
+                $cancelacion->minimo=$producto->minimo;
+                $cancelacion->vendidos=$producto->vendidos;
+                $cancelacion->user_id=$devolucion->user_id;
+                $cancelacion->orden_id=$devolucion->orden_id;
+                $cancelacion->save();
+                Mail::send('emails.cancelacion', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
+                    $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $m->to($user->email, $user->name)->subject('Lo sentimos');
+                });
+
+                $orden->status="Cancelada";
+                $orden->save();
+              }
+
+              $producto->habilitado=0;
+              $producto->ganador=0;
+              $producto->vendidos=0;
+              $producto->save();
+            }
+          }
+        }
+                  
+      }
+
+
+
+      
 }

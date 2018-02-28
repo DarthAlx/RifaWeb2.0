@@ -82,6 +82,16 @@
                     
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Rifas canceladas</span>
+
+                      <h5 style="font-weight: 700">{{$rifascanceladas}}</h5>
+                    </div>
+                    
+                </div>
+            </div>
 
         </div>
 		<div class="row">

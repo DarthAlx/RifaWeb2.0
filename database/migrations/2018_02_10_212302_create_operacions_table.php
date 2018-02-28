@@ -14,9 +14,9 @@ class CreateOperacionsTable extends Migration
     public function up()
     {
         Schema::create('operaciones', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->integer('orden_id')->nullable(true);;
+            $table->integer('orden_id')->nullable(true);
             $table->integer('codigo_id')->nullable(true);
             $table->bigInteger('rt');
             $table->bigInteger('pesos');

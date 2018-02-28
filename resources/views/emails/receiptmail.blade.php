@@ -468,7 +468,7 @@
 																	<td align="right">
 																		<div class="pull-right">
 																			<p style="float: right;">
-																				<strong>Fecha:</strong> {{$orden->operacion->fecha}}<br>
+																				<strong>Fecha:</strong> {{date('Y-m-d')}}<br>
 																			</p>
 																		</div>
 																	</td>
@@ -478,7 +478,7 @@
 																				<p><strong>RifaWeb</strong>
 																				</p>
 																				<p>
-																					<strong>Cliente:</strong> <br>
+																					<strong>Estimado(a):</strong> <br>
 
 																					{{$user->name}}
 																				</p>

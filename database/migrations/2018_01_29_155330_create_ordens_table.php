@@ -14,7 +14,7 @@ class CreateOrdensTable extends Migration
     public function up()
     {
         Schema::create('ordenes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('user_id');
             $table->string('order_id');
             $table->string('folio');

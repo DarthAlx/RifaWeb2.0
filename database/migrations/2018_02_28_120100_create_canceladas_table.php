@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGanadorsTable extends Migration
+class CreateCanceladasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateGanadorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ganadores', function (Blueprint $table) {
+        Schema::create('canceladas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->integer('orden_id');
             $table->string('producto');
-            $table->string('boleto');
-            $table->string('loteria');
-            $table->string('imagen');
+            $table->bigInteger('rt');
+            $table->bigInteger('minimo');
+            $table->bigInteger('vendidos');
             $table->dateTime('fecha');
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreateGanadorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ganadores');
+        Schema::dropIfExists('canceladas');
     }
 }

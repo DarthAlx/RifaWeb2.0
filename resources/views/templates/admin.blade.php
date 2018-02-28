@@ -31,6 +31,7 @@
                             <li><a href="{{url('/productos')}}">Productos</a></li>
                             <li><a href="{{url('/ordenes')}}">Ordenes</a></li>
                             <li><a href="{{url('/ganadores')}}">Ganadores</a></li>
+                            <li><a href="{{url('/canceladas')}}">Rifas canceladas</a></li>
                             <li><a href="{{url('/catalogos')}}">Catálogos</a></li>
                             <li><a href="{{url('/loterias')}}">Loterías</a></li>
                           </ul>
@@ -103,5 +104,7 @@
         </script>
         
         @yield('scripts')
+
+        <?php App\Http\Controllers\OrdenController::cancelacion(); ?>
     </body>
 </html>

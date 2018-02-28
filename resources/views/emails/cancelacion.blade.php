@@ -462,7 +462,7 @@
 																<tr>
 																	<td>
 																		<div class="pull-right">
-																			<h2>Rifa ganada</h2>
+																			<h2>Rifa no completada</h2>
 																		</div>
 																	</td>
 																	<td align="right">
@@ -493,33 +493,14 @@
 																	</tr>
 																	<tr>
 																			<td colspan="2">
-																			<table class="border" width="100%" cellspacing="0" cellpadding="6">
-																					<tbody>
-																							<tr>
-																									<td style="width: 33.33%;"><span>Rifa</span></td>
-																									<td style="width: 33.33%;"><span>Boleto ganador</span></td>
-																									<td style="width: 33.33%;"><span>Fecha de rifa</span></td>
-																									
-																							</tr>
-																							
-
-																							<tr class="text">
-																									<td style="width: 33.33%;">{{$ganador->producto}}</td>
-																									<td style="width: 33.33%;">{{$ganador->boleto}}</td>
-																									<td style="width: 33.33%;">{{$ganador->fecha}}</td>
-																									
-																							</tr>
-																							
-							
-																					</tbody>
-																			</table>
+																			
 																			
 																			<table width="100%" class="textb" border="0" cellspacing="0" cellpadding="6">
 																					<tbody>
 																							<tr>
 																									<td>
-																										<p class="text-left">Felicidades por haber ganado la rifa. <br></p>
-																										<p class="text-center">Ingresa a tu perfil para saber como reclamar tu premio.<br></p>
+																										<p class="text-left">Lo sentimos, la rifa en la que participabas no completó el minimo de boletos requeridos. <br></p>
+																										<p class="text-center">Regresamos el valor de tus boletos en RifaTokens y te agregamos 10 extra para que sigas participando.<br></p>
 																										<p class="text-center">Gracias por tu preferencia.</p>
 																									</td>
 																							</tr>
