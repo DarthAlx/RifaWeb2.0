@@ -14,7 +14,7 @@ class CreatePopletsTable extends Migration
     public function up()
     {
         Schema::create('poplets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('producto_id');
             $table->string('imagen');
             $table->timestamps();

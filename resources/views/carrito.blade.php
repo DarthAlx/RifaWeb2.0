@@ -96,8 +96,8 @@
 						</tr>
 
 						<tr>	
-							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;"></td>
-							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong>@if(($usuario->rt)/10>=Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</td>
+							<td colspan="4" class="d-none d-sm-block" style="display: table-cell !important;">{{Cart::total(2,'.',',')}}</td>
+							<td class="d-none d-sm-block text-center"><strong style="font-weight: 700">Total</strong>@if(($usuario->rt)/10>=Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</td>
 						</tr>
 						<tr>
 							<td><a href="{{url('/rifas')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar comprando</a></td>

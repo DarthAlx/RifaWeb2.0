@@ -383,6 +383,9 @@
   $dob1=$usuario->dob;
   $hoy = explode('-', $hoy1);  
   $dob = explode('-', $dob1);  
+  $creado=$usuario->created_at;
+  $crea1=explode(' ', $creado);  
+  $creacion=explode('-', $crea1[0]);  
 
   $dob[0]=$hoy[0];
 
@@ -414,7 +417,7 @@
 
 
     }
-    else{
+    elseif($creacion[0]!=$hoy[0]){
         $operacion = new App\Operacion();
           $operacion->user_id=Auth::user()->id;
           $operacion->rt=100;

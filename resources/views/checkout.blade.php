@@ -37,7 +37,7 @@
 				    
 				    <div class="row">
 				        <div class="col s12">
-				          <h3><i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)}}</h3>
+				          <h3><i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10}}</h3>
 				        </div>
 				    </div>
 
@@ -145,7 +145,7 @@
 		        @endforeach
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Tus RifaTokens</strong><a class="secondary-content"><i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</a></div></li>
-		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt/10)>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(Cart::total(2,'.',','), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</a></div></li>
+		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt/10)>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</a></div></li>
 		        
 		      </ul>
 

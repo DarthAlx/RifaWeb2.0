@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->integer('orden_id');
             $table->integer('producto_id');
             $table->string('producto');
-            $table->string('boletos');
+            $table->longText('boletos');
             $table->integer('cantidad');
             $table->integer('precio');
             $table->dateTime('fecha');
