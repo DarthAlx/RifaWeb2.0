@@ -50,13 +50,13 @@
                       </div>
                       </form>
                       
-                       <form action="{{url()->current()}}" method="post" id="ordenform">
+                       <form action="{{url()->current()}}" method="post" id="ordenformmini">
                           {!! csrf_field() !!}
 
                       <div class="row">
-                        <p class="titleshop col-sm-12">Ordenar publicaciones</p>
+                        <p class="titleshop col-sm-12">Ordenar productos</p>
                       <div class="input-field col s8" style="margin: 0;">
-                            <select id="orden" name="orden" class="select" required>
+                            <select id="ordenmini" name="orden" class="select" required>
                               <option value="A - Z">A - Z</option>
                               <option value="Z - A">Z - A</option>
                               <option value="Menor precio">Menor precio</option>
@@ -71,8 +71,8 @@
                       </div>
                       </form>
                         <script>
-                          $('#orden').change(function(){
-                            $('#ordenform').submit();
+                          $('#ordenmini').change(function(){
+                            $('#ordenformmini').submit();
 
                           });
                         </script>
@@ -80,7 +80,7 @@
                         <hr>
                       <p class="titleshop">Precio</p>
 
-                      <form action="{{url()->current()}}" method="post" id="precioform">
+                      <form action="{{url()->current()}}" method="post" id="precioformmini">
                           {!! csrf_field() !!}
 
 
@@ -96,7 +96,7 @@
                               <input type="text" class="form-control browser-default" name="maximo" placeholder="Maximo" aria-describedby="basic-addon2">
                             </div>
                             <div class="col-xs-3 valign-wrapper">
-                              <a href="#" id="searchprice"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                              <a href="#" id="searchpricemini"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
                               
                             </div>
                           </div>
@@ -105,8 +105,8 @@
 
                         </form>
                         <script>
-                          $('#searchprice').click(function(){
-                            $('#precioform').submit();
+                          $('#searchpricemini').click(function(){
+                            $('#precioformmini').submit();
 
                           });
                         </script>
@@ -189,7 +189,7 @@
                     {!! csrf_field() !!}
 
                 <div class="row">
-                  <p class="titleshop col-sm-12">Ordenar publicaciones</p>
+                  <p class="titleshop col-sm-12">Ordenar productos</p>
                 <div class="input-field col s8" style="margin: 0;">
                       <select id="orden" name="orden" class="select" required>
                         <option value="A - Z">A - Z</option>

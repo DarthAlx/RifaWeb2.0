@@ -411,7 +411,7 @@ class ProductoController extends Controller
          $productos=Producto::where('nombre', 'like','%'.$request->busqueda.'%')->orWhere('sku', 'like','%'.$request->busqueda.'%')->orWhere('descripcion', 'like','%'.$request->busqueda.'%')->orWhere('loteria', 'like','%'.$request->busqueda.'%')->orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
     }
 
-    if ($request->orden) {
+    elseif ($request->orden) {
         if ($request->orden=="A - Z") {
             $productos=Producto::orderBy('nombre','asc')->paginate(20);
         }
@@ -428,7 +428,7 @@ class ProductoController extends Controller
     }
 
 
-    if ($request->minimo||$request->maximo) {
+    elseif ($request->minimo||$request->maximo) {
         if ($request->minimo&&$request->maximo) {
             $productos=Producto::whereBetween('precio', [$request->minimo, $request->maximo])->orderBy('precio','asc')->where('habilitado',1)->paginate(20);
         }
@@ -440,6 +440,9 @@ class ProductoController extends Controller
         }
         
         
+    }
+    else{
+        $productos=Producto::orderBy('nombre','asc')->where('habilitado',1)->paginate(20);
     }
 
     return view('catalogo', ['productos'=>$productos,'categorias'=>$categorias,'fuentes'=>$fuentes,'catalogo'=>$catalogo]);
@@ -591,7 +594,7 @@ class ProductoController extends Controller
             foreach ($oldpoplets as $oldpoplet) {
                 File::delete($path . $oldpoplet->imagen);
                 $oldpoplet->delete();
-            }*/
+            }
           $producto->delete();
           Session::flash('mensaje', 'Producto eliminado con éxito.');
             Session::flash('class', 'success');
