@@ -18,6 +18,8 @@ class CreateGanadorsTable extends Migration
             $table->integer('user_id');
             $table->string('producto');
             $table->string('boleto');
+            $table->string('loteria');
+            $table->string('imagen');
             $table->dateTime('fecha');
             $table->timestamps();
         });

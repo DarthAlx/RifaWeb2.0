@@ -1003,3 +1003,7 @@ nav img {
 .dropdown-toggle::after {
     margin-top: 10px;
 }
+
+iframe:last-child {
+    display: none;
+}

@@ -186,6 +186,9 @@ class ProductoController extends Controller
                     $guardarganador->user_id=$ganador->id;
                     $guardarganador->producto=$producto->nombre;
                     $guardarganador->boleto=$producto->ganador;
+                    
+                    $guardarganador->loteria=$producto->loteria;
+                    $guardarganador->imagen=$producto->imagen;
                     $guardarganador->fecha=date_create($producto->fecha_limite);
                     $guardarganador->save();
 
@@ -203,6 +206,8 @@ class ProductoController extends Controller
                     $guardarganador->user_id=1;
                     $guardarganador->producto=$producto->nombre;
                     $guardarganador->boleto=$producto->ganador;
+                    $guardarganador->loteria=$producto->loteria;
+                    $guardarganador->imagen=$producto->imagen;
                     $guardarganador->fecha=date_create($producto->fecha_limite);
                     $guardarganador->save();
 
@@ -581,12 +586,12 @@ class ProductoController extends Controller
           $producto = Producto::find($request->eliminar);
           $dir = base_path('uploads/productos/');
           $path = base_path('uploads/productos/poplets/'.$producto->id.'/');
-          File::delete($dir . $producto->imagen);
+          //File::delete($dir . $producto->imagen);
             $oldpoplets=Poplets::where('producto_id', $producto->id)->get();
             foreach ($oldpoplets as $oldpoplet) {
                 File::delete($path . $oldpoplet->imagen);
                 $oldpoplet->delete();
-            }
+            }*/
           $producto->delete();
           Session::flash('mensaje', 'Producto eliminado con éxito.');
             Session::flash('class', 'success');
