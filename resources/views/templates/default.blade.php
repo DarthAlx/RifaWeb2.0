@@ -40,7 +40,11 @@
                           $nuevos=App\Mensaje::where('user_id',$usuario->id)->where('leido',0)->count();
                         }
                       ?>  
-
+                      @if($usuario->is_admin==1)
+                      <script>
+                        window.location="{{url('/admin')}}";
+                      </script>
+                      @endif
                       <ul id="dropdown1" class="dropdown-content">
                         <li><a href="{{url('/perfil')}}">Perfil</a></li>
                         <li><a href="{{url('/perfil')}}">Mensajes @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
@@ -80,9 +84,15 @@
                         <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
                       @else
                       
-                      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA</a></li>
+                      @if($usuario->is_admin==1)
+  
+                      <li><a href="{{url('/admin')}}">ADMIN</a></li>
+                      <li><a href="{{url('/salir')}}">SALIR</a></li>
+                      @else
+                      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
                       <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
                       <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
+                      @endif
                       @endif
                     </ul>
                     
@@ -106,14 +116,21 @@
                         <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
                         <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>
                       @else
+                      @if($usuario->is_admin==1)
+                      <li><a href="{{url('/admin')}}">ADMIN</a></li>
+                      <li><a href="{{url('/salir')}}">SALIR</a></li>
+                      @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown0">Mi cuenta</a></li>
+                      @endif
                       <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i>
                         <li><a href="{{url('/perfil')}}">Perfil <i class="fa fa-user right" aria-hidden="true"></i>
                         <li><a href="{{url('/rifas-ganadas')}}">Rifas ganadas <i class="fa fa-trophy right" aria-hidden="true"></i>
                         <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i>
                         <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i>
                       <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
+                      @if($usuario->is_admin==0)
                       <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+                      @endif
 
 
                       <li><a href="{{url('/canjear')}}">Canjear <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>

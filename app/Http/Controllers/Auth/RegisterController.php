@@ -76,7 +76,8 @@ class RegisterController extends Controller
             'dob' => $data['dob'],
             'tel' => $data['tel'],
             'genero' => $data['genero'],
-            'avatar' => $data['avatar']
+            'avatar' => $data['avatar'],
+            'rt'=>100,
         ]);
         }
         else{
@@ -86,7 +87,8 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'dob' => $data['dob'],
             'tel' => $data['tel'],
-            'genero' => $data['genero']
+            'genero' => $data['genero'],
+            'rt'=>100,
             ]);
         }
         

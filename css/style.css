@@ -113,19 +113,19 @@ footer{
     text-align: center;
     line-height: 25px;
     background: transparent;
-    color: #446084;
+    color: #1AA5B9;
     cursor: pointer;
-    border: 2px solid #446084;
+    border: 2px solid #1AA5B9;
     border-radius: 50%;
     text-decoration: none;
     transition: opacity 0.2s ease-out;
     opacity: 0;
-    border-color: #446084;
+    border-color: #1AA5B9;
 }
 #back-to-top:hover {
     color: #fff;
-    background-color: #446084;
-    border-color: #446084;
+    background-color: #1AA5B9;
+    border-color: #1AA5B9;
 }
 #back-to-top.show {
     opacity: 1;
@@ -494,12 +494,12 @@ right: 0;
     }
 
 
-.social-login{
+/*.social-login{
     background-color: #f7f7f7;
     border-top: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     padding: 20px 0;
-}
+}*/
 .omb_btn-facebook{
     background-color:  #3A589D;
     color: #fff !important;
@@ -1010,3 +1010,17 @@ iframe:last-child {
 .product-content h1{
     text-align: center;
 }
+
+.entrar{
+        background: #cccccc2b;
+}
+.entrar .card-body{
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: 40px;
+        padding: 40px;
+}
+.entrar .omb_btn-facebook{
+    border-radius: 5px;
+}
+

@@ -5,24 +5,35 @@
 
 <section class="entrar">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin:0;">
 
         <div class="col-md-6 mb-4 offset-md-3">
             <div>
                 <div class="card-body">
-                    <div class="row omb_row-sm-offset-3 social-login">
+                    
                         @if(!$userinfo)
+                        <div class="row omb_row-sm-offset-3 social-login">
                         <div class="col-md-8 offset-md-2">
                             <a href="{{url('auth/facebook')}}" class="btn btn-lg omb_btn-facebook">
                                 <i class="fa fa-facebook visible-xs"></i>
                                 <span class="hidden-xs">Iniciar con Facebook</span>
                             </a>
                         </div>
+                        
+                        </div>
+                        <div class="section-title">
+                            <b></b>
+                            <span class="secition-title-main"> &nbsp; ó &nbsp; </span>
+                            <b></b>
+                        </div>
                         @else
+                        <div class="row omb_row-sm-offset-3 social-login">
                             <div  class="text-center" style="width: 100%;"><img src="{{$userinfo->getAvatar()}}" class="circle" alt=""></div>
                             <h5><strong>Por favor complete su perfil.</strong></h5>
+
+                            </div>
                         @endif
-                    </div>
+                    
                     <h6 class="section-title-center py-3"> <span class="secition-title-main"><i class="fa fa-user"></i> Registrarse</span></h6>
 
                     @if (session('status'))

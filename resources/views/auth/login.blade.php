@@ -5,7 +5,7 @@
 
 <section class="entrar">
     <div class="container">
-        <div class="row">
+        <div class="row" style="margin: 0;">
         <div class="col-md-6 mb-4 offset-md-3">
 
             <div>
@@ -19,6 +19,12 @@
                             </a>
                         </div>
                     </div>
+                    <div class="section-title">
+                        <b></b>
+                        <span class="secition-title-main"> &nbsp; ó &nbsp; </span>
+                        <b></b>
+                    </div>
+                    
                     <h6 class="section-title-center py-3"> <span class="secition-title-main"><i class="fa fa-lock"></i> Iniciar sesión</span></h6>
                     @include('snip.notificaciones')
                     <!--Body-->
@@ -42,13 +48,21 @@
                               <label for="test5">Recordarme</label>
                             
                         </div>
+                        
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
                         <p>
                             <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a>
                         </p>
+                        
+                    </div>
+                    <div class="col-sm-6">
                         <p>
                             ¿No tienes una cuenta? <a href="{{ url('/register') }}">Regístrate ahora</a>
                         </p>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
