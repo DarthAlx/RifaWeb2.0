@@ -39,13 +39,13 @@
 						//}
 						
 					</script>
-					<div class="titlescan d-blockd-sm-none"><h6>ó</h6></div>
+					<div class="titlescan d-blockd-sm-none"><h6>ó escribe aquí el código</h6></div>
 					<form role="form" action="{{ url('/canjear') }}" method="post">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					
 					<div class="input-field">
 			          <input id="codigo" name="codigo" type="text" class="validate" value="{{old('codigo')}}" style="text-transform: uppercase;" required>
-			          <label for="codigo">Código promocional</label>
+			          <label for="codigo">Tu código promocional</label>
 	        		</div>
 
 	        		<div>

@@ -126,7 +126,7 @@
                 @if($nuevas>0)
               <div class="collection">
                 @foreach($ganadas as $ganada)
-                    <a href="#ganada{{$ganada->id}}" class="collection-item modal-trigger">Ganaste {{$ganada->producto}} <span  class="secondary-content">
+                    <a href="#ganada{{$ganada->id}}" class="collection-item modal-trigger"><b>¡{{$ganada->producto}}!</b> <span  class="secondary-content">
                       <i class="fa fa-search-plus" aria-hidden="true"></i></span>
 
                     </a>
@@ -163,7 +163,7 @@
                 @if($nuevos>0)
               <div class="collection">
                 @foreach($mensajes as $mensaje)
-                    <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{!!str_limit($mensaje->msg, $limit = 20, $end = '...')!!} <span  class="secondary-content">
+                    <a href="#leer{{$mensaje->id}}" onclick="leer('{{$mensaje->id}}')" class="collection-item modal-trigger">{!!str_limit($mensaje->asunto, $limit = 50, $end = '...')!!} <span  class="secondary-content">
                       @if($mensaje->leido)<i id="msj{{$mensaje->id}}" class="fa fa-envelope-open"></i>@else<i id="msj{{$mensaje->id}}" class="fa fa-envelope"></i>@endif</span>
 
                     </a>
@@ -206,11 +206,17 @@
     <div class="modal-content" style="height: 100%;">
       <div class="row">
         <div class="col-md-12">
-          <h4>{{$ganada->producto}}</h4>
-      <p>Texto ganador</p>
-      <div class="text-right">
-        
-      </div>
+          <h2 style="text-align: center;">¡Muchísimas felicidades!</h2>
+          <div style="text-align: center;">
+            <img src="{{url('/uploads/productos')}}/{{$ganada->imagen}}" class="circle" style="margin: 0 auto; max-width: 250px;" alt="">
+          </div>
+      <p>Eres el ganador en la rifa <b>"{{$ganada->producto}}"</b> con el boleto número <b>"{{$ganada->boleto}}"</b>. El ganador se obtuvo de la rifa <b>"{{$ganada->lotería}}"</b> en la fecha <b>"{{$ganada->fecha}}"</b>.</p>
+
+      <p>Haz click en el siguiente botón para ver cómo reclamar tu premio</p>
+<div style="text-align: center;">
+  <a href="#" class="btn waves-effect waves-green">RECLAMAR MI PRODUCTO</a>
+</div>
+
       
         </div>
       </div>
@@ -233,8 +239,9 @@
     <div class="modal-content" style="height: 100%;">
       <div class="row">
         <div class="col-md-12">
-          <small>Mensaje enviado el {{$mensaje->fecha}}</small>
-          <h3>{{$mensaje->asunto}}</h3>
+          <h2 style="text-align: center;">{{$mensaje->asunto}}</h2>
+          <small style="text-align: right;">Mensaje enviado el {{$mensaje->fecha}}</small>
+          
           @if($mensaje->imagen)
           <img src="{{url('/uploads/mensajes')}}/{{$mensaje->imagen}}" style="max-width: 100%;" alt="">
           @endif

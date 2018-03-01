@@ -139,7 +139,7 @@
                 </div>
                 <div class="icon-box-text text-center">
                   <h5><strong>#1 – Registrate</strong></h5>
-                  <p>Crea tu cuenta, y recibe 100 tickets gratis.</p>
+                  <p>Crea tu cuenta, y te regalamos 100 RifaTokens.</p>
                 </div>
               </div>
               <div class="col l4 m4">
