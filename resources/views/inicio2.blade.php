@@ -379,8 +379,9 @@
                                   probabilidad=($('#cantidad{{$producto->id}}').val()*100)/{{$producto->boletos}};
                                   Materialize.Toast.removeAll();
                                   var url="{{url('/carrito')}}"
-                                  var $toastContent = $('<span>'+probabilidad.toFixed(2)+'% probabilidad de ganar</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
+                                  var $toastContent = $('<span style="display:block">'+probabilidad.toFixed(2)+'% probabilidad de ganar</span><br>');
                                   Materialize.toast($toastContent, 4000);
+                                  Materialize.toast('<a href="'+url+'" class="btn-flat toast-action"  style="text-align: center">Ir a carrito</a>', 4000);
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
 
                                   $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+'MXN');

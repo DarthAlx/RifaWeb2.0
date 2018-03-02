@@ -502,8 +502,9 @@
                                   Materialize.Toast.removeAll();
 
                                   var url="{{url('/carrito')}}"
-                                  var $toastContent = $('<span>'+probabilidad.toFixed(2)+'% probabilidad de ganar</span>').add($('<a href="'+url+'" class="btn-flat toast-action">Ir a carrito</a>'));
+                                  var $toastContent = $('<span style="display:block">'+probabilidad.toFixed(2)+'% probabilidad de ganar</span><br>');
                                   Materialize.toast($toastContent, 4000);
+                                  Materialize.toast('<a href="'+url+'" class="btn-flat toast-action"  style="text-align: center">Ir a carrito</a>', 4000);
 
 
     
