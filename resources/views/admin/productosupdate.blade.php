@@ -66,7 +66,7 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="col s6">
+					        <div class="col s4">
 					        	<div class="switch">
 								    <label>
 								      <input type="checkbox" name="habilitado" id="habilitado"/>
@@ -83,7 +83,7 @@
 						      @endif
 					        </div>
 
-					        <div class="col s6">
+					        <div class="col s4">
 					        	<div class="switch">
 								    <label>
 								      <input type="checkbox" name="destacado" id="destacado"/>
@@ -100,6 +100,25 @@
 							      </script>
 						      @endif
 					        </div>
+
+					        <div class="col s4">
+					        	<div class="switch">
+								    <label>
+								      <input type="checkbox" name="gratuito" id="gratuito"/>
+								      <span class="lever"></span>
+								      
+								    </label>
+								  </div>
+					          <p>      
+							      <label for="gratuito">Gratuito</label>
+						      </p>
+						      @if($producto->gratuito)
+							      <script>
+							      	$('#gratuito').prop('checked', true);
+							      </script>
+						      @endif
+					        </div>
+
 					      </div>
 					      
 					    </div>

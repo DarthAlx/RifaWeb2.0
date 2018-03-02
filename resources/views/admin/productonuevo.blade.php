@@ -64,7 +64,7 @@
 					        </div>
 					      </div>
 					      <div class="row">
-					        <div class="col s6">
+					        <div class="col s4">
 					        	<div class="switch">
 								    <label>
 								      <input type="checkbox" name="habilitado" id="habilitado" checked="checked"/>
@@ -77,7 +77,7 @@
 						      </p>
 					        </div>
 
-					        <div class="col s6">
+					        <div class="col s4">
 					        	<div class="switch">
 								    <label>
 								      <input type="checkbox" name="destacado" id="destacado"/>
@@ -86,9 +86,24 @@
 								    </label>
 								  </div>
 					          <p>      
-							      <label for="habilitado">Destacado</label>
+							      <label for="destacado">Destacado</label>
 						      </p>
 					        </div>
+
+					        <div class="col s4">
+					        	<div class="switch">
+								    <label>
+								      <input type="checkbox" name="gratuito" id="gratuito"/>
+								      <span class="lever"></span>
+								      
+								    </label>
+								  </div>
+					          <p>      
+							      <label for="gratuito">Gratuito</label>
+						      </p>
+					        </div>
+
+
 					      </div>
 					      
 					    </div>

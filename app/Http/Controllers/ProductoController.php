@@ -70,6 +70,13 @@ class ProductoController extends Controller
         else{
             $producto->destacado=0;
         }
+        //gratuito
+        if (isset($request->gratuito)) {
+            $producto->gratuito=1;
+        }
+        else{
+            $producto->gratuito=0;
+        }
 
         //producto general
         if ($request->hasFile('imagen')) {
@@ -312,6 +319,13 @@ class ProductoController extends Controller
         }
         else{
             $producto->destacado=0;
+        }
+        //gratuito
+        if (isset($request->gratuito)) {
+            $producto->gratuito=1;
+        }
+        else{
+            $producto->gratuito=0;
         }
         //producto general
         if ($request->hasFile('imagen')) {
