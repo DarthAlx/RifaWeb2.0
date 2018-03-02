@@ -98,11 +98,13 @@
                     
                     <ul class="side-nav" id="mobile-demo">
                       @if (Auth::guest())
-                        <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i>
-                        <li><a href="{{url('/perfil')}}">Perfil <i class="fa fa-user right" aria-hidden="true"></i>
-                        <li><a href="{{url('/rifas-ganadas')}}">Rifas ganadas <i class="fa fa-trophy right" aria-hidden="true"></i>
-                        <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i>
-                        <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i>
+                      
+                        <li><a href="{{url('/rifas')}}">Inicio <i class="fa fa-home right"></i></a></li>
+                        <li><a href="{{url('/rifas')}}">Rifas <i class="fa fa-ticket right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{url('/perfil')}}">Perfil <i class="fa fa-user right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{url('/rifas-ganadas')}}">Rifas ganadas <i class="fa fa-trophy right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i></a></li>
+                        <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i></a></li>
 
                           <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
 
@@ -116,6 +118,7 @@
                         <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
                         <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>
                       @else
+                      <li><a href="{{url('/rifas')}}">Inicio <i class="fa fa-home right"></i></a></li>
                       @if($usuario->is_admin==1)
                       <li><a href="{{url('/admin')}}">ADMIN</a></li>
                       <li><a href="{{url('/salir')}}">SALIR</a></li>
@@ -215,8 +218,8 @@
 
                 <p></p>
               </div>
-              <div class="col-md-6 text-right">
-                <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i> &nbsp; <img src="{{ url('img/oxxo.png') }}" style="max-width: 64px;float: right;">
+              <div class="col-md-6 payments">
+                <i class="fa fa-cc-visa fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-mastercard fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-amex fa-2x" aria-hidden="true"></i> &nbsp; <i class="fa fa-cc-paypal fa-2x" aria-hidden="true"></i> &nbsp; <img src="{{ url('img/oxxo.png') }}" style="max-width: 64px;">
               </div>
             </div>
             

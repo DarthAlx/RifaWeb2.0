@@ -16,6 +16,13 @@
       </div>
     </div>
               <div class="col-md-12">
+                @if($catalogo=="Todos")
+                <h3 class="section-title section-title-center">
+                  <b></b>
+                  <span class="secition-title-main">Todas las rifas</span>
+                  <b></b>
+                </h3>
+                @endif
                 <div id="bc1" class="btn-group btn-breadcrumb">
                   <a href="{{url('/')}}" class="btn btn-default"><i class="fa fa-home"></i></a>
                   <a href="{{url('/rifas')}}" class="btn btn-default"><div>Rifas</div></a>
@@ -32,13 +39,11 @@
 
 
 
-              <ul class="collapsible visiblemov" data-collapsible="accordion" style="border: none; box-shadow: none;">
-                @if($catalogo=="Todos")
-                <li><h4 style="font-weight: 700">Todas las rifas</h4></li>
-                @endif
+              <ul class="collapsible visiblemov" data-collapsible="accordion" style="border: none; box-shadow: none; width: 100%;">
+                
                 <li>
-                  <div class="collapsible-header dropdown-toggle" ><h5>Filtro</h5></div>
-                  <div class="collapsible-body">
+                  <div class="collapsible-header dropdown-toggle" ><h5>Filtrar Rifas</h5></div>
+                  <div class="collapsible-body" style="padding: 2rem 0;">
                     <div class="col-md-3">
                       <form action="{{url()->current()}}" method="post">
                         {{ csrf_field() }}
@@ -64,10 +69,7 @@
                             </select>
                             
                       </div>
-                      <div class="sorting col s4 valign-wrapper">
-                        <a onclick="list();" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Lista"><i class="fa fa-list fa-2x"></i></a> &nbsp;
-                        <a onclick="grid();" class="tooltipped"  data-position="bottom" data-delay="50" data-tooltip="Grilla"><i class="fa fa-th-large fa-2x"></i></a>
-                      </div>
+                      
                       </div>
                       </form>
                         <script>
@@ -115,22 +117,41 @@
 
                       @if($categorias)
                       <hr>
-                      <p class="titleshop">Categorías</p>
-                      <ul class="listacategorias">
-                        @foreach($categorias as $categoria)
-                        <li><a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$categoria->nombre}}</a></li>
-                        @endforeach
+                      
+                      <ul class="listacategorias collapsible" data-collapsible="accordion"  style="box-shadow: none; border: 0; border-bottom: none;">
+                        
+                        <li>
+                          <div class="collapsible-header" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
+                            <p  class="titleshop  dropdown-toggle">Categorías</p>
+                            
+                          </div>
+                          <div class="collapsible-body" style="padding: 0;">
+                            @foreach($categorias as $categoria)
+                            <a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$categoria->nombre}}</a><br>
+                            @endforeach
+                          </div>
+                        </li>
+                        
                       </ul>
 
                       @endif
 
                       @if($fuentes)
                       <hr>
-                      <p class="titleshop">Fuentes</p>
-                      <ul class="listacategorias">
-                        @foreach($fuentes as $fuente)
-                        <li><a href="{{url('/rifas')}}/{{$fuente->slug}}">{{$fuente->nombre}}</a></li>
-                        @endforeach
+                      <ul class="listacategorias collapsible" data-collapsible="accordion"  style="box-shadow: none; border: 0; border-bottom: none;">
+
+                        <li>
+                          <div class="collapsible-header" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
+                            <p  class="titleshop  dropdown-toggle">Fuentes</p>
+                            
+                          </div>
+                          <div class="collapsible-body" style="padding: 0;">
+                            @foreach($fuentes as $fuente)
+                            <a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$fuente->nombre}}</a><br>
+                            @endforeach
+                          </div>
+                        </li>
+                      
                       </ul>
                       @endif
                       

@@ -713,9 +713,68 @@ nav img {
     border-right: .8em solid transparent;
     border-left: .8em solid transparent;
 }
+
+.titleshop.dropdown-toggle::after {
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-left: .3em solid transparent;
+}
+
+.payments{
+    text-align: center;
+}
+.payments img{
+    float: none;
+    margin-top: -10px;
+}
+
+
+.entrar .card-body{
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: 40px;
+        padding: 20px;
+}
+
+
+.entrar .card-body .col-md-8{
+    padding: 0;
+}
+
+.entrar .card-body label:last-child, .entrar .card-body input:last-child{
+    margin-top: 15px;
+}
+
+.entrar p{
+   text-align: center;
+}
+
+.section-title{
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+}
+
+
 }
 
 @media screen and (min-width:768px){
+
+    .entrar .card-body{
+    background: #fff;
+    border: 1px solid #ccc;
+    margin-top: 40px;
+        padding: 40px;
+}
+
+
+
+    .payments{
+    text-align: right;
+}
+.payments img{
+    float: right;
+
+}
   /*  #outdiv video{
     display: none;
 }*/
@@ -1014,12 +1073,7 @@ iframe:last-child {
 .entrar{
         background: #cccccc2b;
 }
-.entrar .card-body{
-    background: #fff;
-    border: 1px solid #ccc;
-    margin-top: 40px;
-        padding: 40px;
-}
+
 .entrar .omb_btn-facebook{
     border-radius: 5px;
 }

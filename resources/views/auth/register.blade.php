@@ -88,12 +88,12 @@
                         
                         <div class="md-form input-field">
                             
-                            <input type="password" name="password" id="defaultForm-pass" class="form-control" required>
+                            <input type="password" name="password" id="defaultForm-pass" class="form-control" minlength="6" required>
                             <label for="defaultForm-pass"><i class="fa fa-lock grey-text fa-lg"></i> Contraseña</label>
                         </div>
                         <div class="md-form input-field">
                             
-                            <input type="password" name="password_confirmation" id="defaultForm-pass-confirm" class="form-control" required>
+                            <input type="password" name="password_confirmation" id="defaultForm-pass-confirm" class="form-control"  minlength="6" required>
                             <label for="defaultForm-pass-confirm"><i class="fa fa-lock grey-text fa-lg"></i> Confirmar contraseña</label>
                         </div>
                         <p>
