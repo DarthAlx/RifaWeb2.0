@@ -248,7 +248,20 @@
                         
                         
                         
+                        @if($producto->gratuito)
+                        <div class="buttons">
+                          <div class="row" style="width: 100%; margin: 0;">
+                            <div class="botonprecio col-md-12" style="padding: 0">
+                              <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = Gratis
+                            </div>
+                            <div class="botoncantidad col-md-12" style="padding: 0">
+                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" style="width:100%; color: #fff;">Participar gratis</a>
+                            </div>
+
+                          </div>
                         
+                        </div>
+                        @else
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
                             <div class="botonprecio col-md-12" style="padding: 0">
@@ -406,6 +419,7 @@
 
                           
                         </div>
+                        @endif
                       </div>
                     </div>
                     </div>

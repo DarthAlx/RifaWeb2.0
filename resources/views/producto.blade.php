@@ -133,7 +133,20 @@
                         
                         
                         
+                        @if($producto->gratuito)
+                        <div class="buttons">
+                          <div class="row" style="width: 100%; margin: 0;">
+                            <div class="botonprecio col-md-12" style="padding: 0">
+                              <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = Gratis
+                            </div>
+                            <div class="botoncantidad col-md-12" style="padding: 0">
+                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" style="width:100%; color: #fff;">Participar gratis</a>
+                            </div>
+
+                          </div>
                         
+                        </div>
+                        @else
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
                             <div class="botonprecio col-md-12" style="padding: 0">
@@ -310,6 +323,7 @@
 
                           <!--iframe src="https://www.facebook.com/plugins/share_button.php?href={{url()->current()}}&layout=button&size=large&mobile_iframe=true&appId=1516214558672727&width=99&height=28" width="99" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe-->
       </div>
+      @endif
     </form>
     </div>
   </div>
