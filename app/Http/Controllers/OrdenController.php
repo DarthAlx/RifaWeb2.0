@@ -138,7 +138,7 @@ class OrdenController extends Controller
              $operacion->rt = round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10;
              $operacion->pesos = 0;
              $operacion->tipo ="Compra";
-             $operacion->fecha = date_create(date("Y-m-d"));
+             $operacion->fecha = date_create(date("Y-m-d H:i:s"));
              $operacion->save();
 
              

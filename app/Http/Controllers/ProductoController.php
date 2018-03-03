@@ -10,6 +10,11 @@ use App\Fuente;
 use App\Item;
 use App\Ganador;
 use App\Video;
+use App\Folio;
+use App\Orden;
+use App\Operacion;
+use App\User;
+
 use Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -73,6 +78,7 @@ class ProductoController extends Controller
         //gratuito
         if (isset($request->gratuito)) {
             $producto->gratuito=1;
+            $producto->precio=0;
         }
         else{
             $producto->gratuito=0;
@@ -248,7 +254,137 @@ class ProductoController extends Controller
         
     }
 
+    public function regalarboleto($id){
+        $usuario=User::find(Auth::user()->id);
+        $product=Producto::find($id);
+        $operacion=Operacion::where('user_id',Auth::user()->id)->where('tipo','Boleto gratis')->orderBy('created_at', 'desc')->first();
+        
+        if ($operacion) {
+            $orden=$operacion->orden;
+            foreach ($orden->items as $item) {
+                if ($item->producto==$product->nombre&&$item->fecha==$product->fecha_limite) {
+                    $yaregalado=true;
+                    break;
+                }
+                else{
+                    $yaregalado=false;
+                }
+            }
 
+            if (!$yaregalado) {
+                $folio=Folio::first();
+
+                $guardar = new Orden();
+                $guardar->order_id="Regalo";
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pagado';
+                $guardar->save();
+
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = 0;
+                 $operacion->pesos = 0;
+                 $operacion->tipo ="Boleto gratis";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+
+                $boletos = $product->boletos;
+                $digitos = strlen(intval($boletos));
+                
+                $vendidos = $product->vendidos;
+                $tickets = array();
+
+                for ($i=$product->vendidos+1; $i <= ($product->vendidos+1)*$product->multiplicador; $i++) { 
+                  $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                  $tickets[]="t".$numero."t";
+                }
+
+                $product->vendidos=$vendidos+1;
+                $product->save();
+                
+                $item = new Item();
+                $item->orden_id = $guardar->id;
+                $item->producto = $product->nombre;
+                $item->producto_id = $product->id;
+                $item->boletos = implode(",", $tickets);
+                $item->cantidad = 1;
+                $item->precio = $product->precio;
+                $item->fecha = date_create($product->fecha_limite);
+                $item->save();
+              
+        
+
+
+              $folio->folio++;
+              $folio->save();
+
+              return view('receipt', ['orden'=>$guardar]);
+
+              //$this->sendinvoice($guardar->id);
+            }
+            else{
+                 Session::flash('mensaje', 'Ya estás participando en esta rifa.');
+                    Session::flash('class', 'warning');
+                    return redirect()->intended(url()->previous());
+            }
+
+        }
+        else{
+            $folio=Folio::first();
+
+                $guardar = new Orden();
+                $guardar->order_id="Regalo";
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pagado';
+                $guardar->save();
+
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = 0;
+                 $operacion->pesos = 0;
+                 $operacion->tipo ="Boleto gratis";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+
+                $boletos = $product->boletos;
+                $digitos = strlen(intval($boletos));
+                
+                $vendidos = $product->vendidos;
+                $tickets = array();
+
+                for ($i=$product->vendidos+1; $i <= ($product->vendidos+1)*$product->multiplicador; $i++) { 
+                  $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                  $tickets[]="t".$numero."t";
+                }
+
+                $product->vendidos=$vendidos+1;
+                $product->save();
+                
+                $item = new Item();
+                $item->orden_id = $guardar->id;
+                $item->producto = $product->nombre;
+                $item->producto_id = $product->id;
+                $item->boletos = implode(",", $tickets);
+                $item->cantidad = 1;
+                $item->precio = $product->precio;
+                $item->fecha = date_create($product->fecha_limite);
+                $item->save();
+              
+        
+
+
+              $folio->folio++;
+              $folio->save();
+
+              return view('receipt', ['orden'=>$guardar]);
+
+              //$this->sendinvoice($guardar->id);
+        }
+    }
 
 
 
@@ -323,6 +459,7 @@ class ProductoController extends Controller
         //gratuito
         if (isset($request->gratuito)) {
             $producto->gratuito=1;
+            $producto->precio=0;
         }
         else{
             $producto->gratuito=0;

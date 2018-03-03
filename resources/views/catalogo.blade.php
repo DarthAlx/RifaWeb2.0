@@ -9,12 +9,15 @@
 
 <section class="productsmain">
           <div class="container">
+
             <div class="row">
-              <div class="row">
       <div class="col-md-12">
         @include('snip.notificaciones')
       </div>
     </div>
+    
+            <div class="row">
+              
               <div class="col-md-12">
                 @if($catalogo=="Todos")
                 <h3 class="section-title section-title-center">
@@ -369,8 +372,20 @@
                           </div>
                         
                         
+                        @if($producto->gratuito)
+                        <div class="buttons">
+                          <div class="row" style="width: 100%; margin: 0;">
+                            <div class="botonprecio col-md-12" style="padding: 0">
+                              <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = Gratis
+                            </div>
+                            <div class="botoncantidad col-md-12" style="padding: 0">
+                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" style="width:100%; color: #fff;">Participar gratis</a>
+                            </div>
+
+                          </div>
                         
-                        
+                        </div>
+                        @else
                         <div class="buttons">
                           <div class="row" style="width: 100%; margin: 0;">
                             <div class="botonprecio col-md-12" style="padding: 0">
@@ -505,34 +520,25 @@
                                   var $toastContent = $('<span style="display:block">'+probabilidad.toFixed(2)+'% probabilidad de ganar</span><br>');
                                   Materialize.toast($toastContent, 4000);
                                   Materialize.toast('<a href="'+url+'" class="btn-flat toast-action"  style="text-align: center">Ir a carrito</a>', 4000);
-
-
-    
-                                
                                   costo=$('#cantidad{{$producto->id}}').val()*{{$producto->precio}};
 
                                   $('#precio{{$producto->id}}').html($('#cantidad{{$producto->id}}').val()+' <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = $'+costo.toFixed(0)+'MXN');
                                   
-
-
-
-
                                 });
                               </script>
                             </div>
-                            
                           </div>
-                          
-
                           <div class="pbut hidden">
                             <br>
                           </div>
-
-                          
-                          
-
-                          
                         </div>
+                        @endif
+
+
+
+
+
+
                       </div>
                     </div>
                     </div>

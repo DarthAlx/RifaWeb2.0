@@ -38,6 +38,7 @@
 			  <tbody>
 			  	@if($ordenes)
 			  		@foreach($ordenes as $orden)
+			  		@if($orden->operacion->tipo=="Compra")
 
 						<tr style="cursor: pointer;" class="modal-trigger " href="#orden{{$orden->id}}">
 							<td>{{$orden->order_id}}</td>
@@ -48,6 +49,7 @@
 							<td>{{$orden->operacion->pesos}}</td>
 							<td>{{$orden->operacion->fecha}}</td>
 						</tr>
+					@endif
 					@endforeach
 				@else
 					<tr style="cursor: pointer;">

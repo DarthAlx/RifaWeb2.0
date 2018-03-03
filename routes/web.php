@@ -74,7 +74,7 @@ Route::get('/rifas-ganadas', function () {
 	$ganadores=App\Ganador::orderBy('created_at','desc')->get();
     	return view('ganadores', ['ganadores'=>$ganadores]);
 });
-
+Route::get('/regalar/{id}', 'ProductoController@regalarboleto')->middleware('auth');;
 
 Route::post('carrito', 'OrdenController@addtocart');
 Route::get('/carrito', function () {
@@ -318,7 +318,7 @@ Route::group(['middleware' => 'admin'], function(){
 	});
 
 	Route::get('/ordenes', function () {
-		$ordenes=App\Orden::where('tipo','Compra')->get();
+		$ordenes=App\Orden::all();
 	    return view('admin.ordenes', ['ordenes'=>$ordenes]);
 	});
 
@@ -415,6 +415,9 @@ Route::group(['middleware' => 'admin'], function(){
 	});
 
 	Route::post('regalo-update', 'CodigoController@regalo_update');
+
+	
+
 
 });
 
