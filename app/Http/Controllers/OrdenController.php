@@ -79,6 +79,17 @@ class OrdenController extends Controller
         });
     }
 
+    public function sendficha($id)
+    {
+      $orden=Orden::find($id);
+      $user=$orden->user;
+        Mail::send('emails.ficha', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
+            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $m->to($user->email, $user->name)->subject('¡Tu ficha de pago!');
+        });
+    }
+
+
 
 
 
@@ -99,6 +110,7 @@ class OrdenController extends Controller
       $usuario=User::find(Auth::user()->id);
       $rt=$usuario->rt/10;
      
+      
 
       if ($rt>=Cart::total(2,'.',',')) {
 
@@ -185,8 +197,10 @@ class OrdenController extends Controller
        
           return view('receipt', ['orden'=>$guardar]);
 
-      }
+      }//proceso solo rt
       else{
+
+        if ($request->metodo=="Normal") {
         
         foreach ($items as $product) {
           $hayproduct = Producto::find($product->id);
@@ -210,7 +224,7 @@ class OrdenController extends Controller
         }
         $descuentos[]=array(
             'code'   => 'RifaTokens',
-            'amount' => $rt,
+            'amount' => $rt*100,
             'type'   => 'sign'
           );
       
@@ -333,8 +347,169 @@ class OrdenController extends Controller
           return redirect()->intended(url('/carrito'))->withInput();
         }
 
+        }//metodo normal
 
-      }
+
+
+
+        elseif ($request->metodo=="Tienda") {
+          foreach ($items as $product) {
+              $hayproduct = Producto::find($product->id);
+              $hayboletos=(intval($hayproduct->vendidos)+intval($product->qty))<=intval($hayproduct->boletos);
+              if (!$hayboletos) {
+                Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+                Session::flash('class', 'danger');
+                return redirect()->intended(url('/carrito'))->withInput();
+
+              }//hayboletos
+
+              $precio = $product->price*100;
+              $productos[]=array(
+                'name' => $product->name,
+                'unit_price' => $precio,
+                'quantity' => $product->qty,
+                'metadata' => array(      
+                  'id' => $product->id
+                )
+              );
+            }
+            $descuentos[]=array(
+                'code'   => 'RifaTokens',
+                'amount' => $rt*100,
+                'type'   => 'sign'
+              );
+          
+      
+
+
+
+            try{
+
+                $order=\Conekta\Order::create(array(
+                  'currency' => 'MXN',
+                  "customer_info" => array(
+                    "name" => ''.Auth::user()->name,
+                    "email" => ''.Auth::user()->email,
+                    "phone" => "+521".Auth::user()->tel
+                  ), //customer_info
+                  'line_items' => $productos,
+                  
+
+                  'discount_lines' => $descuentos,
+                  'charges' => array(
+                    array(
+                      'payment_method' => array(
+                        "type" => "oxxo_cash",
+                        "status" => "Pendiente"
+                      )
+                    )
+                  )
+                ));
+
+
+
+              $folio=Folio::first();
+
+                $guardar = new Orden();
+                $guardar->order_id=$order->id;
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pendiente';
+                $guardar->referencia=$order->charges[0]->payment_method->reference;
+                $guardar->save();
+
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = $rt*10;
+                 $operacion->pesos = Cart::total(2,'.',',')-$rt;
+                 $operacion->tipo ="Pendiente";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+
+                 
+
+              foreach ($productos as $producto) {
+                $product = Producto::find($producto['metadata']['id']);
+                /*$boletos = $product->boletos;
+                $digitos = strlen(intval($boletos));
+
+                
+                $vendidos = $product->vendidos;
+                $tickets = array();
+
+                for ($i=$product->vendidos+1; $i <= ($product->vendidos+$producto['quantity'])*$product->multiplicador; $i++) { 
+                  $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                  $tickets[]="t".$numero."t";
+                }
+
+                $product->vendidos=$vendidos+$producto['quantity'];
+                $product->save();
+                */
+                $item = new Item();
+                $item->orden_id = $guardar->id;
+                $item->producto = $producto['name'];
+                $item->producto_id = $producto['metadata']['id'];
+                $item->boletos = 'pendiente';
+                $item->cantidad = $producto['quantity'];
+                $item->precio = $producto['unit_price']/100;
+                $item->fecha = date_create($product->fecha_limite);
+                $item->save();
+              }
+        
+
+
+              $folio->folio++;
+              $folio->save();
+
+              Cart::destroy();
+              $this->sendficha($guardar->id);
+              //$this->sendclassrequest($order->id);
+              Session::flash('total', $order->amount);
+           
+              return view('ficha', ['orden'=>$guardar]);
+
+            } catch (\Conekta\ProccessingError $error){
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+            } catch (\Conekta\ParameterValidationError $error){
+
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+
+            } catch (\Conekta\Handler $error){
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+            }
+        }//tienda
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }//no rt completo
+
+    
+    
 
     
 

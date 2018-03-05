@@ -53,9 +53,14 @@
 			    
 				@else
 			    <li>
-			      <div class="collapsible-header active"><i class="fa fa-credit-card-alt" style="line-height: 1.5;"></i> <span> &nbsp; Tarjeta</span> </div>
+			      <div class="collapsible-header active" id="normalheader" onclick="document.getElementById('normal').click();">
+			      	<input name="metodo" type="radio" value="Normal" id="normal" checked="checked" onclick="normal();" />
+				      	<label for="normal"></label>
+			      	<i class="fa fa-credit-card-alt" style="line-height: 1.5;"></i> <span> &nbsp; Tarjeta</span> 
+			      </div>
 			      <div class="collapsible-body">
 			      	<form action="{{url('checkout')}}" method="POST" id="card-form">
+			      		<input type="hidden" id="metodo" name="metodo" value="Normal">
 			      		{!! csrf_field() !!}
 					@if(!$usuario->tarjetas->isEmpty())
 			      	<div class="row">
@@ -77,36 +82,40 @@
 
 
 					      	@endif
-					<div class="row">
-				        <div class="input-field col s6">
-				          <input class="validate" id="numtarjeta"  name="numero" autocomplete="off"  data-conekta="card[number]" type="text" maxlength="16" minlength="16">
-				          <label for="numtarjeta">Número de tarjeta <span><i class="fa fa-cc-visa" aria-hidden="true"></i> <i class="fa fa-cc-mastercard" aria-hidden="true"></i> <i class="fa fa-cc-amex" aria-hidden="true"></i></span></label>
-				        </div>
-				    </div>
-				    <div class="row">
-				        <div class="input-field col s6">
-				          <input class="validate" id="nombretitular"  name="nombre" autocomplete="off"  data-conekta="card[name]" type="text" >
-				          <label for="nombretitular">Nombre del titular</label>
-				        </div>
-				    </div>
+					      	<div class="pagotarjeta">
+					      		<div class="row">
+							        <div class="input-field col s6">
+							          <input class="validate" id="numtarjeta"  name="numero" autocomplete="off"  data-conekta="card[number]" type="text" maxlength="16" minlength="16">
+							          <label for="numtarjeta">Número de tarjeta <span><i class="fa fa-cc-visa" aria-hidden="true"></i> <i class="fa fa-cc-mastercard" aria-hidden="true"></i> <i class="fa fa-cc-amex" aria-hidden="true"></i></span></label>
+							        </div>
+							    </div>
+							    <div class="row">
+							        <div class="input-field col s6">
+							          <input class="validate" id="nombretitular"  name="nombre" autocomplete="off"  data-conekta="card[name]" type="text" >
+							          <label for="nombretitular">Nombre del titular</label>
+							        </div>
+							    </div>
 
-				    <div class="row">
-				        <div class="input-field col s4">
-				          <input class="validate" id="mm" name="mes" data-conekta="card[exp_month]" type="text" type="text"  maxlength="2">
-				          
-				          <label for="nombretitular">Mes</label>
-				        </div>
-				        <div class="input-field col s4">
-				          <input class="validate" id="aa" name="año"  data-conekta="card[exp_year]" type="text"  maxlength="2">
-				          <label for="nombretitular">Año</label>
-				        </div>
-				        <div class="input-field col s4">
+							    <div class="row">
+							        <div class="input-field col s4">
+							          <input class="validate" id="mm" name="mes" data-conekta="card[exp_month]" type="text" type="text"  maxlength="2">
+							          
+							          <label for="nombretitular">Mes</label>
+							        </div>
+							        <div class="input-field col s4">
+							          <input class="validate" id="aa" name="año"  data-conekta="card[exp_year]" type="text"  maxlength="2">
+							          <label for="nombretitular">Año</label>
+							        </div>
+							        <div class="input-field col s4">
 
-				          <input class="validate tooltipped" id="cvv" autocomplete="off"  data-conekta="card[cvc]" type="text" data-position="bottom" data-delay="50" data-tooltip="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente."   maxlength="4">
-				          <label for="nombretitular">CVV</label>
-				        </div>
-				        
-				    </div>
+							          <input class="validate tooltipped" id="cvv" autocomplete="off"  data-conekta="card[cvc]" type="text" data-position="bottom" data-delay="50" data-tooltip="Código de seguridad de 3 dígitos ubicado normalmente en la parte trasera de su tarjeta. Las tarjetas American Express tienen un código de 4 dígitos ubicado en el frente."   maxlength="4">
+							          <label for="nombretitular">CVV</label>
+							        </div>
+							        
+							    </div>
+					      	</div>
+					
+
 				    <div class="row" id="guardartarjeta">
 				    	<div class="col s12">
 				    		<div class="switch">
@@ -128,8 +137,41 @@
 					</form>
 			      </div>
 			    </li>
+			    @if(intval(Cart::total(2,'.',','))>=15)
+			    <li>
+			    	<div class="collapsible-header active" id="tiendaheader" onclick="document.getElementById('tienda').click();">
+				      	<input name="metodo" type="radio" value="Tienda" id="tienda"  onclick="tienda()" />
+				      	<label for="tienda"></label>
+	    				<img src="{{ url('img/logo-oxxopay.png') }}" style="width: 93px; height: 20px;"> <span> &nbsp; </span> 
+	    			</div>
+	    			<div class="collapsible-body">
+	    				<p>Oxxo cobrará una comisión extra por la transacción.</p>
+				      	<form action="{{url('checkout')}}" method="POST">
+				      		<input type="hidden" id="metodo" name="metodo" value="Tienda">
+				      		{!! csrf_field() !!}
+				      		<div class="row">
+						    	<div class="col s12">
+						        	<button type="submit" class="btn btn-primary right">Pagar</button>
+						        </div>
+						    </div>
+				      	</form>
+			      	</div>
+			    </li>
+			    @endif
 			    @endif
 			  </ul>
+			  <script>
+
+			  	function normal(){
+
+			  		document.getElementById('normal').checked = true;
+			  		document.getElementById('normalheader').click();
+			  	}
+			  	function tienda(){
+			  		document.getElementById('tienda').checked = true;
+			  		document.getElementById('tiendaheader').click();
+			  	}
+			  </script>
 
 
 			

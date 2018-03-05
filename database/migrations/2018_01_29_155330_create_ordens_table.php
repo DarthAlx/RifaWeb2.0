@@ -19,6 +19,7 @@ class CreateOrdensTable extends Migration
             $table->string('order_id');
             $table->string('folio');
             $table->string('status');
+            $table->string('referencia')->nullable(true);
             $table->timestamps();
             $table->collation = 'utf8_spanish_ci';
         });

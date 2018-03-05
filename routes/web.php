@@ -14,7 +14,7 @@
 Auth::routes();
 
 
-Route::get('/1', function () {
+Route::post('/webhook', function () {
 	$ganadores=App\Ganador::orderBy('created_at','desc')->get();
     	return view('ganadores', ['ganadores'=>$ganadores]);
 });
