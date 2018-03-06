@@ -81,6 +81,29 @@ class ProductoSeeder extends Seeder
         ]);
 
 
+
+
+        DB::table('paquetes')->insert([
+            'rt'=>'1000',
+            'precio'=>'100',
+        ]);
+        DB::table('paquetes')->insert([
+            'rt'=>'2000',
+            'precio'=>'200',
+        ]);
+        DB::table('paquetes')->insert([
+            'rt'=>'5000',
+            'precio'=>'500',
+        ]);
+        DB::table('paquetes')->insert([
+            'rt'=>'7000',
+            'precio'=>'700',
+        ]);
+        DB::table('paquetes')->insert([
+            'rt'=>'10000',
+            'precio'=>'1000',
+        ]);
+
             
 
 

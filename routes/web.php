@@ -83,6 +83,16 @@ Route::get('/carrito', function () {
   return view('carrito',['items'=>$items]);
 });
 
+
+
+Route::get('/paquetes', function () {
+  $paquetes=App\Paquete::all();
+  
+  return view('paquetes',['paquetes'=>$paquetes]);
+});
+
+
+
 Route::get('/checkout', function () {
   $items=Cart::content();
   return view('checkout',['items'=>$items]);

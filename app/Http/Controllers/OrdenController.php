@@ -400,7 +400,8 @@ class OrdenController extends Controller
                     array(
                       'payment_method' => array(
                         "type" => "oxxo_cash",
-                        "status" => "Pendiente"
+                        "status" => "Pendiente",
+                        "expires_at" => strtotime("+5 day")
                       )
                     )
                   )
@@ -582,6 +583,8 @@ public static function pendientes(){
  
         foreach($ordenes as $orden){
           $order = \Conekta\Order::find($orden->order_id);
+
+          $user=$orden->user;
             if ($order->charges[0]->status=="paid") {
 
               $items=$orden->items;
@@ -594,7 +597,7 @@ public static function pendientes(){
                 if (!$hayboletos) {
                   $devolucion=($item->precio*$item->cantidad)*10;
 
-                  $user=$orden->user;
+                  
                   $user->rt=$user->rt+$devolucion;
                   $user->save();
                   $haydevolucion=true;
@@ -645,6 +648,24 @@ public static function pendientes(){
               $operacion->tipo="Compra";
               $operacion->save();
               
+            }//paid
+            else{
+              if ($order->charges[0]->payment_method->expires_at <= strtotime(date("Y-m-d H:i:s"))) {
+                $orden->status="Expirada";
+                $orden->save();
+                $operacion=$orden->operacion;
+                $operacion->tipo="Expirada";
+                $operacion->save();
+
+
+                foreach ($orden->items as $item) {
+                  $devolucion=($item->precio*$item->cantidad)*10;
+                  $user->rt=$user->rt+$devolucion;
+                  $user->save();
+                }
+                
+                
+              }
             }
         }
                   
