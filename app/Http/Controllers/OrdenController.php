@@ -141,7 +141,7 @@ class OrdenController extends Controller
             $guardar->order_id="RifaTokens";
             $guardar->folio="W".$folio->folio;
             $guardar->user_id=Auth::user()->id;
-            $guardar->status='Pagado';
+            $guardar->status='Pagada';
             $guardar->save();
 
              $operacion = new Operacion();
@@ -274,7 +274,7 @@ class OrdenController extends Controller
             $guardar->order_id=$order->id;
             $guardar->folio="W".$folio->folio;
             $guardar->user_id=Auth::user()->id;
-            $guardar->status='Pagado';
+            $guardar->status='Pagada';
             $guardar->save();
 
              $operacion = new Operacion();
@@ -461,6 +461,8 @@ class OrdenController extends Controller
 
               $folio->folio++;
               $folio->save();
+              $usuario->rt = 0;
+              $usuario->save();
 
               Cart::destroy();
               $this->sendficha($guardar->id);
@@ -568,6 +570,88 @@ class OrdenController extends Controller
         }
                   
       }
+
+
+
+
+
+
+public static function pendientes(){
+        \Conekta\Conekta::setApiKey("key_ty3oYz86wwJVi8yCdqMwtw");
+        $ordenes=Orden::where('status','Pendiente')->get();
+ 
+        foreach($ordenes as $orden){
+          $order = \Conekta\Order::find($orden->order_id);
+            if ($order->charges[0]->status=="paid") {
+
+              $items=$orden->items;
+              $haydevolucion=false;
+              foreach ($items as $item) {
+
+                $product = Producto::find($item->producto_id);
+                $hayproduct = Producto::find($product->id);
+                $hayboletos=(intval($hayproduct->vendidos)+intval($item->cantidad))<=intval($hayproduct->boletos);
+                if (!$hayboletos) {
+                  $devolucion=($item->precio*$item->cantidad)*10;
+
+                  $user=$orden->user;
+                  $user->rt=$user->rt+$devolucion;
+                  $user->save();
+                  $haydevolucion=true;
+                }//hayboletos
+                else{
+
+                  $boletos = $product->boletos;
+                  $digitos = strlen(intval($boletos));
+
+                  
+                  $vendidos = $product->vendidos;
+                  $tickets = array();
+
+                  for ($i=$product->vendidos+1; $i <= ($product->vendidos+$item->cantidad)*$product->multiplicador; $i++) { 
+                    $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                    $tickets[]="t".$numero."t";
+                  }
+                  $item->boletos = implode(",", $tickets);
+                  $item->save();
+
+                  $product->vendidos=$vendidos+$item->cantidad;
+                  $product->save();
+                  $haydevolucion=false;
+
+                  
+                }
+
+
+                
+
+
+              }
+
+              Mail::send('emails.aprobado', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
+                    $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+                    $m->to($user->email, $user->name)->subject('¡Pago acreditado!');
+                });
+
+              if ($haydevolucion) {
+                $orden->status="Devolucion";
+              }
+              else{
+                $orden->status="Pagada";
+              }
+              
+              $orden->save();
+              $operacion=$orden->operacion;
+              $operacion->tipo="Compra";
+              $operacion->save();
+              
+            }
+        }
+                  
+      }
+
+
+
 
 
 

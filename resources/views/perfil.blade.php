@@ -57,10 +57,11 @@
             </div>
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
-              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status', '<>','Terminada')->orderBy('created_at','desc')->paginate(10); $li=0;?>
+              <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status','Pagada')->orderBy('created_at','desc')->paginate(10); $li=0;?>
               @foreach($ordenes as $orden)
                 @foreach($orden->items as $item)
 
+                  @if($item->boletos!="pendiente")
                 
                   <li>
                     <div class="collapsible-header @if($li==0) active <?php $li++;?>@endif"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
@@ -103,6 +104,7 @@
 
                         </div>
                   </li>
+                  @endif
                 @endforeach
               @endforeach
             </ul>  
