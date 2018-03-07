@@ -144,7 +144,7 @@
 						    			</div>
 						    			<div class="collapsible-body">
 						    				<p>Oxxo cobrará una comisión extra por la transacción.</p>
-									      	<form action="{{url('checkout')}}" method="POST">
+									      	<form action="{{url('paquetes')}}" method="POST">
 									      		<input type="hidden" id="metodo" name="metodo" value="Tienda">
 									      		<input type="hidden" id="pagotienda" name="paquete" value="" required>
 									      		{!! csrf_field() !!}
@@ -236,70 +236,10 @@
 
 
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-@section('scripts')
-
-<script type="text/javascript">
-
-    Conekta.setPublishableKey('key_O2AUfqG6Rsv3ZgKVi38uSdA');
-
-  var conektaSuccessResponseHandler = function(token) {
-    var $form = $("#card-form");
-    //Inserta el token_id en la forma para que se envíe al servidor
-    $form.append($('<input type="hidden" name="tokencard" id="conektaTokenId">').val(token.id));
-    $form.get(0).submit(); //Hace submit
-  };
-  var conektaErrorResponseHandler = function(response) {
-    var $form = $("#card-form");
-    $("#cart-errors").show();
-    $(".card-errors").text(response.message_to_purchaser);
-    $form.find("button").prop("disabled", false);
-  };
-
-  //jQuery para que genere el token después de dar click en submit
-  $(function () {
-    $("#card-form").submit(function(event) {
-      var $form = $(this);
-      // Previene hacer submit más de una vez
-      $form.find("button").prop("disabled", true);
-      Conekta.token.create($form, conektaSuccessResponseHandler, conektaErrorResponseHandler);
-      return false;
-    });
-  });
-</script>
-
-
-<script>
-
-  $('#mitarjeta').change(function(){
-  	if ($('#mitarjeta').val()!="") {
-  		$("#guardartarjeta").hide();
-  	}
-  	else{
-  		$("#guardartarjeta").show();
-  	}
-  	
-  	tarjeta = $('#mitarjeta').val();
-    _token = $('#token').val();
-    $.post("{{url('/traertarjeta')}}", {
-        tarjeta : tarjeta,
-        _token : _token
-        }, function(data) {
-          $("#llenar").append(data);
-        });
-  });
-
-    
-
-  
-  
-</script>
-
-
-@endsection
 @endsection
 
 
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
 @section('scripts')
 
 <script type="text/javascript">

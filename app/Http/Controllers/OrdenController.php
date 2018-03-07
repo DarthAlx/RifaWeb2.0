@@ -16,6 +16,7 @@ use App\Operacion;
 use App\Folio;
 use App\Tarjeta;
 use App\Cancelada;
+use App\Paquete;
 class OrdenController extends Controller
 {
     public function addtocart(Request $request)
@@ -150,6 +151,7 @@ class OrdenController extends Controller
              $operacion->rt = round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10;
              $operacion->pesos = 0;
              $operacion->tipo ="Compra";
+             $operacion->metodo ="RifaTokens";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));
              $operacion->save();
 
@@ -283,6 +285,7 @@ class OrdenController extends Controller
              $operacion->rt = $rt*10;
              $operacion->pesos = Cart::total(2,'.',',')-$rt;
              $operacion->tipo ="Compra";
+             $operacion->metodo ="Tarjeta";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));
              $operacion->save();
 
@@ -425,6 +428,7 @@ class OrdenController extends Controller
                  $operacion->rt = $rt*10;
                  $operacion->pesos = Cart::total(2,'.',',')-$rt;
                  $operacion->tipo ="Pendiente";
+                 $operacion->metodo ="Oxxo";
                  $operacion->fecha = date_create(date("Y-m-d H:i:s"));
                  $operacion->save();
 
@@ -489,35 +493,7 @@ class OrdenController extends Controller
             }
         }//tienda
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       }//no rt completo
-
-    
-    
-
-    
-
-
-
       }
 
 
@@ -670,6 +646,260 @@ public static function pendientes(){
         }
                   
       }
+
+
+
+
+
+
+
+
+
+
+
+    public function paquetes(Request $request)
+    {
+      \Conekta\Conekta::setApiKey("key_ty3oYz86wwJVi8yCdqMwtw");
+
+      $usuario=User::find(Auth::user()->id);
+      $paquete=Paquete::find($request->paquete);
+
+      $precio=intval($paquete->precio);
+        $cantidad=intval($paquete->rt);
+        $impuesto= (($precio*0.029)+2.5);
+        $impuestomasiva=$impuesto+($impuesto*0.16);
+        $impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
+        $iva=($precio*0.16);
+        $iva=round(str_replace(",","",$iva), 2, PHP_ROUND_HALF_UP);
+        $total=$precio+$iva+$impuestomasiva;
+        $total=round(str_replace(",","",$total), 2, PHP_ROUND_HALF_UP);
+
+        if ($request->metodo=="Normal") {
+        
+          $precio = $precio*100;
+          $productos[]=array(
+            'name' => 'RifaTokens',
+            'unit_price' => $precio,
+            'quantity' => 1,
+            'metadata' => array(      
+              'id' => $paquete->id
+            )
+          );
+        
+      
+  
+
+
+
+        try{
+
+            $order=\Conekta\Order::create(array(
+              'currency' => 'MXN',
+              "customer_info" => array(
+                "name" => ''.Auth::user()->name,
+                "email" => ''.Auth::user()->email,
+                "phone" => "+521".Auth::user()->tel
+              ), //customer_info
+              'line_items' => $productos,
+              'tax_lines'=> array(
+                array(
+                  'description' => 'IVA',
+                  'amount'      => $iva*100
+                ),
+                array(
+                  'description' => 'Impuestos',
+                  'amount'      => $impuestomasiva*100
+                )
+              ),
+
+              'charges' => array(
+                array(
+                  'payment_method' => array(
+                    'type' => 'card',
+                    "token_id" => $request->tokencard
+                  )
+                )
+              )
+            ));
+
+
+            if (isset($request->tarjeta)) {
+              $tarjeta = new Tarjeta();
+              $tarjeta->identificador= substr_replace($request->numero, '************', 0, -4);
+              $tarjeta->num= $request->numero;
+              $tarjeta->nombre = $request->nombre;
+              $tarjeta->mes = $request->mes;
+              $tarjeta->año = $request->año;
+              $tarjeta->user_id = Auth::user()->id;
+              $tarjeta->save();
+            }
+
+
+          $folio=Folio::first();
+
+            $guardar = new Orden();
+            $guardar->order_id=$order->id;
+            $guardar->folio="W".$folio->folio;
+            $guardar->user_id=Auth::user()->id;
+            $guardar->status='Pagada';
+            $guardar->save();
+
+             $operacion = new Operacion();
+             $operacion->user_id=Auth::user()->id;
+             $operacion->orden_id = $guardar->id;
+             $operacion->rt = 0;
+             $operacion->pesos = $total;
+             $operacion->tipo ="Compra RT";
+             $operacion->metodo ="Tarjeta";
+             $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+             $operacion->save();
+
+            
+    
+
+
+          $folio->folio++;
+          $folio->save();
+
+          $usuario->rt = $usuario->rt+$paquete->rt;
+          $usuario->save();
+
+          //$this->sendinvoice($guardar->id);
+          //$this->sendclassrequest($order->id);
+          Session::flash('total', $order->amount);
+       
+          return view('receipt', ['orden'=>$guardar]);
+
+        } catch (\Conekta\ProccessingError $error){
+          Session::flash('mensaje', $error->getMessage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'))->withInput();
+        } catch (\Conekta\ParameterValidationError $error){
+
+          Session::flash('mensaje', $error->getMessage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'))->withInput();
+
+        } catch (\Conekta\Handler $error){
+          Session::flash('mensaje', $error->getMessage());
+          Session::flash('class', 'danger');
+          return redirect()->intended(url('/carrito'))->withInput();
+        }
+
+        }//metodo normal
+
+
+
+
+        elseif ($request->metodo=="Tienda") {
+          $precio = $precio*100;
+          $productos[]=array(
+            'name' => 'RifaTokens',
+            'unit_price' => $precio,
+            'quantity' => 1,
+            'metadata' => array(      
+              'id' => $paquete->id
+            )
+          );
+          
+      
+
+
+
+            try{
+
+                $order=\Conekta\Order::create(array(
+                  'currency' => 'MXN',
+                  "customer_info" => array(
+                    "name" => ''.Auth::user()->name,
+                    "email" => ''.Auth::user()->email,
+                    "phone" => "+521".Auth::user()->tel
+                  ), //customer_info
+                  'line_items' => $productos,
+                  
+
+                  'tax_lines'=> array(
+                    array(
+                      'description' => 'IVA',
+                      'amount'      => $iva*100
+                    ),
+                    array(
+                      'description' => 'Impuestos',
+                      'amount'      => $impuestomasiva*100
+                    )
+                  ),
+                  'charges' => array(
+                    array(
+                      'payment_method' => array(
+                        "type" => "oxxo_cash",
+                        "status" => "Pendiente",
+                        "expires_at" => strtotime("+5 day")
+                      )
+                    )
+                  )
+                ));
+
+
+
+              $folio=Folio::first();
+
+                $guardar = new Orden();
+                $guardar->order_id=$order->id;
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pagada';
+                $guardar->referencia=$order->charges[0]->payment_method->reference;
+                $guardar->save();
+
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = 0;
+                 $operacion->pesos = $total;
+                 $operacion->tipo ="Compra RT";
+                 $operacion->metodo ="Oxxo";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+        
+
+
+              $folio->folio++;
+              $folio->save();
+              $usuario->rt = $usuario->rt+$paquete->rt;
+              $usuario->save();
+
+              //$this->sendficha($guardar->id);
+
+              Session::flash('total', $order->amount);
+           
+              return view('ficha', ['orden'=>$guardar]);
+
+            } catch (\Conekta\ProccessingError $error){
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+            } catch (\Conekta\ParameterValidationError $error){
+
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+
+            } catch (\Conekta\Handler $error){
+              Session::flash('mensaje', $error->getMessage());
+              Session::flash('class', 'danger');
+              return redirect()->intended(url('/carrito'))->withInput();
+            }
+        }//tienda
+
+
+      }
+
+
+
+
+
+
+
 
 
 

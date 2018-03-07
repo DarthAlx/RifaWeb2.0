@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Operacion extends Model
 {
     protected $table = 'operaciones';
-	protected $fillable = ['user_id', 'orden_id', 'codigo_id', 'rt', 'pesos', 'tipo', 'fecha'];
+	protected $fillable = ['user_id', 'orden_id', 'codigo_id', 'rt', 'pesos', 'tipo', 'metodo', 'fecha'];
 
 	public function user(){
 	    return $this->belongsTo('App\User');
@@ -19,4 +19,3 @@ class Operacion extends Model
 	    return $this->belongsTo('App\Codigo');
 	}
 }
-

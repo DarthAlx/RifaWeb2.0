@@ -584,7 +584,7 @@ a {
 						<div class="opps-brand"><img src="{{ url('/img/oxxopay_brand.png') }}" alt="OXXOPay"></div>
 						<div class="opps-ammount">
 							<h3>Monto a pagar</h3>
-							<h2>$ {{number_format(($orden->operacion->rt/10)+$orden->operacion->pesos)}} <sup>MXN</sup></h2>
+							<h2>$ {{number_format($orden->operacion->pesos)}} <sup>MXN</sup></h2>
 							<p>OXXO cobrará una comisión adicional al momento de realizar el pago.</p>
 						</div>
 					</div>

@@ -21,6 +21,7 @@ class CreateOperacionsTable extends Migration
             $table->bigInteger('rt');
             $table->bigInteger('pesos');
             $table->string('tipo');
+            $table->string('metodo')->nullable(true);
             $table->dateTime('fecha');
             $table->timestamps();
         });

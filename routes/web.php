@@ -99,6 +99,8 @@ Route::get('/checkout', function () {
 });
 Route::post('checkout', 'OrdenController@cargo');
 
+Route::post('paquetes', 'OrdenController@paquetes');
+
  Route::get('removefromcart/{id}', 'OrdenController@destroy');
  Route::post('removefromcartpost', 'OrdenController@destroypost');
 
