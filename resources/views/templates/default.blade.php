@@ -73,6 +73,7 @@
                       
                       <li><a href="{{url('/canjear')}}"><i class="fa fa-qrcode" aria-hidden="true"></i> CANJEAR</a></li>
                       @endif
+                      <li><a href="{{url('/paquetes')}}"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i> COMPRAR RIFATOKENS</a></li>
                     </ul>
 
                     <a class="brand-logo center auto hiddenmov" href="{{url('/')}}"><img src="{{url('img/Rifaweb2.png')}}" alt=""></a>
@@ -114,6 +115,7 @@
                       
                       <li><a href="{{url('/canjear')}}"><i class="fa fa-qrcode right" aria-hidden="true"></i> Canjear</a></li>
                       @endif
+                      <li><a href="{{url('/paquetes')}}"><i class="fa fa-circle-o-notch right"></i> Comprar RifaTokens</a></li>
                         <li><a href="{{url('/entrar')}}">Entrar</a></li>
                         <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
                         <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>

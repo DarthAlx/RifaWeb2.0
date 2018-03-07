@@ -14,8 +14,13 @@
       </div>
     @else
     <?php $usuario = App\User::find(Auth::user()->id); ?>
-
-
+<p>&nbsp;</p>
+<h3 class="section-title section-title-center">
+                  <b></b>
+                  <span class="secition-title-main">Comprar RifaTokens</span>
+                  <b></b>
+                </h3>
+                <p>&nbsp;</p>
 	<div class="col-sm-12">
 		@include('snip.notificaciones')
 	</div>
@@ -35,7 +40,7 @@
 					      <input name="paquete" type="radio" id="paquete{{$paquete->id}}" />
 					      <label for="paquete{{$paquete->id}}"></label>
 					    </p>
-		              <a onclick="carrito('{{$paquete->id}}','{{$paquete->rt}}','{{$paquete->precio}}')" class="btn btn-default" style="padding: .375rem .75rem; line-height: 25px; color: #fff; cursor: pointer;">Seleccionar</a>
+		              <a onclick="carrito('{{$paquete->id}}','{{$paquete->rt}}','{{$paquete->precio}}')" id="btn-paquete{{$paquete->id}}" class="btn btn-default" style="padding: .375rem .75rem; line-height: 25px; color: #fff; cursor: pointer;">Seleccionar</a>
 
 		            </div>
 		          </div>
@@ -43,6 +48,7 @@
 		</div>
 		@endforeach
 	</div>
+
 
 	<div class="row">
 		<div class="col-md-6">
@@ -202,6 +208,8 @@
 
 </div>
 
+
+
 		<script>
 			$('#pagotienda').change(function() {
 				$('#subtotal').html($('#pagotienda').val());
@@ -252,6 +260,11 @@
 				$('#total').html(parseFloat(total).toFixed(2));
 			}
 		</script>
+
+		<script>
+		$('#btn-paquete1').click();
+		$('#normalheader').click();
+	</script>
 	
 @endif
 
