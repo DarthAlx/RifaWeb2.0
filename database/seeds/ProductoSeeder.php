@@ -86,22 +86,38 @@ class ProductoSeeder extends Seeder
         DB::table('paquetes')->insert([
             'rt'=>'1000',
             'precio'=>'100',
+            'iva'=>'16',
+            'impuesto'=>'6.26',
+            'impuestot'=>'4.06',
         ]);
         DB::table('paquetes')->insert([
             'rt'=>'2000',
             'precio'=>'200',
+            'iva'=>'32',
+            'impuesto'=>'9.63',
+            'impuestot'=>'8.12',
+
         ]);
         DB::table('paquetes')->insert([
             'rt'=>'5000',
             'precio'=>'500',
+            'iva'=>'80',
+            'impuesto'=>'19.72',
+            'impuestot'=>'20.30',
         ]);
         DB::table('paquetes')->insert([
             'rt'=>'7000',
             'precio'=>'700',
+            'iva'=>'112',
+            'impuesto'=>'26.45',
+            'impuestot'=>'28.42',
         ]);
         DB::table('paquetes')->insert([
             'rt'=>'10000',
             'precio'=>'1000',
+            'iva'=>'160',
+            'impuesto'=>'36.54',
+            'impuestot'=>'40.60',
         ]);
 
             

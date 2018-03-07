@@ -19,7 +19,7 @@
 						<div class="opps-brand"><img src="{{ url('/img/oxxopay_brand.png') }}" alt="OXXOPay"></div>
 						<div class="opps-ammount">
 							<h3>Monto a pagar</h3>
-							<h2>$ {{number_format(($orden->operacion->rt/10)+$orden->operacion->pesos)}} <sup>MXN</sup></h2>
+							<h2>$ {{number_format(floatval($orden->operacion->pesos+$orden->operacion->iva+$orden->operacion->impuesto),2)}} <sup>MXN</sup></h2>
 							<p>OXXO cobrará una comisión adicional al momento de realizar el pago.</p>
 						</div>
 					</div>
@@ -37,7 +37,7 @@
 						<li>Realiza el pago correspondiente con dinero en efectivo.</li>
 						<li>Al confirmar tu pago, el cajero te entregará un comprobante impreso. <strong>En el podrás verificar que se haya realizado correctamente.</strong> Conserva este comprobante de pago.</li>
 					</ol>
-					<div class="opps-footnote">Al completar estos pasos y validar tu pago recibirás un correo de <strong>Nombre del negocio</strong> confirmando tu pago.</div>
+					<div class="opps-footnote">Al completar estos pasos y validar tu pago recibirás un correo de <strong>RifaWeb</strong> confirmando tu pago.</div>
 				</div>
 			</div>	
 		</div>

@@ -45,7 +45,7 @@
                             &nbsp; &nbsp; &nbsp; &nbsp; 
                          
                               <input type="checkbox" id="test5" />
-                              <label for="test5">Recordarme</label>
+                              <label for="test5" class="remember">Recordarme</label>
                             
                         </div>
                         

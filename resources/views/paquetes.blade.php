@@ -2,7 +2,6 @@
 
 @section('header')
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
-<link href="{{ url('css/ficha.css') }}" media="all" rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
 @endsection
 
@@ -161,11 +160,12 @@
 					<script>
 
 			  	function normal(){
-
+			  		impuestos('Normal');
 			  		document.getElementById('normal').checked = true;
 			  		document.getElementById('normalheader').click();
 			  	}
 			  	function tienda(){
+			  		impuestos('Tienda');
 			  		document.getElementById('tienda').checked = true;
 			  		document.getElementById('tiendaheader').click();
 			  	}
@@ -212,8 +212,11 @@
 				cantidad=parseInt(cantidad);
 				impuesto= ((precio*0.029)+2.5);
 				impuestomasiva=impuesto+(impuesto*0.16);
+				impuestomasiva=parseFloat(impuestomasiva).toFixed(2);
 				iva=(precio*0.16);
-				total=precio+iva+impuestomasiva;
+				iva=parseFloat(iva).toFixed(2);
+				total=parseFloat(precio)+parseFloat(iva)+parseFloat(impuestomasiva);
+				total=parseFloat(total).toFixed(2);
 				
 
 				document.getElementById('paquete'+id).click(); 
@@ -227,6 +230,27 @@
 
 					$('#total').html(parseFloat(total).toFixed(2));
 			}
+
+			function impuestos(valor){
+
+				precio=parseInt($('#subtotal').html());
+
+				if(valor=="Normal"){
+					impuesto= ((precio*0.029)+2.5);
+				}else{
+					impuesto= ((precio*0.035));
+				}
+				
+				impuestomasiva=impuesto+(impuesto*0.16);
+				impuestomasiva=parseFloat(impuestomasiva).toFixed(2);
+				iva=(precio*0.16);
+				iva=parseFloat(iva).toFixed(2);
+				total=parseFloat(precio)+parseFloat(iva)+parseFloat(impuestomasiva);
+				total=parseFloat(total).toFixed(2)
+				$('#iva').html(iva);
+				$('#impuestos').html(impuestomasiva);
+				$('#total').html(parseFloat(total).toFixed(2));
+			}
 		</script>
 	
 @endif
@@ -236,6 +260,7 @@
 
 
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+<div id="llenar" style="display: none;">	</div>
 @endsection
 
 

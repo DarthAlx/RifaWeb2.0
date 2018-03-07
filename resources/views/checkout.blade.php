@@ -21,7 +21,11 @@
 		@include('snip.notificaciones')
 	</div>
 
-	<h1 class="title">Comprar boletos.</h1>
+	<h3 class="section-title section-title-center">
+                  <b></b>
+                  <span class="secition-title-main">Comprar boletos</span>
+                  <b></b>
+                </h3>
 	<div class="row">
 		<div class="col-md-6">
 
@@ -137,27 +141,7 @@
 					</form>
 			      </div>
 			    </li>
-			    @if(intval(Cart::total(2,'.',','))>=15)
-			    <li>
-			    	<div class="collapsible-header active" id="tiendaheader" onclick="document.getElementById('tienda').click();">
-				      	<input name="metodo" type="radio" value="Tienda" id="tienda"  onclick="tienda()" />
-				      	<label for="tienda"></label>
-	    				<img src="{{ url('img/logo-oxxopay.png') }}" style="width: 93px; height: 20px;"> <span> &nbsp; </span> 
-	    			</div>
-	    			<div class="collapsible-body">
-	    				<p>Oxxo cobrará una comisión extra por la transacción.</p>
-				      	<form action="{{url('checkout')}}" method="POST">
-				      		<input type="hidden" id="metodo" name="metodo" value="Tienda">
-				      		{!! csrf_field() !!}
-				      		<div class="row">
-						    	<div class="col s12">
-						        	<button type="submit" class="btn btn-primary right">Pagar</button>
-						        </div>
-						    </div>
-				      	</form>
-			      	</div>
-			    </li>
-			    @endif
+			    
 			    @endif
 			  </ul>
 			  <script>
@@ -186,8 +170,19 @@
 		        <li class="collection-item"><div>{{ $product->name }} <i class="fa fa-ticket" aria-hidden="true"></i> {{ $product->qty }}  <a class="secondary-content">${{ $product->price*$product->qty }}</a></div></li>
 		        @endforeach
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
+		        <li class="collection-item"><div><strong style="font-weight: 700">IVA</strong><a class="secondary-content">${{Cart::tax()}}</a></div></li>
+
+		        @php
+							    $impuesto=floatval(Cart::subtotal(2,'.',','))*0.029;
+								$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
+								$impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
+							@endphp
+@php
+							    $total=floatval(Cart::subtotal(2,'.',','))+floatval(Cart::tax())+floatval($impuestomasiva);
+							@endphp
+		        <li class="collection-item"><div><strong style="font-weight: 700">Impuesto</strong><a class="secondary-content">${{$impuestomasiva}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Tus RifaTokens</strong><a class="secondary-content"><i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</a></div></li>
-		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt/10)>Cart::total(2,'.',',')) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10}} @else ${{Cart::total(2,'.',',')-($usuario->rt/10)}} @endif</a></div></li>
+		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt)/10>=$total) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",$total), 0, PHP_ROUND_HALF_UP)*10}} @else ${{$total-($usuario->rt/10)}} @endif</a></div></li>
 		        
 		      </ul>
 

@@ -741,7 +741,7 @@ nav img {
     padding: 0;
 }
 
-.entrar .card-body label:last-child, .entrar .card-body input:last-child{
+.entrar .card-body .remember{
     margin-top: 15px;
 }
 
@@ -753,11 +753,25 @@ nav img {
     font-size: 1.8rem;
     margin-bottom: 40px;
 }
+h3 {
+    font-size: 2.3rem;
+}
 
+.actions::before{
+    content: "";
+    display: none !important;
+    width: 0;
+}
+.totalcart{
+    display: none !important;
+}
 
 }
 
 @media screen and (min-width:768px){
+    .totalcart{
+    display: table-cell !important;
+}
 
     .entrar .card-body{
     background: #fff;

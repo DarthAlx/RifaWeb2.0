@@ -19,10 +19,14 @@ class CreateOperacionsTable extends Migration
             $table->integer('orden_id')->nullable(true);
             $table->integer('codigo_id')->nullable(true);
             $table->bigInteger('rt');
-            $table->bigInteger('pesos');
+            $table->double('pesos');
+            $table->double('iva');
+            $table->double('impuesto');
             $table->string('tipo');
             $table->string('metodo')->nullable(true);
+
             $table->dateTime('fecha');
+            $table->integer('paquete_id')->nullable(true);
             $table->timestamps();
         });
     }

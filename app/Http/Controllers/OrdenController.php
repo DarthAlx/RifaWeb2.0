@@ -79,6 +79,15 @@ class OrdenController extends Controller
             $m->to($user->email, $user->name)->subject('¡Tu compra!');
         });
     }
+    public function sendinvoicert($id)
+    {
+      $orden=Orden::find($id);
+      $user=$orden->user;
+        Mail::send('emails.receiptmailrt', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
+            $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
+            $m->to($user->email, $user->name)->subject('¡Tu compra!');
+        });
+    }
 
     public function sendficha($id)
     {
@@ -562,67 +571,23 @@ public static function pendientes(){
 
           $user=$orden->user;
             if ($order->charges[0]->status=="paid") {
+              $orden->status="Pagada";
+              $orden->save();
+              $operacion=$orden->operacion;
+              $operacion->tipo="Compra RT";
+              $operacion->save();
 
-              $items=$orden->items;
-              $haydevolucion=false;
-              foreach ($items as $item) {
-
-                $product = Producto::find($item->producto_id);
-                $hayproduct = Producto::find($product->id);
-                $hayboletos=(intval($hayproduct->vendidos)+intval($item->cantidad))<=intval($hayproduct->boletos);
-                if (!$hayboletos) {
-                  $devolucion=($item->precio*$item->cantidad)*10;
-
-                  
-                  $user->rt=$user->rt+$devolucion;
-                  $user->save();
-                  $haydevolucion=true;
-                }//hayboletos
-                else{
-
-                  $boletos = $product->boletos;
-                  $digitos = strlen(intval($boletos));
-
-                  
-                  $vendidos = $product->vendidos;
-                  $tickets = array();
-
-                  for ($i=$product->vendidos+1; $i <= ($product->vendidos+$item->cantidad)*$product->multiplicador; $i++) { 
-                    $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
-                    $tickets[]="t".$numero."t";
-                  }
-                  $item->boletos = implode(",", $tickets);
-                  $item->save();
-
-                  $product->vendidos=$vendidos+$item->cantidad;
-                  $product->save();
-                  $haydevolucion=false;
-
-                  
-                }
-
-
-                
-
-
-              }
+              $user->rt=$user->rt+$operacion->paquete->rt;
+              $user->save();
+              
 
               Mail::send('emails.aprobado', ['orden'=>$orden,'user'=>$user], function ($m) use ($user) {
                     $m->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
                     $m->to($user->email, $user->name)->subject('¡Pago acreditado!');
                 });
 
-              if ($haydevolucion) {
-                $orden->status="Devolucion";
-              }
-              else{
-                $orden->status="Pagada";
-              }
+             
               
-              $orden->save();
-              $operacion=$orden->operacion;
-              $operacion->tipo="Compra";
-              $operacion->save();
               
             }//paid
             else{
@@ -631,16 +596,7 @@ public static function pendientes(){
                 $orden->save();
                 $operacion=$orden->operacion;
                 $operacion->tipo="Expirada";
-                $operacion->save();
-
-
-                foreach ($orden->items as $item) {
-                  $devolucion=($item->precio*$item->cantidad)*10;
-                  $user->rt=$user->rt+$devolucion;
-                  $user->save();
-                }
-                
-                
+                $operacion->save();       
               }
             }
         }
@@ -666,13 +622,23 @@ public static function pendientes(){
 
       $precio=intval($paquete->precio);
         $cantidad=intval($paquete->rt);
-        $impuesto= (($precio*0.029)+2.5);
-        $impuestomasiva=$impuesto+($impuesto*0.16);
-        $impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
-        $iva=($precio*0.16);
-        $iva=round(str_replace(",","",$iva), 2, PHP_ROUND_HALF_UP);
-        $total=$precio+$iva+$impuestomasiva;
+      if ($request->metodo=="Normal") {
+        $impuesto= floatval($paquete->impuesto);
+      }
+      else{
+        $impuesto= floatval($paquete->impuestot);
+      }
+        
+
+        /*$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
+        $impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);*/
+        $iva=floatval($paquete->iva);
+        $total=floatval($precio)+floatval($iva)+floatval($impuesto);
         $total=round(str_replace(",","",$total), 2, PHP_ROUND_HALF_UP);
+        
+
+        $impuestocent=($impuesto*100);
+        $ivacent=($iva*100);
 
         if ($request->metodo=="Normal") {
         
@@ -704,11 +670,11 @@ public static function pendientes(){
               'tax_lines'=> array(
                 array(
                   'description' => 'IVA',
-                  'amount'      => $iva*100
+                  'amount'      => intval($ivacent)
                 ),
                 array(
                   'description' => 'Impuestos',
-                  'amount'      => $impuestomasiva*100
+                  'amount'      => intval($impuestocent)
                 )
               ),
 
@@ -748,7 +714,11 @@ public static function pendientes(){
              $operacion->user_id=Auth::user()->id;
              $operacion->orden_id = $guardar->id;
              $operacion->rt = 0;
-             $operacion->pesos = $total;
+             $operacion->pesos = $paquete->precio;
+             $operacion->iva = $iva;
+             $operacion->impuesto = $impuesto;
+             $operacion->paquete_id = $paquete->id;
+
              $operacion->tipo ="Compra RT";
              $operacion->metodo ="Tarjeta";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));
@@ -764,11 +734,11 @@ public static function pendientes(){
           $usuario->rt = $usuario->rt+$paquete->rt;
           $usuario->save();
 
-          //$this->sendinvoice($guardar->id);
+          $this->sendinvoicert($guardar->id);
           //$this->sendclassrequest($order->id);
           Session::flash('total', $order->amount);
        
-          return view('receipt', ['orden'=>$guardar]);
+          return view('receiptrt', ['orden'=>$guardar]);
 
         } catch (\Conekta\ProccessingError $error){
           Session::flash('mensaje', $error->getMessage());
@@ -821,11 +791,11 @@ public static function pendientes(){
                   'tax_lines'=> array(
                     array(
                       'description' => 'IVA',
-                      'amount'      => $iva*100
+                      'amount'      => intval($ivacent)
                     ),
                     array(
                       'description' => 'Impuestos',
-                      'amount'      => $impuestomasiva*100
+                      'amount'      => intval($impuestocent)
                     )
                   ),
                   'charges' => array(
@@ -855,7 +825,10 @@ public static function pendientes(){
                  $operacion->user_id=Auth::user()->id;
                  $operacion->orden_id = $guardar->id;
                  $operacion->rt = 0;
-                 $operacion->pesos = $total;
+                 $operacion->pesos = $paquete->precio;
+                 $operacion->iva = $iva;
+                  $operacion->impuesto = $impuesto;
+                  $operacion->paquete_id = $paquete->id;
                  $operacion->tipo ="Compra RT";
                  $operacion->metodo ="Oxxo";
                  $operacion->fecha = date_create(date("Y-m-d H:i:s"));
@@ -865,10 +838,9 @@ public static function pendientes(){
 
               $folio->folio++;
               $folio->save();
-              $usuario->rt = $usuario->rt+$paquete->rt;
-              $usuario->save();
+         
 
-              //$this->sendficha($guardar->id);
+              $this->sendficha($guardar->id);
 
               Session::flash('total', $order->amount);
            

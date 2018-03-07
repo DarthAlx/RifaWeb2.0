@@ -20,7 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('producto');
             $table->longText('boletos');
             $table->integer('cantidad');
-            $table->integer('precio');
+            $table->double('precio');
             $table->dateTime('fecha');
             $table->timestamps();
 
