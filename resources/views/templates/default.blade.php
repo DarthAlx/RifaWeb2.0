@@ -82,7 +82,7 @@
                     <ul class="right hide-on-med-and-down valign-wrapper" style="height: -webkit-fill-available;">
                       @if (Auth::guest())
                         <li><a href="{{url('/entrar')}}">ENTRAR</a></li>
-                        <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
+                        <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::subtotal(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
                       @else
                       
                       @if($usuario->is_admin==1)
@@ -92,7 +92,7 @@
                       @else
                       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">MI CUENTA @if($nuevos>0)<span class="new badge" data-badge-caption="">{{$nuevos}}</span>@endif</a></li>
                       <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
-                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
+                      <li><a href="{{url('/carrito')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i>  @if (Cart::content()->count()>0) <span id="minicart">${{Cart::subtotal(2,'.',',')}}</span> @else <span id="minicart"></span> @endif</a></li>
                       @endif
                       @endif
                     </ul>
@@ -107,7 +107,7 @@
                         <li><a href="{{url('/como-funciona')}}">¿Cómo Funciona? <i class="fa fa-cogs right" aria-hidden="true"></i></a></li>
                         <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i></a></li>
 
-                          <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+                          <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::subtotal(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
 
                           @if (Auth::guest())
                         <li><a href="{{url('/entrar')}}"><i class="fa fa-qrcode right" aria-hidden="true"></i> Canjear</a></li>
@@ -134,7 +134,7 @@
                         <li><a href="{{url('/legales')}}">Permisos y Docs <i class="fa fa-book right" aria-hidden="true"></i>
                       <!--li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Tus RifaTokens"><i class="fa fa-circle-o-notch" style="font-size: inherit;"></i>{{$usuario->rt}}</a></li-->
                       @if($usuario->is_admin==0)
-                      <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::total(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
+                      <li><a href="{{url('/carrito')}}">Carrito <i class="fa fa-shopping-cart right" aria-hidden="true"></i> @if (Cart::content()->count()>0) <span id="minicart">${{Cart::subtotal(2,'.',',')}}</span> @else <span id="minicart"></span>  @endif</a></li>
                       @endif
 
 

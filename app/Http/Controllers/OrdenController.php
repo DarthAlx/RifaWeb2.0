@@ -119,10 +119,17 @@ class OrdenController extends Controller
       $items=Cart::content();
       $usuario=User::find(Auth::user()->id);
       $rt=$usuario->rt/10;
+      $subtotal=floatval(str_replace(",","",Cart::subtotal(2,'.',',')));
+      $impuesto=$subtotal*0.029;
+      $iva=floatval(str_replace(",","",Cart::tax()));
+      $impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
+      $impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
+
+      $total=floatval($subtotal)+floatval($iva)+floatval($impuestomasiva);
      
       
 
-      if ($rt>=Cart::total(2,'.',',')) {
+      if ($rt>=$total) {
 
         foreach ($items as $product) {
           $hayproduct = Producto::find($product->id);
@@ -157,8 +164,10 @@ class OrdenController extends Controller
              $operacion = new Operacion();
              $operacion->user_id=Auth::user()->id;
              $operacion->orden_id = $guardar->id;
-             $operacion->rt = round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10;
+             $operacion->rt = round($total, 0, PHP_ROUND_HALF_UP)*10;
              $operacion->pesos = 0;
+             $operacion->iva = $iva;
+             $operacion->impuesto = $impuestomasiva;
              $operacion->tipo ="Compra";
              $operacion->metodo ="RifaTokens";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));
@@ -292,7 +301,9 @@ class OrdenController extends Controller
              $operacion->user_id=Auth::user()->id;
              $operacion->orden_id = $guardar->id;
              $operacion->rt = $rt*10;
-             $operacion->pesos = Cart::total(2,'.',',')-$rt;
+             $operacion->pesos = $subtotal-$rt;
+             $operacion->iva = $iva;
+             $operacion->impuesto = $impuestomasiva;
              $operacion->tipo ="Compra";
              $operacion->metodo ="Tarjeta";
              $operacion->fecha = date_create(date("Y-m-d H:i:s"));

@@ -534,6 +534,18 @@
 
 																									<td class="text">${{ ($orden->operacion->rt/10)+$orden->operacion->pesos }}</td>
 																							</tr>
+																							<tr>
+																									<td align="right" style="width: 50%;"><strong>IVA:</strong></td>
+																									
+
+																									<td class="text">${{ $orden->operacion->iva }}</td>
+																							</tr>
+																							<tr>
+																									<td align="right" style="width: 50%;"><strong>Impuesto:</strong></td>
+																									
+
+																									<td class="text">${{ $orden->operacion->impuesto }}</td>
+																							</tr>
 
 																							<tr>
 																									<td align="right" style="width: 50%;"><strong>Rifatokens usados:</strong></td>
@@ -544,7 +556,15 @@
 																							<tr>
 																									<td align="right" style="width: 50%;"><strong>Total pagado:</strong></td>
 																									
-																									<td class="text">${{ $orden->operacion->pesos }}</td>
+																									<td class="text">
+																										
+																										@if($orden->operacion->metodo=="RifaTokens")
+																                                            ${{$orden->operacion->pesos}}
+																                                        @else
+																                                            ${{$orden->operacion->pesos+$orden->operacion->iva+$orden->operacion->impuesto}}
+																                                        @endif
+
+																									</td>
 																									
 																							</tr>
 

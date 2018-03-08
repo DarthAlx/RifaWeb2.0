@@ -70,6 +70,18 @@
     								<td class="thick-line text-right"><strong>Subtotal</strong></td>
     								<td class="thick-line text-right">${{$subtotal}}</td>
     							</tr>
+                                <tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-right"><strong>IVA</strong></td>
+                                    <td class="thick-line text-right">${{$orden->operacion->iva}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-right"><strong>Impuesto</strong></td>
+                                    <td class="thick-line text-right">${{$orden->operacion->impuesto}}</td>
+                                </tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
@@ -79,8 +91,14 @@
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
-    								<td class="no-line text-right"><strong>Total</strong></td>
-    								<td class="no-line text-right">${{$orden->operacion->pesos}}</td>
+    								<td class="no-line text-right"><strong>Total pagado</strong></td>
+    								<td class="no-line text-right">
+                                        @if($orden->operacion->metodo=="RifaTokens")
+                                            ${{$orden->operacion->pesos}}
+                                        @else
+                                            ${{$orden->operacion->pesos+$orden->operacion->iva+$orden->operacion->impuesto}}
+                                        @endif
+                                    </td>
     							</tr>
     						</tbody>
     					</table>

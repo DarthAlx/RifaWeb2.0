@@ -26,6 +26,17 @@
                   <span class="secition-title-main">Comprar boletos</span>
                   <b></b>
                 </h3>
+
+                @php
+							    $impuesto=floatval(Cart::subtotal(2,'.',','))*0.029;
+								$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
+								$impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
+							@endphp
+@php
+							    $total=floatval(Cart::subtotal(2,'.',','))+floatval(Cart::tax())+floatval($impuestomasiva);
+							@endphp
+
+
 	<div class="row">
 		<div class="col-md-6">
 
@@ -41,7 +52,7 @@
 				    
 				    <div class="row">
 				        <div class="col s12">
-				          <h3><i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",Cart::total(2,'.',',')), 0, PHP_ROUND_HALF_UP)*10}}</h3>
+				          <h3><i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",$total), 0, PHP_ROUND_HALF_UP)*10}}</h3>
 				        </div>
 				    </div>
 
@@ -172,14 +183,7 @@
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">IVA</strong><a class="secondary-content">${{Cart::tax()}}</a></div></li>
 
-		        @php
-							    $impuesto=floatval(Cart::subtotal(2,'.',','))*0.029;
-								$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
-								$impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
-							@endphp
-@php
-							    $total=floatval(Cart::subtotal(2,'.',','))+floatval(Cart::tax())+floatval($impuestomasiva);
-							@endphp
+		        
 		        <li class="collection-item"><div><strong style="font-weight: 700">Impuesto</strong><a class="secondary-content">${{$impuestomasiva}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Tus RifaTokens</strong><a class="secondary-content"><i class="fa fa-circle-o-notch"></i>{{$usuario->rt}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">Total</strong><a class="secondary-content">@if(($usuario->rt)/10>=$total) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",$total), 0, PHP_ROUND_HALF_UP)*10}} @else ${{$total-($usuario->rt/10)}} @endif</a></div></li>
