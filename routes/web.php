@@ -428,8 +428,13 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::post('regalo-update', 'CodigoController@regalo_update');
 
-	
+	Route::get('/rifatokens', function () {
+		$paquetes=App\Paquete::all();
 
+	
+	    return view('admin.paquetes', ['paquetes'=>$paquetes]);
+	});
+	Route::post('rifatokens', 'PaqueteController@update');
 
 });
 

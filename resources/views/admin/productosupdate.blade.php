@@ -48,11 +48,9 @@
 				    <div class="card-text">
 				    	<div class="col s12">
 					      <div class="row">
-					        <div class="input-field col col-md-8">
-							
+					        <div class="input-field col col-md-8">			
 								<input id="nombre" name="nombre" type="text" class="validate" value="{{$producto->nombre or old('nombre')}}" required>
-					          
-					          <label for="nombre">Nombre</label>
+					          	<label for="nombre">Nombre</label>
 					        </div>
 					        <div class="input-field col col-md-4">
 					          <input id="sku" name="sku" type="text" class="validate" value="{{$producto->sku or old('sku')}}" required>

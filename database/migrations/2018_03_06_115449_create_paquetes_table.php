@@ -20,6 +20,7 @@ class CreatePaquetesTable extends Migration
             $table->double('iva');
             $table->double('impuesto');
             $table->double('impuestot');
+            $table->boolean('habilitado')->default(true);
 
             $table->timestamps();
         });
