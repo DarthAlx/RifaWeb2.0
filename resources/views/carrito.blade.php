@@ -2,6 +2,13 @@
 
 @section('header')
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
+<script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+<style>
+	iframe:last-child {
+    display: none;
+}
+</style>
+
 @endsection
 
 

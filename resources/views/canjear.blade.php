@@ -3,6 +3,13 @@
 @section('header')
 <script type="text/javascript" src="{{ url('js/llqrcode.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/webqr.js') }}"></script>
+<script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+<style>
+	iframe:last-child {
+    display: none;
+}
+</style>
+
 
 @endsection
 

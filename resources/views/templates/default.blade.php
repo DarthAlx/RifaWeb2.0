@@ -11,11 +11,11 @@
         <link rel="stylesheet" type="text/css" href="{{ url('css/jquery.flipcountdown.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url('js/bxslider/css/jquery.bxslider.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url('css/style.css') }}?v={{rand()}}" media="screen" />
-        @yield('header')
+        
         
 
         <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
+        @yield('header')
         <script type="text/javascript" src="{{ url('js/countdown.js') }}"></script>
       </head>
     <body>
