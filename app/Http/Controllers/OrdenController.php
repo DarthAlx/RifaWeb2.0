@@ -37,7 +37,7 @@ class OrdenController extends Controller
         Cart::add($producto->id,$producto->nombre,$request->cantidad,$producto->precio, ['imagen'=>$producto->imagen, 'loteria'=>$producto->loteria, 'descripcion' => $producto->descripcion, 'slug' => $producto->slug]);
 
 
-      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');     location.reload();</script>";
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::subtotal()."');     location.reload();</script>";
     }
 
     public function updatecart(Request $request)
@@ -51,7 +51,7 @@ class OrdenController extends Controller
 
       Cart::update($request->rowId, $request->qty);
 
-      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');</script>";
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::subtotal()."');</script>";
     }
     public function destroy($rowId)
     {
@@ -64,7 +64,7 @@ class OrdenController extends Controller
     public function destroypost(Request $request)
     {
       Cart::remove($request->rowId);
-      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::total()."');    location.reload();</script>";
+      echo "<script type='text/javascript'>$('#minicart').html('$".Cart::subtotal()."');    location.reload();</script>";
 
     }
 

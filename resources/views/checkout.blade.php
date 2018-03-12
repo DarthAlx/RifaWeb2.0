@@ -42,7 +42,7 @@
 
 
 			<ul class="collapsible" data-collapsible="accordion">
-			    @if(($usuario->rt/10)>=Cart::total(2,'.',','))
+			    @if(($usuario->rt/10)>=$total))
 
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-circle-o-notch" style="line-height: 1.5;"></i> <span> &nbsp; RifaTokens</span> </div>
