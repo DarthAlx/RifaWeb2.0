@@ -357,6 +357,26 @@
             </div>
 
 
+@if (Session::get('inicio'))
+            <div id="inicio" class="modal">
+              <div class="modal-content">
+                <h4>¡Bienvenido!</h4>
+
+                <p>Te regalamos 100 RifaTokens para que comiences a participar por tus productos favoritos.</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cerrar</a> &nbsp; 
+              </div>
+            </div>
+
+            <script type='text/javascript'>
+              $('#inicio').modal();
+              $( document ).ready(function() {
+              $('#inicio').modal('open');
+              });
+              </script>
+@endif
+
   
 
   <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">

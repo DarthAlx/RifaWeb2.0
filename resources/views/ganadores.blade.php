@@ -29,8 +29,7 @@
 	                  <b></b>
 	                </h3>
 
-				    <p class="grey-text pb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi,
-				        veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam.</p>
+				    <p class="grey-text pb-5"></p>
 				    
 				    <div class="row">
 						@if($ganadores)
@@ -73,6 +72,8 @@
 				    
 				        </div>
 				        @endforeach
+				        @else
+				        <p class="grey-text pb-5">Aún no hay ganadores.</p>
 				        @endif
 
 				    

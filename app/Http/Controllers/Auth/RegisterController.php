@@ -6,6 +6,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session;
 
 class RegisterController extends Controller
 {
@@ -98,8 +99,9 @@ class RegisterController extends Controller
                 'provider' => 'facebook'
             ]);
         }
-        return $user;
+        Session::flash('inicio', 'true');
         
+        return $user;
         
     }
 }
