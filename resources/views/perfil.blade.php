@@ -357,7 +357,7 @@
             </div>
 
 
-@if (Session::get('inicio'))
+
             <div id="inicio" class="modal">
               <div class="modal-content">
                 <h4>¡Bienvenido!</h4>
@@ -369,13 +369,6 @@
               </div>
             </div>
 
-            <script type='text/javascript'>
-              $('#inicio').modal();
-              $( document ).ready(function() {
-              $('#inicio').modal('open');
-              });
-              </script>
-@endif
 
   
 
@@ -475,6 +468,13 @@
 
 ?>
 
-
+@if (Session::get('inicio'))
+            <script type='text/javascript'>
+              $('#inicio').modal();
+              $( document ).ready(function() {
+              $('#inicio').modal('open');
+              });
+              </script>
+@endif
 
 @endsection
