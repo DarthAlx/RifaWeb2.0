@@ -12,7 +12,7 @@
 					
             <div class="col-md-1 offset-md-3 col-12 text-center">
   						<div class="perfilimg left">
-  							<img class="circle" src="{{Auth::user()->avatar}}" alt="">
+  							<img class="circle" src="{{Auth::user()->avatar}}" alt="" style="max-width: 100px;">
   						</div>
             </div>
             <div class="col-md-8 col-12 text-center">

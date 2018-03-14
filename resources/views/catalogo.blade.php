@@ -332,7 +332,7 @@
                         <p>Fuente: {{$producto->loteria}}</p>
                         <ul>
                           <li class="descorta" style="display: none;">{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
-                          <li class="desclarga">{{str_limit($producto->descripcion, $limit = 100, $end = '...')}}</li>
+                          <li class="desclarga">{{str_limit($producto->descripcion, $limit = 80, $end = '...')}}</li>
                         </ul>
                         </a>
                           
