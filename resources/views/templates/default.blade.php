@@ -246,7 +246,13 @@
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
             $('.collapsible').collapsible();
             $('#tipo').material_select();
+
             $('.modal').modal();
+            $('#video').modal({
+              complete: function() { 
+                document.getElementById("product-video").src = document.getElementById("product-video").src;
+               }
+            });
             $('.slider').bxSlider({
               auto: true,
               useCSS: false,

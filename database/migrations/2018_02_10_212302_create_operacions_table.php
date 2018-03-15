@@ -20,8 +20,8 @@ class CreateOperacionsTable extends Migration
             $table->integer('codigo_id')->nullable(true);
             $table->bigInteger('rt');
             $table->double('pesos');
-            $table->double('iva');
-            $table->double('impuesto');
+            $table->double('iva')->default(0);
+            $table->double('impuesto')->default(0);
             $table->string('tipo');
             $table->string('metodo')->nullable(true);
 

@@ -45,7 +45,7 @@
 
                     <div id="video" class="modal">
                       <div class="modal-content" style="height: 60vh;">
-                        <iframe width="100%" style="height: 50vh;" src="https://www.youtube-nocookie.com/embed/{{$producto->video->video}}?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="materialboxed"></iframe>
+                        <iframe id="product-video" width="100%" style="height: 50vh;" src="https://www.youtube-nocookie.com/embed/{{$producto->video->video}}?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="materialboxed"></iframe>
                       </div>
                       <div class="modal-footer">
                         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cerrar</a>
@@ -291,6 +291,9 @@
                                 });
                               </script>
                             </div>
+                            <div class="col-md-6 botoncantidad" style="padding: 0;">
+                              <button class="btn" style="width: 100%">Ir al carrito</button>
+                            </div>
                             
                           </div>
                           
@@ -324,8 +327,11 @@
                           <!--iframe src="https://www.facebook.com/plugins/share_button.php?href={{url()->current()}}&layout=button&size=large&mobile_iframe=true&appId=1516214558672727&width=99&height=28" width="99" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe-->
       </div>
       @endif
+
+
     </form>
     </div>
+    
   </div>
 </section>
 
@@ -416,4 +422,8 @@ $(".input-number").keydown(function (e) {
 </script>
 
 <div id="actualizarcarro"></div>
+
+
+
 @endsection
+document.getElementById("product-video").src = "https://www.youtube-nocookie.com/embed/kR6k-Hy4wjE?rel=0&showinfo=0";

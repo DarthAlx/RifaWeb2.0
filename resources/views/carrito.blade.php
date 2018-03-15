@@ -66,14 +66,14 @@
 						<tr>
 							<td data-th="Producto">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="{{url('uploads/productos')}}/{{ $product->options->imagen }}" class="responsive-img"/></div>
+									<div class="col-sm-2 hidden-xs valign-wrapper"><img src="{{url('uploads/productos')}}/{{ $product->options->imagen }}" class="responsive-img"/></div>
 									<div class="col-sm-10">
-										<a href="{{url('/rifa')}}/{{$product->options->slug}}" style="color: inherit; text-decoration: none;">
+										<!--a href="{{url('/rifa')}}/{{$product->options->slug}}" style="color: inherit; text-decoration: none;"-->
 										<h4 class="nomargin">{{ $product->name }}</h4>
-										<p>Fuente: {{$product->options->loteria}}</p>
+										<!--p>Fuente: {{$product->options->loteria}}</p-->
 
 										<p>{{str_limit($product->options->descripcion, $limit = 50, $end = '...')}}</p>
-										</a>
+										<!--/a-->
 									</div>
 								</div>
 							</td>
@@ -100,7 +100,7 @@
 							<td colspan="4" class="d-none d-sm-block totalcart"></td>
 							<td class=" text-center"><strong style="font-weight: 700">Subtotal</strong> ${{Cart::subtotal(2,'.',',')}}</td>
 						</tr>
-						<tr>	
+						<!--tr>	
 							<td colspan="4" class="d-none d-sm-block totalcart"></td>
 							<td class=" text-center"><strong style="font-weight: 700">IVA</strong> ${{Cart::tax()}}</td>
 						</tr>
@@ -126,7 +126,7 @@
 							@endphp
 							<td colspan="4" class="d-none d-sm-block totalcart"></td>
 							<td class=" text-center"><strong style="font-weight: 700">Total</strong>@if(($usuario->rt)/10>=$total) <i class="fa fa-circle-o-notch"></i>{{round(str_replace(",","",$total), 0, PHP_ROUND_HALF_UP)*10}} @else ${{$total-($usuario->rt/10)}} @endif</td>
-						</tr>
+						</tr-->
 						<tr>
 							<td data-th=""><a href="{{url('/rifas')}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continuar comprando</a></td>
 							<td colspan="3" class="d-none d-sm-block" style="display: table-cell !important;"></td>

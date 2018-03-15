@@ -2,6 +2,7 @@
 
 @section('header')
 <link rel="stylesheet" type="text/css" href="{{ url('css/shop.css') }}?v={{rand()}}" media="screen" />
+<script type="text/javascript" src="https://conektaapi.s3.amazonaws.com/v0.3.2/js/conekta.js"></script>
 @endsection
 
 
@@ -28,12 +29,12 @@
                 </h3>
 
                 @php
-							    $impuesto=floatval(Cart::subtotal(2,'.',','))*0.029;
+							    $impuesto=floatval(str_replace(',','',Cart::subtotal(2,'.',',')))*0.029;
 								$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
 								$impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
 							@endphp
 @php
-							    $total=floatval(Cart::subtotal(2,'.',','))+floatval(Cart::tax())+floatval($impuestomasiva);
+							    $total=floatval(str_replace(',','',Cart::subtotal(2,'.',',')))+floatval(Cart::tax())+floatval($impuestomasiva);
 							@endphp
 
 
@@ -42,7 +43,7 @@
 
 
 			<ul class="collapsible" data-collapsible="accordion">
-			    @if(($usuario->rt/10)>=$total))
+			    @if(($usuario->rt/10)>=$total)
 
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-circle-o-notch" style="line-height: 1.5;"></i> <span> &nbsp; RifaTokens</span> </div>
@@ -178,7 +179,7 @@
 			<ul class="collection with-header">
 		        <li class="collection-header"><h4>Tus boletos</h4></li>
 		        @foreach ($items as $product)
-		        <li class="collection-item"><div>{{ $product->name }} <i class="fa fa-ticket" aria-hidden="true"></i> {{ $product->qty }}  <a class="secondary-content">${{ $product->price*$product->qty }}</a></div></li>
+		        <li class="collection-item"><div>{{ $product->name }} <i class="fa fa-ticket" aria-hidden="true"></i> {{ $product->qty }}  <a class="secondary-content">${{ number_format($product->price*$product->qty,2) }}</a></div></li>
 		        @endforeach
 		        <li class="collection-item"><div><strong style="font-weight: 700">Subtotal</strong><a class="secondary-content">${{Cart::subtotal(2,'.',',')}}</a></div></li>
 		        <li class="collection-item"><div><strong style="font-weight: 700">IVA</strong><a class="secondary-content">${{Cart::tax()}}</a></div></li>

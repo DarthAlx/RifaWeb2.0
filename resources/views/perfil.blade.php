@@ -58,7 +58,9 @@
 
             <ul class="collapsible" data-collapsible="accordion" style="margin-bottom: 0;">
               <?php $ordenes= App\Orden::where('user_id',$usuario->id)->where('status','Pagada')->orderBy('created_at','desc')->paginate(10); $li=0;?>
+           
               @foreach($ordenes as $orden)
+
                 @foreach($orden->items as $item)
 
                   @if($item->boletos!="pendiente")

@@ -550,7 +550,7 @@
 																							<tr>
 																									<td align="right" style="width: 50%;"><strong>Rifatokens usados:</strong></td>
 																									
-																									<td class="text">${{ $orden->operacion->rt }}</td>
+																									<td class="text">{{ $orden->operacion->rt }}</td>
 																									
 																							</tr>
 																							<tr>

@@ -248,10 +248,10 @@ class OrdenController extends Controller
             'type'   => 'sign'
           );
       
-  
+        
 
-
-
+        $impuestocent=($impuestomasiva*100);
+        $ivacent=($iva*100);
         try{
 
             $order=\Conekta\Order::create(array(
@@ -263,6 +263,16 @@ class OrdenController extends Controller
               ), //customer_info
               'line_items' => $productos,
               
+              'tax_lines'=> array(
+                array(
+                  'description' => 'IVA',
+                  'amount'      => intval($ivacent)
+                ),
+                array(
+                  'description' => 'Impuestos',
+                  'amount'      => intval($impuestocent)
+                )
+              ),
 
               'discount_lines' => $descuentos,
               'charges' => array(
