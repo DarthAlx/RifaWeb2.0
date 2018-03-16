@@ -34,7 +34,12 @@ Route::get('/', function () {
      
 });
 
+Route::get('/legales', function () {
 
+    return view('legales');
+
+     
+});
 
 Route::get('/rifas/{catalogo}', function ($catalogo) {
 	$categoria=App\Categoria::where('slug',$catalogo)->first();
