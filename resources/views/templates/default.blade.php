@@ -139,8 +139,8 @@
 
 
                       <li><a href="{{url('/canjear')}}">Canjear <i class="fa fa-qrcode right" aria-hidden="true"></i></a></li>
-                      <li><a href="{{url('/aviso-de-privacidad')}}">Aviso de privacidad</a></li>
-                      <li><a href="{{url('/terminos-y-condiciones')}}">Términos y condiciones</a></li>
+                      <li><a href="{{url('/legales')}}">Aviso de privacidad</a></li>
+                      <li><a href="{{url('/legales')}}">Términos y condiciones</a></li>
                       @endif
                     </ul>
                   </div>
