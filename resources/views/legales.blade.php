@@ -20,12 +20,15 @@
 
 		<div class="row">
 			<div class="col-md-3">
+				<p>&nbsp;</p>
+				<h3>LEGALES</h3>
+				<p>&nbsp;</p>
 				<ul>
 					<li>
-						<b><a href="#" class="grey-text ">AVISO DE PRIVACIDAD</a></b>
+						<b><a href="#" onclick="legales('aviso')" class="grey-text ">AVISO DE PRIVACIDAD</a></b>
 					</li>
 					<li>
-						<b><a href="#" class="grey-text ">TÉRMINOS Y CONDICIONES</a></b>
+						<b><a href="#" onclick="legales('terminos')" class="grey-text ">TÉRMINOS Y CONDICIONES</a></b>
 					</li>
 				</ul>
 				
@@ -183,7 +186,7 @@ III. Los datos personales se sometan a un procedimiento previo de disociación; 
 
 
 
-				<section class="pb-3 text-justify legales terminos">
+				<section class="pb-3 text-justify legales terminos" style="display: none;">
 				        
 				    <p>&nbsp;</p>
 				    <h3 class="section-title section-title-center">
@@ -399,6 +402,11 @@ el Producto y el mismo pasará a ser propiedad de Rifaweb para el uso que mejor 
 
 
 @section('scripts')
-
+<script>
+	function legales(valor){
+		$('.legales').fadeOut();
+		$('.'+valor).fadeIn();
+	}
+</script>
 
 @endsection

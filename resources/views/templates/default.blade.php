@@ -194,7 +194,7 @@
                 
                   <div class="bouton_google text-center">
                     <div class="google_volet" style="background-color:#C61867;"><i class="fa fa-book fa-3x" aria-hidden="true"></i> <br><span class="hiddenmov">Permisos y Docs</span> </div>
-                    <a href="#123" style="text-decoration:none; color:#C61867;">
+                    <a href="{{url('/legales')}}" style="text-decoration:none; color:#C61867;">
                       <div class="txt_google"><span class="hiddenmov">Documentos legales</span><span class="visiblemov">Legales</span> <br> <i class="fa fa-chevron-down fa-3x" aria-hidden="true"></i></div>
                     </a>
                   </div>
