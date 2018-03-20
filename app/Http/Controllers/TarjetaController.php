@@ -26,6 +26,10 @@ class TarjetaController extends Controller
 			$('#nombretitular').val('$tarjeta->nombre');    
 			$('#mm').val('$tarjeta->mes');    
 			$('#aa').val('$tarjeta->año');
+	  		$('#numtarjeta').focus();
+			$('#nombretitular').focus();
+			$('#mm').focus();
+			$('#aa').focus();
 			$('#cvv').focus();
 	      </script>";
 			    

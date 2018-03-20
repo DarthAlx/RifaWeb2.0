@@ -216,7 +216,7 @@
           <div class="container">
             <div class="row" style="margin: 0;">
               <div class="col-md-6">
-                <p>Aviso de privacidad &nbsp; &nbsp; Términos y condiciones</p>
+                <p><a href="{{url('/legales')}}" style="color: #fff; text-decoration: none;">Aviso de privacidad &nbsp; &nbsp; Términos y condiciones</a></p>
 
                 <p></p>
               </div>

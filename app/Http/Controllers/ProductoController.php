@@ -297,7 +297,7 @@ class ProductoController extends Controller
                 $vendidos = $product->vendidos;
                 $tickets = array();
 
-                for ($i=$product->vendidos+1; $i <= ($product->vendidos+1)*$product->multiplicador; $i++) { 
+                for ($i=$product->vendidos; $i <= ($product->vendidos+(1*$product->multiplicador))-1; $i++) { 
                   $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
                   $tickets[]="t".$numero."t";
                 }
@@ -358,7 +358,7 @@ class ProductoController extends Controller
                 $vendidos = $product->vendidos;
                 $tickets = array();
 
-                for ($i=$product->vendidos+1; $i <= ($product->vendidos+1)*$product->multiplicador; $i++) { 
+                for ($i=$product->vendidos+1; $i <= ($product->vendidos+(1*$product->multiplicador))-1; $i++) { 
                   $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
                   $tickets[]="t".$numero."t";
                 }

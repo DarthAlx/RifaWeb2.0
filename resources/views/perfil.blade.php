@@ -66,7 +66,7 @@
                   @if($item->boletos!="pendiente")
                 
                   <li>
-                    <div class="collapsible-header @if($li==0) active <?php $li++;?>@endif"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
+                    <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right">Ver <i class="fa fa-ticket" aria-hidden="true"></i></div></div>
                     <?php $boletos=explode(',',str_replace("t", "", $item->boletos)); $contador=0;?>
                     <div class="collapsible-body">
                           
@@ -214,7 +214,7 @@
           <div style="text-align: center;">
             <img src="{{url('/uploads/productos')}}/{{$ganada->imagen}}" class="circle" style="margin: 0 auto; max-width: 250px;" alt="">
           </div>
-      <p>Eres el ganador en la rifa <b>"{{$ganada->producto}}"</b> con el boleto número <b>"{{$ganada->boleto}}"</b>. El ganador se obtuvo de la rifa <b>"{{$ganada->lotería}}"</b> en la fecha <b>"{{$ganada->fecha}}"</b>.</p>
+      <p>Eres el ganador en la rifa <b>"{{$ganada->producto}}"</b> con el boleto número <b>"{{$ganada->boleto}}"</b>. El ganador se obtuvo de la rifa <b>"{{$ganada->loteria}}"</b> en la fecha <b>"{{$ganada->fecha}}"</b>.</p>
 
       <p>Haz click en el siguiente botón para ver cómo reclamar tu premio</p>
 <div style="text-align: center;">

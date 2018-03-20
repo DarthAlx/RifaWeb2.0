@@ -254,11 +254,11 @@
 			@foreach($orden->items as $item)
               <li>
                 <div class="collapsible-header"><div class="left">{{$item->producto}} </div><div class="right"><i class="fa fa-ticket" aria-hidden="true"></i>{{$item->cantidad}}</div></div>
-                <div class="collapsible-body"><span># {{str_replace("t", "", $item->boletos)}}</span></div>
+                <div class="collapsible-body"><span># {{str_replace(",", " ,",str_replace("t", "", $item->boletos))}}</span></div>
               </li>
             @endforeach
  
-            </ul>  
+       </ul>  
 
     </div>
     <div class="modal-footer">

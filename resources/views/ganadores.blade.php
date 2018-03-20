@@ -64,6 +64,7 @@
 					                    {{$ganador->loteria}}
 					                  
 				                	</p>
+				                	<?php $usuario=explode(" ",$ganador->user->name); ?>
 
 				                    <p class="dark-grey-text">El ganador de {{$ganador->producto}} es <b>{{$usuario[0]}}</b> con el número de boleto: <b>{{$ganador->boleto}}</b> </p>
 				                </div>

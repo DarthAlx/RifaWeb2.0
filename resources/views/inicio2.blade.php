@@ -239,10 +239,10 @@
                           <div class="progress tooltipped" data-position="top" data-delay="50" data-tooltip="{{$producto->vendidos}}/{{$producto->boletos}}">
                             <?php if((($producto->vendidos*100)/$producto->boletos)<=33){?>
                               <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: red;"></div>
-                              <?php } else if(($producto->vendidos*100)/$producto->boletos <= 66) {?>
-                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: yellow;"></div>
-                              <?php }else{ ?>
+                              <?php } else if($producto->vendidos >= $producto->minimo) {?>
                               <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: green;"></div>
+                              <?php }else{ ?>
+                              <div class="determinate" style="width: {{($producto->vendidos*100)/$producto->boletos}}%; background: yellow;"></div>
                               <?php } ?>
                           </div>
                         
