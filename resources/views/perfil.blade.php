@@ -214,11 +214,11 @@
           <div style="text-align: center;">
             <img src="{{url('/uploads/productos')}}/{{$ganada->imagen}}" class="circle" style="margin: 0 auto; max-width: 250px;" alt="">
           </div>
-      <p>Eres el ganador en la rifa <b>"{{$ganada->producto}}"</b> con el boleto número <b>"{{$ganada->boleto}}"</b>. El ganador se obtuvo de la rifa <b>"{{$ganada->loteria}}"</b> en la fecha <b>"{{$ganada->fecha}}"</b>.</p>
+      <p>Eres el ganador en la rifa <b>{{$ganada->producto}}</b> con el boleto número <b>{{$ganada->boleto}}</b>. El ganador se obtuvo de la rifa <b>{{$ganada->loteria}}</b> en la fecha <b>{{$ganada->fecha}}</b>.</p>
 
       <p>Haz click en el siguiente botón para ver cómo reclamar tu premio</p>
 <div style="text-align: center;">
-  <a href="#" class="btn waves-effect waves-green">RECLAMAR MI PRODUCTO</a>
+  <a href="#" class="btn waves-effect waves-green">RECLAMAR MI PREMIO</a>
 </div>
 
       

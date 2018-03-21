@@ -140,10 +140,38 @@
                               <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = Gratis
                             </div>
                             <div class="botoncantidad col-md-12" style="padding: 0">
-                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" style="width:100%; color: #fff;">Participar gratis</a>
+                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" id="btnregalo{{$producto->id}}" style="width:100%; color: #fff;">Participar gratis</a>
                             </div>
 
                           </div>
+                          @if (Auth::guest())
+
+                          @else
+                          <?php
+                            $operacion=App\Operacion::where('user_id',Auth::user()->id)->where('tipo','Boleto gratis')->orderBy('created_at', 'desc')->first();
+                            if ($operacion) {
+                              $orden=$operacion->orden;
+                              foreach ($orden->items as $item) {
+                                  if ($item->producto==$producto->nombre&&$item->fecha==$producto->fecha_limite) {
+                                      $yaregalado=true;
+                                      break;
+                                  }
+                                  else{
+                                      $yaregalado=false;
+                                  }
+                              }
+
+                              if ($yaregalado) {
+                                ?>
+                                <script>
+                                  $('#btnregalo{{$producto->id}}').addClass('disabled');
+                                </script>
+                                <?php
+
+                              }
+                          }
+                          ?>
+                          @endif
                         
                         </div>
                         @else
@@ -292,7 +320,7 @@
                               </script>
                             </div>
                             <div class="col-md-6 botoncantidad" style="padding: 0;">
-                              <button class="btn" style="width: 100%">Ir al carrito</button>
+                              <a href="{{url('/carrito')}}" class="btn" style="width: 100%">Ir al carrito</a>
                             </div>
                             
                           </div>
@@ -426,4 +454,4 @@ $(".input-number").keydown(function (e) {
 
 
 @endsection
-document.getElementById("product-video").src = "https://www.youtube-nocookie.com/embed/kR6k-Hy4wjE?rel=0&showinfo=0";
+

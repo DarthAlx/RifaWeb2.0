@@ -258,6 +258,17 @@ class ProductoController extends Controller
         $usuario=User::find(Auth::user()->id);
         $product=Producto::find($id);
         $operacion=Operacion::where('user_id',Auth::user()->id)->where('tipo','Boleto gratis')->orderBy('created_at', 'desc')->first();
+
+        $hayproduct = Producto::find($product->id);
+          $hayboletos=(intval($hayproduct->vendidos)+(1*$hayproduct->multiplicador))<=intval($hayproduct->boletos);
+          if (!$hayboletos) {
+            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/carrito'))->withInput();
+
+          }//hayboletos
+
+
         
         if ($operacion) {
             $orden=$operacion->orden;
@@ -358,7 +369,7 @@ class ProductoController extends Controller
                 $vendidos = $product->vendidos;
                 $tickets = array();
 
-                for ($i=$product->vendidos+1; $i <= ($product->vendidos+(1*$product->multiplicador))-1; $i++) { 
+                for ($i=$product->vendidos; $i <= ($product->vendidos+(1*$product->multiplicador))-1; $i++) { 
                   $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
                   $tickets[]="t".$numero."t";
                 }

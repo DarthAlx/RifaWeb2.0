@@ -222,24 +222,47 @@ class CodigoController extends Controller
 		}
 		elseif ($gift->tipo=="Ticket"){
 			$product = Producto::find($gift->producto_id);
-			$hayboletos=(intval($product->vendidos)+intval($gift->boletos))<=intval($product->boletos);
+		
+
+			$hayproduct = Producto::find($product->id);
+          $hayboletos=(intval($hayproduct->vendidos)+(1*$hayproduct->multiplicador))<=intval($hayproduct->boletos);
+          if (!$hayboletos) {
+            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+            Session::flash('class', 'danger');
+            return redirect()->intended(url('/carrito'))->withInput();
+
+          }//hayboletos
 
 	
 
 
 
-			$ticket=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
+			$operacion=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
 
-			if ($ticket&&$hayboletos) {
+			if ($operacion) {
+
+				$orden=$ticket->orden;
+	            foreach ($orden->items as $item) {
+	                if ($item->producto==$product->nombre&&$item->fecha==$product->fecha_limite) {
+	                    $yaregalado=true;
+	                    break;
+	                }
+	                else{
+	                    $yaregalado=false;
+	                }
+	            }
+
+
+
 				$fecha=date_create($ticket->fecha);
 				$hoy=date_create(date("Y-m-d H:i:s"));
 				$interval = date_diff($fecha, $hoy);
 				$intervalo = intval($interval->format('%R%a'));
-				if ($intervalo>$gift->dias) {
-
+				if (!$yaregalado&&$intervalo>$gift->dias) {
+					$folio=Folio::first();
 		            $guardar = new Orden();
 		            $guardar->order_id="Regalo";
-		            $guardar->folio=0;
+		            $guardar->folio="W".$folio->folio;
 		            $guardar->user_id=Auth::user()->id;
 		            $guardar->status='Regalo';
 		            $guardar->save();
@@ -265,7 +288,7 @@ class CodigoController extends Controller
 		            $vendidos = $product->vendidos;
 		            $tickets = array();
 
-		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
+		            for ($i=$product->vendidos; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
 		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
 		              $tickets[]="t".$numero."t";
 		            }
@@ -282,6 +305,9 @@ class CodigoController extends Controller
 		            $item->precio = 0;
 		            $item->fecha = date_create($product->fecha_limite);
 		            $item->save();
+
+		            $folio->folio++;
+          			$folio->save();
 
 			    	echo "
 						<div id='modalregalo' class='modal'>
@@ -306,14 +332,28 @@ class CodigoController extends Controller
 
 				else{
 					echo "
+						<div id='modalregalo' class='modal'>
+						    <div class='modal-content'>
+						      <h4>Ya estás participando en esta rifa.</h4>
+						      
+						      <p>Vuelve en ".$gift->dias. " días para obtener una nueva recompensa.</p>
+
+						    </div>
+						    <div class='modal-footer'>
+						    	<a href='#!' class='modal-action modal-close waves-effect waves-green btn'>Cerrar</a> 
+						    </div>
+						  </div>
+
 						  <script type='text/javascript'>
+						  $('#modalregalo').modal();
+							$('#modalregalo').modal('open');
 							console.log('menos15dias');
 						  </script>
 			    	";
 				}
 
 			}
-			elseif ($hayboletos) {
+			else {
 				$guardar = new Orden();
 		            $guardar->order_id="Regalo";
 		            $guardar->folio=0;
@@ -341,7 +381,7 @@ class CodigoController extends Controller
 		            $vendidos = $product->vendidos;
 		            $tickets = array();
 
-		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
+		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+($gift->boletos*$product->multiplicador))-1; $i++) { 
 		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
 		              $tickets[]="t".$numero."t";
 		            }

@@ -255,10 +255,38 @@
                               <span class="btn" id="precio{{$producto->id}}" style="padding: 0 1rem;width: 100%;"><span id="precio{{$producto->id}}">1 <i class="fa fa-ticket" aria-hidden="true" style="font-size: 1rem;"></i> = Gratis
                             </div>
                             <div class="botoncantidad col-md-12" style="padding: 0">
-                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" style="width:100%; color: #fff;">Participar gratis</a>
+                              <a href="{{url('/regalar')}}/{{$producto->id}}" class="btn" id="btnregalo{{$producto->id}}" style="width:100%; color: #fff;">Participar gratis</a>
                             </div>
 
                           </div>
+                          @if (Auth::guest())
+
+                          @else
+                          <?php
+                            $operacion=App\Operacion::where('user_id',Auth::user()->id)->where('tipo','Boleto gratis')->orderBy('created_at', 'desc')->first();
+                            if ($operacion) {
+                              $orden=$operacion->orden;
+                              foreach ($orden->items as $item) {
+                                  if ($item->producto==$producto->nombre&&$item->fecha==$producto->fecha_limite) {
+                                      $yaregalado=true;
+                                      break;
+                                  }
+                                  else{
+                                      $yaregalado=false;
+                                  }
+                              }
+
+                              if ($yaregalado) {
+                                ?>
+                                <script>
+                                  $('#btnregalo{{$producto->id}}').addClass('disabled');
+                                </script>
+                                <?php
+
+                              }
+                          }
+                          ?>
+                          @endif
                         
                         </div>
                         @else
