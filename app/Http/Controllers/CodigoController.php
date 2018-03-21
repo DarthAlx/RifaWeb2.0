@@ -221,95 +221,90 @@ class CodigoController extends Controller
 
 		}
 		elseif ($gift->tipo=="Ticket"){
-			$product = Producto::find($gift->producto_id);
-		
 
-			$hayproduct = Producto::find($product->id);
+			       $usuario=User::find(Auth::user()->id);
+        $product=Producto::find($gift->producto_id);
+        $operacion=Operacion::where('user_id',Auth::user()->id)->where('tipo','Boleto gratis')->orderBy('created_at', 'desc')->first();
+
+        $hayproduct = Producto::find($product->id);
           $hayboletos=(intval($hayproduct->vendidos)+(1*$hayproduct->multiplicador))<=intval($hayproduct->boletos);
           if (!$hayboletos) {
-            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->name.' se han terminado.');
+            Session::flash('mensaje', 'Lo sentimos, los boletos para '.$product->nombre.' se han terminado.');
             Session::flash('class', 'danger');
             return redirect()->intended(url('/carrito'))->withInput();
 
           }//hayboletos
 
-	
 
+        
+        if ($operacion) {
+            $orden=$operacion->orden;
+            foreach ($orden->items as $item) {
+                if ($item->producto==$product->nombre&&$item->fecha==$product->fecha_limite) {
+                    $yaregalado=true;
+                    break;
+                }
+                else{
+                    $yaregalado=false;
+                }
+            }
 
-
-			$operacion=Operacion::where('user_id',$usuario->id)->where('tipo','TicketGift')->orderBy('fecha','desc')->first();
-
-			if ($operacion) {
-
-				$orden=$ticket->orden;
-	            foreach ($orden->items as $item) {
-	                if ($item->producto==$product->nombre&&$item->fecha==$product->fecha_limite) {
-	                    $yaregalado=true;
-	                    break;
-	                }
-	                else{
-	                    $yaregalado=false;
-	                }
-	            }
-
-
-
-				$fecha=date_create($ticket->fecha);
+            $fecha=date_create($ticket->fecha);
 				$hoy=date_create(date("Y-m-d H:i:s"));
 				$interval = date_diff($fecha, $hoy);
 				$intervalo = intval($interval->format('%R%a'));
-				if (!$yaregalado&&$intervalo>$gift->dias) {
-					$folio=Folio::first();
-		            $guardar = new Orden();
-		            $guardar->order_id="Regalo";
-		            $guardar->folio="W".$folio->folio;
-		            $guardar->user_id=Auth::user()->id;
-		            $guardar->status='Regalo';
-		            $guardar->save();
 
-	
+            if (!$yaregalado&&$intervalo>$gift->dias) {
+                $folio=Folio::first();
 
-		            $regalo = new Operacion();
-			    	$regalo->user_id=Auth::user()->id;
-			    	$regalo->rt= 0;
-			    	$regalo->pesos= 0;
-			    	$regalo->tipo= 'TicketGift';
-			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-			    	$regalo->orden_id= $guardar->id;
-			    	$regalo->save();
+                $guardar = new Orden();
+                $guardar->order_id="Regalo";
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pagado';
+                $guardar->save();
+
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = 0;
+                 $operacion->pesos = 0;
+                 $operacion->tipo ="Boleto gratis";
+                 $operacion->metodo ="Boleto gratis";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+
+                $boletos = $product->boletos;
+                $digitos = strlen(intval($boletos));
+                
+                $vendidos = $product->vendidos;
+                $tickets = array();
+
+                for ($i=$product->vendidos; $i <= ($product->vendidos+($gift->boletos*$product->multiplicador))-1; $i++) { 
+                  $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                  $tickets[]="t".$numero."t";
+                }
+
+                $product->vendidos=$vendidos+1;
+                $product->save();
+                
+                $item = new Item();
+                $item->orden_id = $guardar->id;
+                $item->producto = $product->nombre;
+                $item->producto_id = $product->id;
+                $item->boletos = implode(",", $tickets);
+                $item->cantidad = $gift->boletos;
+                $item->precio = $product->precio;
+                $item->fecha = date_create($product->fecha_limite);
+                $item->save();
+              
+        
 
 
-		             
-		            
-		            $boletos = $product->boletos;
-		            $digitos = strlen(intval($boletos));
+              $folio->folio++;
+              $folio->save();
 
-		            
-		            $vendidos = $product->vendidos;
-		            $tickets = array();
-
-		            for ($i=$product->vendidos; $i <= ($product->vendidos+$gift->boletos)*$product->multiplicador; $i++) { 
-		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
-		              $tickets[]="t".$numero."t";
-		            }
-
-		            $product->vendidos=$vendidos+$gift->boletos;
-		            $product->save();
-		            
-		            $item = new Item();
-		            $item->orden_id = $guardar->id;
-		            $item->producto = $product->nombre;
-		            $item->producto_id = $product->id;
-		            $item->boletos = implode(",", $tickets);
-		            $item->cantidad = $gift->boletos;
-		            $item->precio = 0;
-		            $item->fecha = date_create($product->fecha_limite);
-		            $item->save();
-
-		            $folio->folio++;
-          			$folio->save();
-
-			    	echo "
+              echo "
 						<div id='modalregalo' class='modal'>
 						    <div class='modal-content'>
 						      <h4>¡Gracias por compartir!</h4>
@@ -328,10 +323,11 @@ class CodigoController extends Controller
 							console.log('mas15dias');
 						  </script>
 			    	";
-				}
 
-				else{
-					echo "
+              //$this->sendinvoice($guardar->id);
+            }
+            else{
+                 echo "
 						<div id='modalregalo' class='modal'>
 						    <div class='modal-content'>
 						      <h4>Ya estás participando en esta rifa.</h4>
@@ -350,63 +346,60 @@ class CodigoController extends Controller
 							console.log('menos15dias');
 						  </script>
 			    	";
-				}
+            }
 
-			}
-			else {
-				echo "
+        }
+        else{
+            $folio=Folio::first();
 
-						  <script type='text/javascript'>
+                $guardar = new Orden();
+                $guardar->order_id="Regalo";
+                $guardar->folio="W".$folio->folio;
+                $guardar->user_id=Auth::user()->id;
+                $guardar->status='Pagada';
+                $guardar->save();
 
-							console.log('deb');
-						  </script>
-			    	";
-				$guardar = new Orden();
-		            $guardar->order_id="Regalo";
-		            $guardar->folio=0;
-		            $guardar->user_id=Auth::user()->id;
-		            $guardar->status='Pagado';
-		            $guardar->save();
+                 $operacion = new Operacion();
+                 $operacion->user_id=Auth::user()->id;
+                 $operacion->orden_id = $guardar->id;
+                 $operacion->rt = 0;
+                 $operacion->pesos = 0;
+                 $operacion->tipo ="Boleto gratis";
+                 $operacion->metodo ="Boleto gratis";
+                 $operacion->fecha = date_create(date("Y-m-d H:i:s"));
+                 $operacion->save();
+
+                $boletos = $product->boletos;
+                $digitos = strlen(intval($boletos));
+                
+                $vendidos = $product->vendidos;
+                $tickets = array();
+
+                for ($i=$product->vendidos; $i <= ($product->vendidos+($gift->boletos*$product->multiplicador))-1; $i++) { 
+                  $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
+                  $tickets[]="t".$numero."t";
+                }
+
+                $product->vendidos=$vendidos+1;
+                $product->save();
+                
+                $item = new Item();
+                $item->orden_id = $guardar->id;
+                $item->producto = $product->nombre;
+                $item->producto_id = $product->id;
+                $item->boletos = implode(",", $tickets);
+                $item->cantidad = $gift->boletos;
+                $item->precio = $product->precio;
+                $item->fecha = date_create($product->fecha_limite);
+                $item->save();
+              
+        
 
 
-		            $regalo = new Operacion();
-			    	$regalo->user_id=Auth::user()->id;
-			    	$regalo->rt= 0;
-			    	$regalo->pesos= 0;
-			    	$regalo->tipo= 'TicketGift';
-			    	$regalo->fecha= date_create(date("Y-m-d H:i:s"));
-			    	$regalo->orden_id= $guardar->id;
-			    	$regalo->save();
+              $folio->folio++;
+              $folio->save();
 
-
-		             
-		            $product = Producto::find($gift->producto_id);
-		            $boletos = $product->boletos;
-		            $digitos = strlen(intval($boletos));
-
-		            
-		            $vendidos = $product->vendidos;
-		            $tickets = array();
-
-		            for ($i=$product->vendidos+1; $i <= ($product->vendidos+($gift->boletos*$product->multiplicador))-1; $i++) { 
-		              $numero=str_pad((string)$i, $digitos, "0", STR_PAD_LEFT);
-		              $tickets[]="t".$numero."t";
-		            }
-
-		            $product->vendidos=$vendidos+$gift->boletos;
-		            $product->save();
-		            
-		            $item = new Item();
-		            $item->orden_id = $guardar->id;
-		            $item->producto = $product->nombre;
-		            $item->producto_id = $product->id;
-		            $item->boletos = implode(",", $tickets);
-		            $item->cantidad = $gift->boletos;
-		            $item->precio = 0;
-		            $item->fecha = date_create($product->fecha_limite);
-		            $item->save();
-
-			    	echo "
+              echo "
 						<div id='modalregalo' class='modal'>
 						    <div class='modal-content'>
 						      <h4>¡Gracias por compartir!</h4>
@@ -425,7 +418,15 @@ class CodigoController extends Controller
 							console.log('mas15dias');
 						  </script>
 			    	";
-			}
+
+              //$this->sendinvoice($guardar->id);
+        }
+
+
+
+
+
+			
 
 
 
