@@ -31,7 +31,7 @@ class ProductoController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'ganador' => 'required|string|min:3|confirmed'
+            'ganador' => 'required|confirmed'
         ]);
     }
 	public function store(Request $request)
