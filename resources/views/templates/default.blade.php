@@ -285,10 +285,10 @@
 
           });
         </script>
-
+<div id="regalo"></div>
         @yield('scripts')
 
-        <div id="regalo"></div>
+        
 
 
         <?php App\Http\Controllers\OrdenController::cancelacion(); ?>
