@@ -354,11 +354,18 @@ class CodigoController extends Controller
 
 			}
 			else {
+				echo "
+
+						  <script type='text/javascript'>
+
+							console.log('deb');
+						  </script>
+			    	";
 				$guardar = new Orden();
 		            $guardar->order_id="Regalo";
 		            $guardar->folio=0;
 		            $guardar->user_id=Auth::user()->id;
-		            $guardar->status='Regalo';
+		            $guardar->status='Pagado';
 		            $guardar->save();
 
 
