@@ -333,24 +333,7 @@
 
                           <div id="shareBtn" class="btn btn-success clearfix" style="background-color: #3B5999;"><i class="fa fa-facebook" aria-hidden="true"></i> Compartir</div>
                           
-                       <script>
-                          document.getElementById('shareBtn').onclick = function() {
-                            FB.ui({
-                              method: 'share',
-                              display: 'popup',
-                              href: '{{url()->current()}}',
-                            }, function(response){
-                              if (response.post_id!="") {
-                                _token = $('#token').val();
-                                $.post("{{url('/regalo')}}", {
-                                    _token : _token
-                                    }, function(data) {
-                                      $("#regalo").append(data);
-                                    });
-                              }
-                            });
-                          }
-                        </script>
+                       
 
                           <!--iframe src="https://www.facebook.com/plugins/share_button.php?href={{url()->current()}}&layout=button&size=large&mobile_iframe=true&appId=1516214558672727&width=99&height=28" width="99" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe-->
       </div>
@@ -451,7 +434,24 @@ $(".input-number").keydown(function (e) {
 
 <div id="actualizarcarro"></div>
 
-
+<script>
+                          document.getElementById('shareBtn').onclick = function() {
+                            FB.ui({
+                              method: 'share',
+                              display: 'popup',
+                              href: '{{url()->current()}}',
+                            }, function(response){
+                              if (response.post_id!="") {
+                                _token = $('#token').val();
+                                $.post("{{url('/regalo')}}", {
+                                    _token : _token
+                                    }, function(data) {
+                                      $("#regalo").append(data);
+                                    });
+                              }
+                            });
+                          }
+                        </script>
 
 @endsection
 
