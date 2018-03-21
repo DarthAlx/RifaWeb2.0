@@ -48,7 +48,7 @@
 			    <li>
 			      <div class="collapsible-header active"><i class="fa fa-circle-o-notch" style="line-height: 1.5;"></i> <span> &nbsp; RifaTokens</span> </div>
 			      <div class="collapsible-body">
-			      	<form action="{{url('checkout')}}" method="POST">
+			      	<form action="{{url('checkout')}}" onsubmit="$('#btnpagarrt').addClass('disabled');" method="POST">
 			      		{!! csrf_field() !!}
 				    
 				    <div class="row">
@@ -60,7 +60,7 @@
 				   
 				    <div class="row">
 				    	<div class="col s12">
-				        	<button type="submit" class="btn btn-primary right">Pagar</button>
+				        	<button type="submit" id="btnpagarrt" class="btn btn-primary right">Pagar</button>
 				        </div>
 				    </div>
 					</form>
