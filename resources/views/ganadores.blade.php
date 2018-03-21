@@ -20,7 +20,7 @@
 
 		<div class="row">
 
-				 <section class="pb-3 text-center">
+				 <section class="col s12 text-center">
 				        
 				    <p>&nbsp;</p>
 				    <h3 class="section-title section-title-center">
