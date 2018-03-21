@@ -534,7 +534,7 @@ class OrdenController extends Controller
           if(strtotime($producto->fecha_limite) <= strtotime(date("Y-m-d H:i:s"))){
             if ($producto->vendidos<$producto->minimo) {
 
-              $items=Item::where('producto',$producto->nombre)->where('fecha', $producto->fecha_limite)->get();
+              $items=Item::where('producto',$producto->nombre)->where('fecha', $producto->fecha_limite)->where('precio','<>', 0)->get();
 
               foreach ($items as $item) {
                 $totaldev=$item->cantidad*$item->precio;

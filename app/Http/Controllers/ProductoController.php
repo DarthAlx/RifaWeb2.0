@@ -289,7 +289,7 @@ class ProductoController extends Controller
                 $guardar->order_id="Regalo";
                 $guardar->folio="W".$folio->folio;
                 $guardar->user_id=Auth::user()->id;
-                $guardar->status='Pagado';
+                $guardar->status='Pagada';
                 $guardar->save();
 
                  $operacion = new Operacion();
