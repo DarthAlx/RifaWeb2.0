@@ -106,6 +106,6 @@
         
         @yield('scripts')
 
-        <?php App\Http\Controllers\OrdenController::cancelacion(); ?>
+        <?php //App\Http\Controllers\OrdenController::cancelacion(); ?>
     </body>
 </html>

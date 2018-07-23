@@ -291,9 +291,9 @@
         
 
 
-        <?php App\Http\Controllers\OrdenController::cancelacion(); ?>
+        <?php //App\Http\Controllers\OrdenController::cancelacion(); ?>
 
-        <?php App\Http\Controllers\OrdenController::pendientes(); ?>
+        <?php //App\Http\Controllers\OrdenController::pendientes(); ?>
 
     </body>
 </html>
