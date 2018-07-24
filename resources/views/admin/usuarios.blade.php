@@ -9,12 +9,12 @@
 			<div class="col-md-6">
 				<h3 class="">Usuarios</h3>
 			</div>
-			<div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
+			<!--div class="col-md-6 text-right valign-wrapper" style="justify-content: space-between;">
 				<div class="text-center" style="margin-left: auto;">
 					<a href="{{url('/usuarios/nuevo')}}" class="btn btn-primary right waves-effect waves-light btn-large">Añadir nuevo</a>
 				</div>
 				
-			</div>
+			</div-->
 		</div>
 		<div class="row">
 			<div class="col-md-12">

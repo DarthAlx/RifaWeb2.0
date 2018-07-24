@@ -41,6 +41,7 @@
                   </li>
                 <li><a href="{{url('/codigos')}}" class="waves-effect"><i class="fa fa-qrcode" aria-hidden="true"></i> Códigos</a></li>
                 <li><a href="{{url('/rifatokens')}}" class="waves-effect"><i class="fa fa-circle-o-notch"></i> RifaTokens</a></li>
+                <li><a href="{{url('/trivias')}}" class="waves-effect"><i class="fa fa-question" aria-hidden="true"></i> Trivias</a></li>
                 <li><a href="{{url('/mensajes')}}" class="waves-effect"><i class="fa fa-envelope" aria-hidden="true"></i> Mensajes</a></li>
                 <li><a href="{{url('/slider')}}" class="waves-effect"><i class="fa fa-film" aria-hidden="true"></i> Slider</a></li>
                 <li><a href="{{url('/regalo-update')}}" class="waves-effect"><i class="fa fa-gift" aria-hidden="true"></i> Regalo</a></li>

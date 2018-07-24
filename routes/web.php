@@ -262,6 +262,17 @@ Route::group(['middleware' => 'admin'], function(){
 
 	Route::post('actualizar-catalogo', 'CatalogoController@update');
 
+	Route::get('/trivias', function () {
+		$trivias=App\Trivia::orderBy('pregunta','asc')->get();
+	    return view('admin.trivias', ['trivias'=>$trivias]);
+	});
+
+	Route::post('agregar-trivia', 'TriviaController@store');
+
+	Route::delete('eliminar-trivia', 'TriviaController@destroy');
+
+	Route::post('actualizar-trivia', 'TriviaController@update');
+
 
 	Route::post('agregar-loteria', 'LoteriaController@store');
 

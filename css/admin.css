@@ -114,3 +114,7 @@ nav{
      left: 0; 
          height: auto;
 }
+
+.modal {
+    max-height: none;
+}
