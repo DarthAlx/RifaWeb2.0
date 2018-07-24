@@ -15,12 +15,38 @@
           	<a href="{{url('/entrar')}}" class="btn btn-success" style="width: 65%; margin: 0 auto;">Entrar</a></h1>
       </div>
     @else
-    <?php $usuario = App\User::find(Auth::user()->id); ?>
+		<?php $usuario = App\User::find(Auth::user()->id); ?>
+		
+		
 
 
 	<div class="col-sm-12">
 		@include('snip.notificaciones')
 	</div>
+
+	<?php $trivia = Cookie::get('trivia'); ?>
+	@if(!$trivia)
+	<?php 
+	$trivias=App\Trivia::inRandomOrder()->take(2);
+	@if(!$trivias)
+	<h3 class="section-title section-title-center">
+		<b></b>
+		<span class="secition-title-main">Aún no hay trivias disponibles.</span>
+		<b></b>
+	</h3>
+	@else
+		//$cookie = Cookie::queue(Cookie::make('trivia', 'correcta', 5));
+	?>
+	<h3 class="section-title section-title-center">
+		<b></b>
+		<span class="secition-title-main">Trivia</span>
+		<b></b>
+	</h3>
+	<p class="text-center">Contesta la siguiente trivia correctamente para proceder con la rifa.</p>
+	@endif
+		
+@else
+
 
 	<h3 class="section-title section-title-center">
                   <b></b>
@@ -33,7 +59,7 @@
 								$impuestomasiva=floatval($impuesto)+(floatval($impuesto)*0.16);
 								$impuestomasiva=round(str_replace(",","",$impuestomasiva), 2, PHP_ROUND_HALF_UP);
 							@endphp
-@php
+							@php
 							    $total=floatval(str_replace(',','',Cart::subtotal(2,'.',',')))+floatval(Cart::tax())+floatval($impuestomasiva);
 							@endphp
 
@@ -97,7 +123,7 @@
 
 
 
-					      	@endif
+					      	@endif <!-- tarjetas 	-->
 					      	<div class="pagotarjeta">
 					      		<div class="row">
 							        <div class="input-field col s6">
@@ -154,7 +180,7 @@
 			      </div>
 			    </li>
 			    
-			    @endif
+			    @endif <!-- usuario tiene rt	-->
 			  </ul>
 			  <script>
 
@@ -194,12 +220,12 @@
 			
 			
 			
-			@endif
+			@endif <!-- cart content >0	-->
 		</div>
 	</div>
+		@endif <!-- trivia correcta	-->
 
-
-@endif
+	@endif <!-- usuario logueado	-->
 </div>
 
 
@@ -277,6 +303,10 @@
   
   
 </script>
+
+
+
+
 
 
 @endsection
