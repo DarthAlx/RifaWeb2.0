@@ -25,10 +25,11 @@
 	</div>
 
 	@php 
-	$trivia = Cookie::get('trivia');
+	$trivia = (string)Cookie::get('trivia');
 	$pregunta=App\Trivia::inRandomOrder()->first();
 	@endphp 
-	@if(!$trivia)
+
+	@if($trivia!="correcta")
 
 	
 	
@@ -39,7 +40,7 @@
 		<b></b>
 	</h3>
 	@else
-	@php 	//$cookie = Cookie::queue(Cookie::make('trivia', 'correcta', 5)); 	@endphp
+
 	
 	<h3 class="section-title section-title-center">
 		<b></b>
@@ -47,8 +48,8 @@
 		<b></b>
 	</h3>
 	<p class="text-center">Contesta la siguiente trivia correctamente para proceder con la rifa.</p>
-	<div class="row">
-			<div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-sm-3 trivia">
+	<div class="row" id="pregunta{{$pregunta->id}}">
+			<div class="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-6 offset-sm-3 trivia">
 					<div class="col-xs-3 col-xs-offset-5" id="loadcontainer" style="position: absolute; left: 50%;">
 											 <div id="loadbar" style="display: none;"  style="position: relative; left: -50%;">
 													<div class="blockG" id="rotateG_01"></div>
@@ -63,17 +64,83 @@
 									</div>
 				
 									<div class="quiz" id="quiz" data-toggle="buttons">
+										<div class="card-header text-center"><h5>{{$pregunta->pregunta}}</h5></div>
 									 <label class="element-animation1 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="a">{{$pregunta->a}}</label>
 									 <label class="element-animation2 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="b">{{$pregunta->b}}</label>
 									 <label class="element-animation3 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="c">{{$pregunta->c}}</label>
 									 </div>
 									 <input type="hidden" name="pregunta" id="pregunta" value="{{$pregunta->id}}">
 									 <div id="answer"></div>
+									 <div class="segundointento text-right" style="display: none">
+										 <button class="btn btn-primary" onclick="location.reload()">Siguiente</button>
+										 <a href="{{url('/carrito')}}" class="btn btn-danger red">Cancelar</a>
+									 </div>
 							 <script>
 								 
 							 </script>
 				</div>
 	</div>
+	<script>
+	$(function(){
+    var loading = $('#loadbar').hide();
+    $(document)
+    .ajaxStart(function () {
+        //loading.show();
+    }).ajaxStop(function () {
+    	loading.hide();
+    });
+    
+    $(".trivia label.btn").on('click',function () {
+			$("input:radio").parent("label").css("background-color", "#1AA5B9");
+			$('#loadcontainer').height($('#quiz').height());
+    	var choice = $(this).find('input:radio').val();
+    	//$('#loadbar').show();
+    	//$('#quiz').fadeOut();
+    	setTimeout(function(){
+				pregunta = $('#pregunta').val();
+				respuesta = $('input:radio').val();
+				_token = $('#token').val();
+
+           	$( "#answer" ).html(  $(this).checking(choice) );      
+            $('#quiz').show();
+            //$('#loadbar').fadeOut();
+						//$('#loadcontainer').height(0);
+           /* something else */
+    	}, 500);
+    });
+
+ans='{{$pregunta->respuesta}}'
+
+    $.fn.checking = function(ck) {
+        if (ck != ans){
+
+				$("input[value='"+ck+"']").parent("label").css("background-color", "red");
+				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
+				@if($trivia=="segundointento")
+					setCookie("trivia", "", -1);
+				@else
+					setCookie("trivia", "segundointento", 2);
+					$('.segundointento').show();
+				@endif
+            return 'INCORRECT';
+				}
+        else {
+				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
+					setCookie("trivia", "correcta", 5);
+					return 'CORRECT';
+				}
+						
+    }; 
+});	
+
+
+function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 60 * 1000));
+                var expires = "expires=" + d.toGMTString();
+                document.cookie = cname + "=" + cvalue + "; " + expires + "; secure;";
+            }
+</script>
 	
 	@endif <!-- existen preguntas	-->
 		
@@ -333,55 +400,7 @@
 
 
 
-$(function(){
-    var loading = $('#loadbar').hide();
-    $(document)
-    .ajaxStart(function () {
-        //loading.show();
-    }).ajaxStop(function () {
-    	loading.hide();
-    });
-    
-    $(".trivia label.btn").on('click',function () {
-			$("input:radio").parent("label").css("background-color", "#1AA5B9");
-			$('#loadcontainer').height($('#quiz').height());
-    	var choice = $(this).find('input:radio').val();
-    	//$('#loadbar').show();
-    	//$('#quiz').fadeOut();
-    	setTimeout(function(){
-				pregunta = $('#pregunta').val();
-				respuesta = $('input:radio').val();
-				_token = $('#token').val();
-				$.post("{{url('/trivia')}}", {
-						pregunta : pregunta,
-						_token : _token
-						}, function(data) {
-							$( "#answer" ).html(  $(this).checking(data) );  
-						});
-           //$( "#answer" ).html(  $(this).checking(choice) );      
-            $('#quiz').show();
-            //$('#loadbar').fadeOut();
-						//$('#loadcontainer').height(0);
-           /* something else */
-    	}, 500);
-    });
 
-    ans = 'a';
-
-    $.fn.checking = function(ck) {
-        if (ck != ans){
-
-				$("input[value='"+ck+"']").parent("label").css("background-color", "red");
-				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
-            return 'INCORRECT';
-				}
-        else {
-				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
-						return 'CORRECT';
-				}
-						
-    }; 
-});	
 
   
   
