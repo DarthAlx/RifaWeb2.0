@@ -177,7 +177,9 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/facebook/retorno', 'Auth\LoginController@handleProviderCallback');
 
-
+Route::post('trivia1', 'TriviaController@trivia1')->middleware('auth');
+Route::post('trivia2', 'TriviaController@trivia2')->middleware('auth');
+Route::post('trivia3', 'TriviaController@trivia3')->middleware('auth');
 
 Route::group(['middleware' => 'admin'], function(){
 

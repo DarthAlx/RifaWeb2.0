@@ -7,6 +7,7 @@
 
 
 @section('pagecontent')
+<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 <div class="container carrito">
 	@if (Auth::guest())
@@ -26,6 +27,7 @@
 
 	@php 
 	$trivia = (string)Cookie::get('trivia');
+
 	$pregunta=App\Trivia::inRandomOrder()->first();
 	@endphp 
 
@@ -64,16 +66,26 @@
 									</div>
 				
 									<div class="quiz" id="quiz" data-toggle="buttons">
-										<div class="card-header text-center"><h5>{{$pregunta->pregunta}}</h5></div>
+										<div class="card-header text-center">
+										<span class="segop" style="display:none"><small>Segundo intento</small></span>
+											<h5>{{$pregunta->pregunta}}</h5>
+										</div>
 									 <label class="element-animation1 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="a">{{$pregunta->a}}</label>
 									 <label class="element-animation2 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="b">{{$pregunta->b}}</label>
 									 <label class="element-animation3 btn btn-large btn-primary btn-block"><span class="btn-label"><i class="fa fa-chevron-right"></i></span> <input type="radio" name="respuesta" value="c">{{$pregunta->c}}</label>
 									 </div>
 									 <input type="hidden" name="pregunta" id="pregunta" value="{{$pregunta->id}}">
-									 <div id="answer"></div>
-									 <div class="segundointento text-right" style="display: none">
+									 <div id="answer" class="card-header text-center" style="border:0; font-family: 'Lato', sans-serif; font-weight: 700"></div>
+									 <div class="segundointento text-center card-header" style="display: none; border:0;">
 										 <button class="btn btn-primary" onclick="location.reload()">Siguiente</button>
 										 <a href="{{url('/carrito')}}" class="btn btn-danger red">Cancelar</a>
+									 </div>
+									 <div class="reintentar text-center card-header" style="display: none; border:0;">
+										 <button class="btn btn-primary" onclick="location.reload()">Reintentar</button>
+										 <a href="{{url('/carrito')}}" class="btn btn-danger red">Cancelar</a>
+									 </div>
+									 <div class="continuar text-center card-header" style="display: none; border:0;">
+										 <button class="btn btn-primary" onclick="location.reload()">Continuar</button>
 									 </div>
 							 <script>
 								 
@@ -81,6 +93,10 @@
 				</div>
 	</div>
 	<script>
+
+	@if($trivia=="segundointento")
+				$('.segop').show();
+	@endif
 	$(function(){
     var loading = $('#loadbar').hide();
     $(document)
@@ -91,16 +107,13 @@
     });
     
     $(".trivia label.btn").on('click',function () {
+			$(".trivia label.btn").off();
 			$("input:radio").parent("label").css("background-color", "#1AA5B9");
 			$('#loadcontainer').height($('#quiz').height());
     	var choice = $(this).find('input:radio').val();
     	//$('#loadbar').show();
     	//$('#quiz').fadeOut();
     	setTimeout(function(){
-				pregunta = $('#pregunta').val();
-				respuesta = $('input:radio').val();
-				_token = $('#token').val();
-
            	$( "#answer" ).html(  $(this).checking(choice) );      
             $('#quiz').show();
             //$('#loadbar').fadeOut();
@@ -117,29 +130,34 @@ ans='{{$pregunta->respuesta}}'
 				$("input[value='"+ck+"']").parent("label").css("background-color", "red");
 				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
 				@if($trivia=="segundointento")
-					setCookie("trivia", "", -1);
+					_token = $('#token').val();
+					$.post("{{url('/trivia2')}}", {
+						_token : _token
+					}, function(data) {});
+					$('.reintentar').show();
+					return 'No respondiste correctamente, intentalo de nuevo.';
 				@else
-					setCookie("trivia", "segundointento", 2);
+					_token = $('#token').val();
+					$.post("{{url('/trivia1')}}", {
+						_token : _token
+					}, function(data) {});
 					$('.segundointento').show();
+					return 'Primer intento incorrecto.';
 				@endif
-            return 'INCORRECT';
+            
 				}
         else {
-				$("input[value='"+ans+"']").parent("label").css("background-color", "green");
-					setCookie("trivia", "correcta", 5);
-					return 'CORRECT';
+					$("input[value='"+ans+"']").parent("label").css("background-color", "green");
+					_token = $('#token').val();
+					$.post("{{url('/trivia3')}}", {
+						_token : _token
+					}, function(data) {});
+					$('.continuar').show();
+					return 'Respuesta correcta, puedes continuar con la rifa.';
 				}
 						
     }; 
 });	
-
-
-function setCookie(cname, cvalue, exdays) {
-                var d = new Date();
-                d.setTime(d.getTime() + (exdays * 60 * 1000));
-                var expires = "expires=" + d.toGMTString();
-                document.cookie = cname + "=" + cvalue + "; " + expires + "; secure;";
-            }
 </script>
 	
 	@endif <!-- existen preguntas	-->
@@ -329,7 +347,6 @@ function setCookie(cname, cvalue, exdays) {
 
 
 
- <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 
 

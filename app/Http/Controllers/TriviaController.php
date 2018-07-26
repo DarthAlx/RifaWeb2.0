@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Trivia;
+use Cookie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -58,4 +59,14 @@ class TriviaController extends Controller
             return redirect()->intended(url('/trivias/'))->withInput();
         }
     }
+
+    public function trivia1(Request $request){
+        Cookie::queue(Cookie::make('trivia', 'segundointento', 1));
+    }
+    public function trivia2(Request $request){
+        Cookie::queue(Cookie::make('trivia', '', -1)); 
+     }
+     public function trivia3(Request $request){
+        Cookie::queue(Cookie::make('trivia', 'correcta', 1));
+     }
 }
