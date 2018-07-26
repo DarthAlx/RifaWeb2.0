@@ -170,18 +170,15 @@ class ProductoController extends Controller
     }
 
     public function ganador(Request $request){
-        $validator = $this->validator($request->all());
 
-        if ($validator->fails()) {
-
-
-            Session::flash('mensaje', 'Los números deben coincidir.');
-              Session::flash('class', 'danger');
-              return redirect()->intended(url()->previous());
-        }
-        else{
+              $digitos = strlen(intval($request->boletos));
+              $randomwinner="";
+              for ($i=0; $i < $digitos; $i++) { 
+                  $randomwinner.=rand(0, 9);
+              }
+              
               $producto = Producto::find($request->producto);
-              $producto->ganador=$request->ganador;
+              $producto->ganador=$randomwinner;
               $producto->habilitado=0;
               $producto->save();
 
@@ -238,7 +235,7 @@ class ProductoController extends Controller
               Session::flash('mensaje', 'Ganador asignado.');
               Session::flash('class', 'success');
               return redirect()->intended(url()->previous());
-        }
+        
     }
 
     public function sendwinner($id)

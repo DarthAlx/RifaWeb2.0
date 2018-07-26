@@ -33,7 +33,6 @@
                             <li><a href="{{url('/ganadores')}}">Ganadores</a></li>
                             <li><a href="{{url('/canceladas')}}">Rifas canceladas</a></li>
                             <li><a href="{{url('/catalogos')}}">Catálogos</a></li>
-                            <li><a href="{{url('/loterias')}}">Loterías</a></li>
                           </ul>
                         </div>
                       </li>

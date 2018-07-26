@@ -138,25 +138,6 @@
                       </ul>
 
                       @endif
-
-                      @if($fuentes)
-                      <hr>
-                      <ul class="listacategorias collapsible" data-collapsible="accordion"  style="box-shadow: none; border: 0; border-bottom: none;">
-
-                        <li>
-                          <div class="collapsible-header" style="background: transparent; border: 0; box-shadow: none; padding: 0;">
-                            <p  class="titleshop  dropdown-toggle">Fuentes</p>
-                            
-                          </div>
-                          <div class="collapsible-body" style="padding: 0;">
-                            @foreach($fuentes as $fuente)
-                            <a href="{{url('/rifas')}}/{{$categoria->slug}}">{{$fuente->nombre}}</a><br>
-                            @endforeach
-                          </div>
-                        </li>
-                      
-                      </ul>
-                      @endif
                       
                     </div>
 
@@ -283,15 +264,7 @@
 
                 @endif
 
-                @if($fuentes)
-                <hr>
-                <p class="titleshop">Fuentes</p>
-                <ul class="listacategorias">
-                  @foreach($fuentes as $fuente)
-                  <li><a href="{{url('/rifas')}}/{{$fuente->slug}}">{{$fuente->nombre}}</a></li>
-                  @endforeach
-                </ul>
-                @endif
+       
 
 
                 
@@ -329,7 +302,6 @@
                       <div class="product-content">
                         <a href="{{url('/rifa')}}/{{$producto->slug}}" style="color: inherit; text-decoration: none;">
                         <h1>{{$producto->nombre}}</h1>
-                        <p>Fuente: {{$producto->loteria}}</p>
                         <ul>
                           <li class="descorta" style="display: none;">{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
                           <li class="desclarga">{{str_limit($producto->descripcion, $limit = 80, $end = '...')}}</li>

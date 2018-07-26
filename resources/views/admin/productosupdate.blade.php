@@ -129,26 +129,6 @@
 				    <h5 class="card-title">Boletos</h5>
 				    <div class="card-text">
 				    	<div class="col s12">
-				    		<div class="row">
-						        <div class="input-field col s12">
-						        	<input type="hidden" name="loteria" id="loteriareal" value="{!! $producto->loteria !!}">
-						        	<select id="loteria"  required>
-								      <option value="" disabled selected>Elejir tipo</option>
-								      	@if($loterias)
-				    					@foreach($loterias as $loteria)
-				    					<option value="{{$loteria->nombre}}">{{$loteria->nombre}}</option>
-										@endforeach
-										@endif
-								    </select>
-						          <label for="loteria">Tipo de lotería</label>
-						          	<script type="text/javascript">
-									 	if (document.getElementById('loteria') != null) document.getElementById('loteria').value = '{!! $producto->loteria !!}';
-									 	$('#loteria').change(function(){
-									 		document.getElementById('loteriareal').value = $('#loteria').val();
-									 	});
-								   	</script>
-						        </div>
-					      	</div>	
 					      <div class="row">
 					        <div class="input-field col col-md-6">
 					          <input id="boletos" name="boletos" type="number" class="validate" value="{{$producto->boletos or old('boletos')}}" required>
@@ -419,17 +399,14 @@
   		<input type="hidden" name="producto" value="{{$producto->id}}">
     <div class="modal-content">
       <h4>Asignar Ganador</h4>
-      <p>Ingresa los ultimos {{$digitos}} digitos del boleto ganador</p>
+      
 	
 	    	<div class="col s12">
 		      <div class="row">
 		        <div class="input-field col col-md-6">
-		          <input id="ganador" name="ganador" type="text" class="validate" value="{{old('ganador')}}" maxlength="{{$digitos}}" minlength="{{$digitos}}">
-		          <label for="ganador">Número ganador</label>
-		        </div>
-		        <div class="input-field col col-md-6">
-		          <input id="ganador_confirmation" name="ganador_confirmation" type="text" value="{{old('ganador_confirmation')}}" class="validate" maxlength="{{$digitos}}" minlength="{{$digitos}}">
-		          <label for="ganador_confirmation">Confirmar número ganador</label>
+		          <input id="boletos" name="boletos" type="hidden" class="validate" value="{{$producto->boletos}}">
+							<label for="boletos">La rifa asignará un ganador aleatorio.</label>
+							<p>&nbsp;</p>
 		        </div>
 		      </div>					      
 		    </div>

@@ -205,7 +205,7 @@
                       <div class="product-content">
                         <a href="{{url('/rifa')}}/{{$producto->slug}}" style="color: inherit; text-decoration: none;">
                         <h1>{{$producto->nombre}}</h1>
-                        <p>Fuente: {{$producto->loteria}}</p>
+                        
                         <ul>
                           <li>{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
                         </ul>

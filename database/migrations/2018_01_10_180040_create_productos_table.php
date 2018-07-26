@@ -29,7 +29,7 @@ class CreateProductosTable extends Migration
             $table->string('imagen');
             $table->integer('minimo');
             $table->dateTime('fecha_limite');
-            $table->string('loteria');
+            $table->string('loteria')->nullable(true);
             $table->string('ganador')->nullable(true);
             $table->string('categoria');
             $table->string('fundacion')->nullable(true);

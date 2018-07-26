@@ -61,12 +61,12 @@ class TriviaController extends Controller
     }
 
     public function trivia1(Request $request){
-        Cookie::queue(Cookie::make('trivia', 'segundointento', 1));
+        Cookie::queue(Cookie::make('trivia', 'segundointento', 2));
     }
     public function trivia2(Request $request){
         Cookie::queue(Cookie::make('trivia', '', -1)); 
      }
      public function trivia3(Request $request){
-        Cookie::queue(Cookie::make('trivia', 'correcta', 1));
+        Cookie::queue(Cookie::make('trivia', 'correcta', 5));
      }
 }

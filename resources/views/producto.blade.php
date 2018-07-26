@@ -114,7 +114,7 @@
                           </div>
 
 
-        <p>Fuente: {{$producto->loteria}}</p>
+
                         
                         
                           

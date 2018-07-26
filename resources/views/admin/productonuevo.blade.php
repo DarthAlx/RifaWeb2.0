@@ -116,20 +116,6 @@
 				    <h5 class="card-title">Boletos</h5>
 				    <div class="card-text">
 				    	<div class="col s12">
-				    		<div class="row">
-						        <div class="input-field col s12">
-						        	<select id="loteria" name="loteria" required>
-								      <option value="" disabled selected>Elejir tipo</option>
-
-								      	@if($loterias)
-				    					@foreach($loterias as $loteria)
-				    					<option value="{{$loteria->nombre}}">{{$loteria->nombre}}</option>
-										@endforeach
-										@endif
-								    </select>
-						          <label for="loteria">Tipo de lotería</label>
-						        </div>
-					      	</div>	
 					      <div class="row">
 					        <div class="input-field col col-md-6">
 					          <input id="boletos" name="boletos" type="number" class="validate" value="{{old('boletos')}}" required>

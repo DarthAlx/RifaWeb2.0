@@ -22,7 +22,7 @@ class RolesController extends Controller
         }
         else{
             if (Cart::content()->count()>0){
-              return url('/carrito');
+                return redirect()->intended(url('/carrito'));
             }
             else {
               return redirect()->intended(url('/perfil'));

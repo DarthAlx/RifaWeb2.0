@@ -140,7 +140,7 @@
                     <div class="p2 product-info col m8">
                       <div class="product-content">
                         <h1>{{$producto->nombre}}</h1>
-                        <p>Fuente: {{$producto->loteria}}</p>
+                        
                         <ul>
                           <li>{{str_limit($producto->descripcion, $limit = 30, $end = '...')}}</li>
                         </ul>

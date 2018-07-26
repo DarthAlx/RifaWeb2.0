@@ -61,7 +61,7 @@
 
 				                    <p class="text-center">
 					                   
-					                    {{$ganador->loteria}}
+					                    
 					                  
 				                	</p>
 				                	<?php $usuario=explode(" ",$ganador->user->name); ?>
