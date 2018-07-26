@@ -19,11 +19,11 @@ class ProductoSeeder extends Seeder
             'habilitado'=>1,
             'destacado'=>1,
             'precio'=>50,
-            'boletos'=>500,
+            'boletos'=>999,
             'imagen'=>'XBX1-1517449728.png',
-            'minimo'=>400,
-            'fecha_limite'=>'2018-03-15',
-            'loteria'=>'Lotería Nacional',
+            'minimo'=>99,
+            'fecha_limite'=>'2018-08-15',
+
             'categoria'=>'1',
         ]);
 
@@ -35,11 +35,11 @@ class ProductoSeeder extends Seeder
             'habilitado'=>1,
             'destacado'=>1,
             'precio'=>70,
-            'boletos'=>800,
+            'boletos'=>99,
             'imagen'=>'IPDX-1517449802.png',
-            'minimo'=>700,
-            'fecha_limite'=>'2018-03-28',
-            'loteria'=>'Melate',
+            'minimo'=>99,
+            'fecha_limite'=>'2018-08-28',
+
             'categoria'=>'2',
         ]);
 
@@ -51,11 +51,11 @@ class ProductoSeeder extends Seeder
             'habilitado'=>1,
             'destacado'=>1,
             'precio'=>40,
-            'boletos'=>400,
+            'boletos'=>999,
             'imagen'=>'IWCP1-1517450059.png',
-            'minimo'=>350,
-            'fecha_limite'=>'2018-03-20',
-            'loteria'=>'Melate',
+            'minimo'=>800,
+            'fecha_limite'=>'2018-08-20',
+
             'categoria'=>'4',
         ]);
 
@@ -67,11 +67,11 @@ class ProductoSeeder extends Seeder
             'habilitado'=>1,
             'destacado'=>1,
             'precio'=>20,
-            'boletos'=>300,
+            'boletos'=>999,
             'imagen'=>'BBSND-1517450164.png',
-            'minimo'=>280,
-            'fecha_limite'=>'2018-03-28',
-            'loteria'=>'Lotería Nacional',
+            'minimo'=>850,
+            'fecha_limite'=>'2018-08-28',
+
             'categoria'=>'5',
         ]);
 
